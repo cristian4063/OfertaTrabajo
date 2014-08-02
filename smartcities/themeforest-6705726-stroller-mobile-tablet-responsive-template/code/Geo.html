@@ -1,0 +1,359 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es-co">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--Declare page as mobile friendly -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0" />
+    <!-- Declare page as iDevice WebApp friendly -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- iDevice WebApp Splash Screen, Regular Icon, iPhone, iPad, iPod Retina Icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/splash/splash-icon.png">
+    <!-- iPhone 3, 3Gs -->
+    <link rel="apple-touch-startup-image" href="images/splash/splash-screen.png" media="screen and (max-device-width: 320px)" />
+    <!-- iPhone 4 -->
+    <link rel="apple-touch-startup-image" href="images/splash/splash-screen@2x.png" media="(max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2)" />
+    <!-- iPhone 5 -->
+    <link rel="apple-touch-startup-image" sizes="640x1096" href="images/splash/splash-screen@3x.png" />
+    <!-- Page Title -->
+    <title>CNSC | Geolocalización</title>
+    <!-- Stylesheet Load -->
+    <link href="styles/style.css" rel="stylesheet" type="text/css">
+    <style>
+        .image-banner
+        {
+            width: 300px;
+        }
+        
+        .parrafo-alertas
+        {
+            margin-left: 45px !important;
+        }
+        
+        .texto-banner
+        {
+            color: #FFFFFF;
+            display: block;
+            font-family: 'Lato' ,sans-serif;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 800;
+            padding-right: 20px;
+            padding-top: 22px;
+            text-align: right;
+            text-transform: uppercase;
+        }
+        
+        .margen-logo
+        {
+            margin-top: -13px;
+        }
+        
+        .margen-inicio
+        {
+            margin-top: 15px !important;
+        }
+        
+        .columna_propia
+        {
+            margin: 0px !important;
+        }
+        
+        .container_propio
+        {
+            margin: 0px !important;
+        }
+        
+        .texto_listado
+        {
+            color: Black !important;
+            font-family: 'Open Sans' ,sans-serif !important;
+            font-size: 12px;
+        }
+        
+        .cuadro_gris
+        {
+            min-height: 60px;
+        }
+        
+        .cuadro_gris2
+        {
+            min-height: 50px;
+        }
+        
+        .a_cuadro
+        {
+            overflow: visible !important;
+            min-height: 60px;
+            line-height: 20px !important;
+        }
+        
+        .a_cuadro2
+        {
+            overflow: visible !important;
+            min-height: 50px;
+            line-height: 20px !important;
+        }
+        
+        .imagen_bookmark
+        {
+            float: left;
+            margin-right: 5px;
+        }
+        
+        .imagen_pesos
+        {
+            background-image: url('images/Pesos.jpg');
+            background-repeat: no-repeat;
+            background-position: center top;
+            margin: 0px !important;
+            width: 45%;
+            text-align: center;
+            float: left;
+            border: 1px solid #d0d0d0;
+            border-radius: 3px;
+            background-color: #e1e1e1;
+            cursor: pointer;
+        }
+        
+        .imagen_noticias
+        {
+            background-image: url('images/Noticias.jpg');
+            background-repeat: no-repeat;
+            background-position: center top;
+            margin: 0px !important;
+            width: 45%;
+            text-align: center;
+            float: right;
+            border: 1px solid #d0d0d0;
+            border-radius: 3px;
+            background-color: #e1e1e1;
+            cursor: pointer;
+        }
+        
+        .paginar_boton
+        {
+            font-size: 15px !important;
+            padding: 8px !important;
+            width: 90px;
+        }
+        
+        .paginar_derecha
+        {
+            float: right;
+        }
+        
+        .paginar_izquierda
+        {
+            float: left;
+        }
+        
+        .notificacion_informativa
+        {
+            background-color: rgba(100, 155, 174, 0.5);
+            color: #2C3E50;
+        }
+        
+        .notificacion_sin_internet
+        {
+            background-color: rgba(255, 217, 58, 0.5);
+            color: #2C3E50;
+        }
+        
+        .notificacion_cerrar
+        {
+            font-size: 20px !important;
+            text-align: center;
+            width: 30px;
+        }
+        
+        .CargandoModalBackground
+        {
+            overflow: hidden;
+            background-color: transparent;
+            filter: alpha(opacity=80);
+            opacity: 0.8;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            text-align: center;
+            vertical-align: middle;
+            padding-top: 15%;
+            padding-bottom: 36%;
+            padding-left: 47%;
+            padding-right: 51%;
+            display: none;
+            z-index: 1;
+        }
+        
+        #map-canvas
+        {
+            width: 100%;
+            height: 100%;
+            background-color: White;
+            position: absolute;
+        }
+        
+        .yellow-minimal
+        {
+            background-color: #FEBF4D;
+            border: 1px solid #E6B650;
+            color: #986A39;
+        }
+        
+        .black-minimal
+        {
+            background-color: #454545;
+            border: 1px solid #4D4D4D;
+            color: #FFFFFF;
+        }
+        
+        .button-minimal
+        {
+            border-radius: 3px;
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 10px 15px;
+            text-decoration: none !important;
+            text-transform: uppercase;
+        }
+        .demo-button
+        {
+            margin-left: 3px;
+            margin-right: 3px;
+        }
+        
+        .button, .button-minimal
+        {
+            margin-bottom: 20px;
+            margin-top: 6px;
+        }
+        
+        .no-bottom
+        {
+            margin-bottom: 0 !important;
+        }
+        
+        .texto-banner
+        {
+            padding-top: 0px !important;
+        }
+        
+        .boton_atras
+        {
+            float: left;
+        }
+    </style>
+    <script src="scripts/jquery.js" type="text/javascript"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script type="text/javascript">
+        var global = 0;
+        var markers = [];
+
+        var directionsDisplay;
+        var directionsService = new google.maps.DirectionsService();
+        var map;
+
+        var markerGlobal = null;
+        //Crea la ventana de información y limpia la propiedad content
+        var infowindow = new google.maps.InfoWindow({
+            content: ""
+        })
+
+        function initialize() {
+
+            directionsDisplay = new google.maps.DirectionsRenderer();
+            var punto_central = new google.maps.LatLng(4.598055599999999, -74.0758333);
+            var mapOptions = {
+                zoom: 6,
+                center: punto_central
+            };
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            directionsDisplay.setMap(map);
+            verDatos();
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+        function verDatos() {
+            borrarMarkers();
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(3.5286008, -76.4979119),
+                map: map
+            });
+            marker.Message = "<a href='#' onclick='verCiudad(\"Manizales\")' class='no-bottom demo-button button-minimal black-minimal boton_atras'>Consultar</a>'";
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.setContent(this.Message)
+                infowindow.open(map, this);
+            });
+            markers.push(marker);
+
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(5.5286008, -76.4979119),
+                map: map
+            });
+            marker.Message = "<a href='#' onclick='verCiudad(\"Manizales\")' class='no-bottom demo-button button-minimal black-minimal boton_atras'>Consultar</a>'";
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.setContent(this.Message)
+                infowindow.open(map, this);
+            });
+            markers.push(marker);
+        }
+
+        function verCiudad(ciudad) {
+            alert(ciudad);
+        }
+
+        function calcRoute() {
+            var start = "Peralonso, manizales, Caldas";
+            var end = "sultana, manizales, Caldas";
+            var request = {
+                origin: start,
+                destination: end,
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+            directionsService.route(request, function (result, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(result);
+                }
+            });
+        }
+
+        //Eliminar todos los markers del vector para limpiar el mapa
+        function borrarMarkers() {
+            if (markers) {
+                for (i in markers) {
+                    markers[i].setMap(null);
+                }
+                markers.length = 0;
+            }
+        }
+
+        function Atras() {
+            calcRoute();
+//            document.location.href = "index.html";
+        }
+
+    </script>
+</head>
+<body style="background: none !important; margin-top: 0px; margin-left: 0px;">
+    <div class="all-elements">
+        <div id="content" class="page-content">
+            <div class="page-header">
+                <label class="texto-banner">
+                    <a href="#" onclick="Atras()" class="no-bottom demo-button button-minimal black-minimal boton_atras">
+                        ATRÁS</a>
+                    <br />
+                    Seguridad Vial
+                </label>
+            </div>
+            <div class="container" id="convocatoria" style="margin: 0px 0px 0px 0px;">
+                <div class="columna_propia">
+                    <div id="map-canvas">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

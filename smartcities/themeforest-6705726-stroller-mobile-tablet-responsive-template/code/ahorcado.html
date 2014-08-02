@@ -1,0 +1,476 @@
+﻿<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/splash/splash-icon.png">
+    <link rel="apple-touch-startup-image" href="images/splash/splash-screen.png" media="screen and (max-device-width: 320px)" />
+    <link rel="apple-touch-startup-image" href="images/splash/splash-screen@2x.png" media="(max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2)" />
+    <link rel="apple-touch-startup-image" sizes="640x1096" href="images/splash/splash-screen@3x.png" />
+    <link rel="apple-touch-startup-image" sizes="1024x748" href="images/splash/splash-screen-ipad-landscape"
+        media="screen and (min-device-width : 481px) and (max-device-width : 1024px) and (orientation : landscape)" />
+    <link rel="apple-touch-startup-image" sizes="768x1004" href="images/splash/splash-screen-ipad-portrait.png"
+        media="screen and (min-device-width : 481px) and (max-device-width : 1024px) and (orientation : portrait)" />
+    <link rel="apple-touch-startup-image" sizes="1536x2008" href="images/splash/splash-screen-ipad-portrait-retina.png"
+        media="(device-width: 768px)  and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" />
+    <link rel="apple-touch-startup-image" sizes="1496x2048" href="images/splash/splash-screen-ipad-landscape-retina.png"
+        media="(device-width: 768px) and (orientation: landscape)    and (-webkit-device-pixel-ratio: 2)" />
+    <title>OCD</title>
+    <link href="styles/style.css" rel="stylesheet" type="text/css">
+    <link href="styles/framework.css" rel="stylesheet" type="text/css">
+    <link href="styles/owl.carousel.css" rel="stylesheet" type="text/css">
+    <link href="styles/owl.theme.css" rel="stylesheet" type="text/css">
+    <link href="styles/swipebox.css" rel="stylesheet" type="text/css">
+    <link href="styles/colorbox.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="scripts/jquery.js"></script>
+    <script type="text/javascript" src="scripts/jqueryui.js"></script>
+    <script type="text/javascript" src="scripts/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery.swipebox.js"></script>
+    <script type="text/javascript" src="scripts/colorbox.js"></script>
+    <script type="text/javascript" src="scripts/snap.js"></script>
+    <script type="text/javascript" src="scripts/contact.js"></script>
+    <script type="text/javascript" src="scripts/custom.js"></script>
+    <script type="text/javascript" src="scripts/framework.js"></script>
+    <script type="text/javascript" src="scripts/framework.launcher.js"></script>
+    <style type="text/css">
+        .styled-select
+        {
+            width: 95%;
+            height: 34px;
+            overflow: hidden;
+            background: url(images/flecha_abajo.png) no-repeat right #ddd;
+            padding: 3px;
+            margin: 5px;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+            -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+            box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+            color: #888;
+            border: none;
+            outline: none;
+            display: inline-block;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+        
+        .icon-balloons
+        {
+            background-image: url(images/icons/misc/balloons.png);
+        }
+        
+        .botonLetra
+        {
+            margin-right: 10px;
+            float: left;
+            width: 20px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <script type="text/javascript">
+        var palabra
+        var droga
+        var libreriaPalabras = new Array("d_e_t_e_r_i_o_r_o_*_d_e_*_l_a_*_m_e_m_o_r_i_a",
+                                         "h_i_p_e_r_a_c_t_i_v_i_d_a_d_e_s_*_m_e_c_a_n_i_c_a_s",
+                                         "i_n_f_l_a_m_a_c_i_o_n_*_d_e_*_l_o_s_*_v_a_s_o_s_*_s_a_n_g_u_i_n_e_o_s",
+                                         "d_i_s_m_i_n_u_c_i_o_n_*_d_e_*_l_a_*_c_a_p_a_c_i_d_a_d_*_d_e_*_c_o_n_c_e_n_t_r_a_c_i_o_n",
+                                         "c_o_a_g_u_l_a_c_i_o_n_*_a_n_o_r_m_a_l_*_d_e_*_l_a_*_s_a_n_g_r_e",
+                                         "i_n_s_u_f_i_c_i_e_n_c_i_a_*_r_e_n_a_l_*_y_*_h_e_p_a_t_i_c_a",
+                                         "i_n_h_i_b_i_r_*_l_a_*_e_r_e_c_c_i_o_n_*_m_a_s_c_u_l_i_n_a",
+                                         "i_n_f_l_a_m_a_c_i_o_n_*_c_e_r_e_b_r_a_l",
+                                         "a_u_m_e_n_t_o_*_d_e_*_l_a_*_p_r_e_s_i_o_n_*_a_r_t_e_r_i_a_l",
+                                         "c_o_m_p_l_i_c_a_c_i_o_n_e_s_*_r_e_s_p_i_r_a_t_o_r_i_a_s",
+                                         "c_a_n_c_e_r_*_d_e_*_b_o_c_a_*_y_*_g_a_r_g_a_n_t_a",
+                                         "m_e_n_o_p_a_u_s_i_a_*_p_r_e_m_a_t_u_r_a",
+                                         "c_a_n_c_e_r_*_d_e_*_p_u_l_m_o_n",
+                                         "d_i_s_m_i_n_u_c_i_o_n_*_d_e_l_*_n_i_v_e_l_*_d_e_*_c_o_n_c_i_e_n_c_i_a",
+                                         "p_e_r_d_i_d_a_*_d_e_l_*_e_q_u_i_l_i_b_r_i_o",
+                                         "c_a_m_b_i_o_s_*_e_n_*_l_a_*_v_i_s_i_o_n")
+        var libreriaPistas = new Array("Efecto causado por consumir Metanfetamina",
+                                       "Efecto causado por consumir Metanfetamina",
+                                       "Efecto causado por consumir Metanfetamina",
+                                       "Efecto causado por consumir Metanfetamina",
+                                       "Efecto causado por consumir Extasis",
+                                       "Efecto causado por consumir Extasis",
+                                       "Efecto causado por consumir Extasis",
+                                       "Efecto causado por consumir Extasis",
+                                       "Efecto causado por consumir Cocaína",
+                                       "Efecto causado por consumir Cocaína",
+                                       "Efecto causado por consumir cigarrillo",
+                                       "Efecto causado por consumir cigarrillo",
+                                       "Efecto causado por consumir cigarrillo",
+                                       "Efecto causado por consumir bebidas alcoholicas",
+                                       "Efecto causado por consumir bebidas alcoholicas",
+                                       "Efecto causado por consumir bebidas alcoholicas")
+        var partes = 1
+        var colNueva = 0
+        var jugando
+
+
+        function ObtienePalabra() {
+            //obtiene la palabra para jugar de forma pseudoaleatoria
+            var indice = Math.round(Math.random() * 15)
+            var cadena = new String(libreriaPalabras[indice])
+            droga = new String(libreriaPistas[indice])
+            palabra = cadena.split("_")
+        }
+
+
+        function DibujaHombre(visor, partes) {
+            //dibuja el hombre ahorcado
+            //partes indica el numero de partes a dibujar
+            var dibujo = ""
+            if (partes < 11)
+                $("#image_ahorcado").attr("src", "images/ahorcado/ahorcado" + partes + ".jpg");
+        }
+
+
+        function DibujaLetra(visor, letra) {
+            //dibuja una letra de la palabra
+            //posicion indica donde debe dibujar la letra
+            var flag = false
+            //indica si se encontro la letra
+            //obtiene cadena actual
+            var cadena = new String(visor.displayPalabra.value.replace(/     /g, " * "))
+            //la separa en sus espacios
+            var letrasCadena = cadena.split(" ")
+            cadena = ""
+            for (var x = 0; x < palabra.length; x++) {
+                if (palabra[x] == letra) {
+                    cadena += letra + " "
+                    flag = true
+                } else {
+                    if (palabra[x] == "*") {
+                        cadena += "    "
+                    } else {
+                        cadena += letrasCadena[x] + " "
+                    }
+                }
+            }
+            visor.displayPalabra.value = cadena
+            return flag
+        }
+
+
+        function NuevaLetra(visor, letra) {
+            //añade letra lista de letras
+            visor.displayLetras.value += letra + " "
+            //comprueba si ha de pasar a la siguiente fila
+            if (colNueva == 3) {
+                visor.displayLetras.value += "\n"
+                colNueva = 0
+            } else
+                colNueva++
+        }
+
+
+        function Juega(visor, letra) {
+            //comprueba si esta jugando
+            if (jugando) {
+                //ciclo de jugada
+                //1. añade letra a la lista
+                NuevaLetra(visor, letra)
+                //2. dibuja la letra y comprueba si acierto
+                var acierto = DibujaLetra(visor, letra)
+                //3. si no acierto, dibuja hombre
+                if (!acierto)
+                    DibujaHombre(visor, ++partes)
+                //4. comprueba si fin
+                if (partes == 10)
+                    FinJuego(false)
+                else if (CompruebaPalabra(visor))
+                    FinJuego(true)
+            } else {
+                alert('Pulsa Juego nuevo para comenzar\nuna partida nueva.')
+            }
+        }
+
+        function IniciaJuego(visor) {
+            //inicializa visor y variables globales
+            jugando = true
+            partes = 1
+            colNueva = 0
+            ObtienePalabra()
+            DibujaHombre(visor, partes)
+            visor.displayPalabra.value = ""
+            for (var x = 0; x < palabra.length; x++)
+                if (palabra[x] == "*") {
+                    visor.displayPalabra.value += "    "
+                } else {
+                    visor.displayPalabra.value += "_ "
+                }
+            visor.displayLetras.value = ""
+        }
+
+        function CompruebaPalabra(visor) {
+            //comprueba si se completo toda la palabra
+            var fin = true
+            //obtiene cadena actual
+            var cadena = new String(visor.displayPalabra.value)
+            //la separa en sus espacios
+            var letrasCadena = cadena.split(" ")
+            for (var x = 0; x < letrasCadena.length; x++)
+                if (letrasCadena[x] == "_")
+                    fin = false
+                return fin
+            }
+
+
+            function FinJuego(resultado) {
+                //indica que si se ha perdido o ganado
+                var solucion = ""
+                jugando = false
+                if (resultado) {
+                    document.visor.ganadas.value++
+                    alert("¡Has ganado! " + solucion + " - " + droga)
+                } else {
+                    document.visor.perdidas.value++
+                    //construye la palabra solucion
+                    for (var x = 0; x < palabra.length; x++)
+                        solucion += palabra[x]
+                    while (solucion.toString().indexOf("*") != -1) {
+                        solucion = solucion.toString().replace("*", " ");
+                    }
+                    alert("¡Has perdido!\n La frase era: " + solucion + "-" + droga)
+                }
+            }
+
+            function abrirPaginaTwitter() {
+                window.open("http://twitter.com/home?status=Obtuve una puntuación de " + document.visor.ganadas.value + " frase(s) acertadas en el juego ahorcado de la aplicación Alerta de Consumo de Drogas. ¿Puede superarme?");
+
+            }
+
+            function mostrarPista(num) {
+                if (num == 1) {
+                    if (droga != undefined)
+                    {
+                        alert(droga);
+                    }
+                }
+            }
+    </script>
+</head>
+<body>
+    <div id="preloader">
+        <div id="status">
+            <p class="center-text">
+                Cargando contenido... <em>La carga dependen de la velocidad del internet!</em>
+            </p>
+        </div>
+    </div>
+    <div class="all-elements">
+        <div id="sidebar" class="page-sidebar">
+            <div class="page-sidebar-scroll">
+                <div class="sidebar-shortcuts">
+                    <a href="#" class="shortcut-close"></a>
+                </div>
+                <div class="sidebar-search">
+                    <div class="search-box">
+                        <input type="text" class="search-field" name="search" onfocus="if(this.value == 'Looking for something?') { this.value = ''; }"
+                            value="Looking for something?">
+                        <a href="#" class="search-close"></a>
+                    </div>
+                </div>
+                <div class="sidebar-logo">
+                    <img src="images/drugs/logo_odc.png" height="52" alt="img">
+                </div>
+                <div class="sidebar-breadcrumb">
+                    NAVEGACIÓN</div>
+                <div class="navigation-item">
+                    <a href="index.html" class="nav-item home-icon">Inicio<em class="unselected-item"></em></a>
+                </div>
+                <div class="sidebar-decoration">
+                </div>
+                <div class="navigation-item">
+                    <a href="listaDrogas.html" class="nav-item home-drugs">Conozca las Drogas<em class="unselected-item"></em></a>
+                </div>
+                <div class="sidebar-decoration">
+                </div>
+                <div class="navigation-item">
+                    <a href="#" class="nav-item home-bandaid submenu-deploy">Acompañamiento<em class="dropdown-item"></em></a>
+                    <div class="nav-submenu">
+                        <a href="diagnostico.html" style="color: white !important;">Diagnóstico <em class="unselected-item">
+                        </em></a><a href="persona-riesgo.html" style="color: white !important;">Estoy en Riesgo
+                            <em class="unselected-item"></em></a>
+                    </div>
+                </div>
+                <div class="sidebar-decoration">
+                </div>
+                <div class="navigation-item">
+                    <a href="#" class="nav-item home-games submenu-deploy">Aprenda Jugando<em class="dropdown-item"></em></a>
+                    <div class="nav-submenu">
+                        <a href="juego_escalera_1.html" style="color: white !important;">Escalera<em class="unselected-item"></em></a>
+                        <a href="ahorcado.html" style="color: white !important;">Ahorcado<em class="selected-item"></em></a>
+                    </div>
+                </div>
+                <div class="sidebar-decoration">
+                </div>
+                <div class="navigation-item">
+                    <a href="faqs.html" class="nav-item home-faqs">Preguntas Frecuentes<em class="unselected-item"></em></a>
+                </div>
+                <div class="sidebar-breadcrumb">
+                    INFORMACIÓN</div>
+                <div class="navigation-item">
+                    <a href="acerca.html" class="nav-item home-info-about">Acerca de<em class="unselected-item"></em></a>
+                </div>
+                <div class="sidebar-breadcrumb">
+                    Actualizaciones</div>
+                <div class="sidebar-decoration">
+                </div>
+                <div class="page-update">
+                    <span class="update-icon"></span><a href="#" class="update-button notification-update">
+                        <strong>Notificación</strong> <em>Se ha agregado krokodil</em> </a>
+                    <div class="page-update-text">
+                        Una nueva droga ha sido agregada al catálogo de datos
+                    </div>
+                </div>
+                <div class="sidebar-decoration">
+                </div>
+                <div class="sidebar-breadcrumb">
+                    ODC 2014.
+                </div>
+            </div>
+        </div>
+        <div id="content" class="page-content">
+            <div class="page-header">
+                <a href="#" class="deploy-sidebar"></a>
+                <img class="header-logo" src="images/drugs/odc-texto.png" width="71" alt="img">
+                <a href="#" class="deploy-contact"></a>
+            </div>
+            <div class="page-header-clear">
+            </div>
+            <div class="content">
+                <div class="container no-bottom" style="text-align: center; margin-top: 10px;">
+                    <h3>
+                        ¡Aprende de las drogas jugando Ahorcado!</h3>
+                </div>
+                <div class="decoration">
+                </div>
+                <div class="container no-bottom">
+                    <div>
+                        <div class="big-notification blue-notification">
+                            <h4 class="uppercase">
+                                AYUDA</h4>
+                            <a href="#" class="close-big-notification">x</a>
+                            <p>
+                                Este módulo le permite conocer los efectos de las drogas a través del popular juego
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <form name="visor">
+                    <center>
+                        <div class="one-half">
+                            <input class="button-icon icon-balloons button-turqoise" onclick="IniciaJuego(this.form)"
+                                type="button" value="Juego nuevo" name="Inicia">
+                        </div>
+                        <div class="two-half last-column">
+                            <div class="container no-bottom">
+                                <div class="container no-bottom">
+                                    <label style="float: left;">
+                                        Ganadas:&nbsp;&nbsp;</label>
+                                    <input value="0" name="ganadas" readonly style="height: 20px; float: left; width: 20px;">
+                                </div>
+                                <div class="container no-bottom">
+                                    <label style="float: left;">
+                                        Perdidas:&nbsp;&nbsp;</label>
+                                    <input value="0" name="perdidas" readonly style="height: 20px; float: left; width: 20px;">
+                                </div>
+                            </div>
+                            <div class="container no-bottom">
+                                <ul class="icon-list" style="float: left;">
+                                    <li class="info-list" style="padding-left: 20px;"><a href="#" onclick="mostrarPista(1)">
+                                        Pista</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="container no-bottom" style="display: none;">
+                            <img class="responsive-image" src="images/ahorcado/ahorcado1.jpg" alt="img" id="img_pista">
+                        </div>
+                        <div class="container no-bottom">
+                            <div class="static-notification-green" style="margin-bottom: 5px; background-color: #16a085;">
+                                Letras Ingresadas
+                                <p class="center-text uppercase" style="margin-top: 0px;">
+                                    <input type="text" name="displayLetras" style="margin-left: 2%; width: 96%;" />
+                                </p>
+                            </div>
+                        </div>
+                        <div class="container no-bottom" style="margin-bottom: 5px;">
+                            <div class="static-notification-green" style="margin-bottom: 5px; background-color: #16a085;">
+                                Efecto a encontrar
+                                <p class="center-text uppercase" style="margin-top: 0px;">
+                                    <textarea name="displayPalabra" style="margin-left: 2%; width: 96%;" rows="2"></textarea>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="one-half">
+                            <img class="responsive-image" src="images/ahorcado/ahorcado1.jpg" alt="img" id="image_ahorcado">
+                        </div>
+                        <div class="two-half last-column">
+                            <div class="container
+                        no-bottom">
+                                <input onclick="Juega(this.form, 'a')" type="button" value=" A " name="botA" class="botonLetra">
+                                <input onclick="Juega(this.form, 'b')" type="button" value=" B " name="botB" class="botonLetra">
+                                <input onclick="Juega(this.form, 'c')" type="button" value=" C " name="botC" class="botonLetra">
+                                <input onclick="Juega(this.form, 'd')" type="button" value=" D " name="botD" class="botonLetra">
+                                <input onclick="Juega(this.form,'e')" type="button" value=" E " name="botE" class="botonLetra">
+                                <input onclick="Juega(this.form,'f')" type="button" value=" F " name="botF" class="botonLetra">
+                                <input onclick="Juega(this.form,'g')" type="button" value=" G " name="botG" class="botonLetra">
+                                <input onclick="Juega(this.form,'h')" type="button" value=" H " name="botH" class="botonLetra">
+                                <input onclick="Juega(this.form,'i')" type="button" value=" I " name="botI" class="botonLetra">
+                                <input onclick="Juega(this.form,'j')" type="button" value=" J " name="botJ" class="botonLetra">
+                                <input onclick="Juega(this.form,'k')" type="button" value=" K " name="botK" class="botonLetra">
+                                <input onclick="Juega(this.form,'l')" type="button" value=" L " name="botL" class="botonLetra">
+                                <input onclick="Juega(this.form,'m')" type="button" value=" M " name="botM" class="botonLetra">
+                                <input onclick="Juega(this.form,'n')" type="button" value=" N " name="botN" class="botonLetra">
+                                <input onclick="Juega(this.form,'ñ')" type="button" value=" Ñ " name="botÑ" class="botonLetra">
+                                <input onclick="Juega(this.form,'o')" type="button" value=" O " name="botO" class="botonLetra">
+                                <input onclick="Juega(this.form,'p')" type="button" value=" P " name="botP" class="botonLetra">
+                                <input onclick="Juega(this.form,'q')" type="button" value=" Q " name="botQ" class="botonLetra">
+                                <input onclick="Juega(this.form,'r')" type="button" value=" R " name="botR" class="botonLetra">
+                                <input onclick="Juega(this.form,'s')" type="button" value=" S " name="botS" class="botonLetra">
+                                <input onclick="Juega(this.form,'t')" type="button" value=" T " name="botT" class="botonLetra">
+                                <input onclick="Juega(this.form,'u')" type="button" value=" U " name="botU" class="botonLetra">
+                                <input onclick="Juega(this.form,'v')" type="button" value=" V " name="botV" class="botonLetra">
+                                <input onclick="Juega(this.form,'w')" type="button" value=" W " name="botW" class="botonLetra">
+                                <input onclick="Juega(this.form,'x')" type="button" value=" X " name="botX" class="botonLetra">
+                                <input onclick="Juega(this.form,'y')" type="button" value=" Y " name="botY" class="botonLetra">
+                                <input onclick="Juega(this.form,'z')" type="button" value=" Z " name="botZ" class="botonLetra">
+                            </div>
+                        </div>
+                        <div class="container no-bottom">
+                            ¡Obtenga el mayor puntaje y comparta los resultados en las redes sociales para retar
+                            a sus amigos!
+                        </div>
+                        <br />
+                        <div class="container
+                        no-bottom">
+                            <a href="#" style="background-position: center center !important;" class="facebook-box
+                        social-box"></a><a href="#" onclick="abrirPaginaTwitter()" style="background-position: center center !important;"
+                            class="twitter-box social-box"></a><a href="#" style="background-position: center center !important;"
+                                class="google-box social-box"></a>
+                        </div>
+                    </center>
+                    </form>
+                </div>
+            </div>
+            <div class="decoration">
+            </div>
+            <div class="container">
+                <div class="footer-socials">
+                    <a href="#" class="facebook-footer"></a><a href="#" class="goup-footer"></a><a href="#"
+                        class="twitter-footer"></a>
+                </div>
+                <p class="copyright uppercase center-text no-bottom">
+                    ODC 2014<br>
+                    Todos los derechos reservados</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
