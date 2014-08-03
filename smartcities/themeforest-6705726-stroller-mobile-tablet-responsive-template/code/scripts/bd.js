@@ -4,7 +4,7 @@ var listaId = "";
 function configurar_db() {
 
     function execute(tx) {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS marcadores (latitud, longitud, texto)');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS usuarios (usuario, password)');
         tx.executeSql('CREATE TABLE IF NOT EXISTS noticias (id)');
     }
 
