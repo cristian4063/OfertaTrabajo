@@ -146,6 +146,11 @@
                     </div>
                 </div>
                 <div id ="ofertas">
+                    <div class="formSubmitButtonErrorsWrap">
+                            <input type="submit" class="buttonWrap button button-dark contactSubmitButton" id="contactSubmitButton"
+                                value="Volver al mapa" data-formid="contactForm" onclick="mostrarMapa();" />
+                        </div>
+                        <br />
                     <div class="container">
                     <div class="toggle-2">
                         <a href="#" onclick="guardarNoticia(2)" class="deploy-toggle-2 toggle-2-active">
@@ -373,6 +378,12 @@
         }
     </style>
     <script>
+
+
+        function mostrarMapa() {
+            document.location.href="OfertasMapa.html"
+        }
+
         function agregarCliente() {
             location.href = "registro_cliente.html"
         }
