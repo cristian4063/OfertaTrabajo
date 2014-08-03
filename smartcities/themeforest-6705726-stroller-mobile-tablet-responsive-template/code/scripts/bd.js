@@ -80,15 +80,62 @@ function cargarOfertas()
 
     for(var i = 0; i < 3; i++) {
         
-        texto += '<div class="container">' +
+        if(i == 0)
+        {
+            texto += '<div class="container">' +
+                        '<div class="toggle-2">' +
+                            '<a href="#" onclick="guardarNoticia(1)" class="deploy-toggle-2 toggle-2">' +
+                                'Auxiliar de servicio general' +
+                            '</a>' +
+                        '<div class="toggle-content">' +
+                            '<p style="text-align:justify;">' +
+                                '<label>' +
+                                    'Fecha Publicación: 02/08/2014</label><br />' +
+                                'Importante temporal requiere para su equipo de trabajo, mujer con experienica minima de un años como auxiliar de servicio general, preferiblemnete que haya trabajo en aseo capital,responsable, honesta y trabajadora.' +
+                                'Actvidad: asear los frentes de las casas del cojunto, aseo de oficina, recoger y sacar la basura.' +
+                            '</p>' +
+                            '<div class="toggle-content" style="display:block;">' +
+                                '<p><strong>Datos del Empleador:</strong></p>' +
+                                '<div class="one-half-responsive ">' +
+                                    '<div class="submenu-navigation">' +
+                                        '<div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>' +
+                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li class="right-list">Tel. 33347-14189</li>' +
+                                            '</ul>' +
+                                        '</a>' +
+                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li class="right-list">Ciudad: Bogotá </li>' +
+                                            '</ul>' +
+                                        '</a>' +
+                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li>' +
+                                                    '<img src="images/misc/facebook.png" class="star" onclick="abrirPaginaFacebook()">' +
+                                                    '<img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter()">' + 
+                                                '</li>' +
+                                            '</ul>' +
+                                        '</a>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+                '</div>';
+        }
+        else if(i == 1) 
+        {
+            texto += '<div class="container">' +
                     '<div class="toggle-2">' +
-                        '<a href="#" onclick="guardarNoticia(1)" class="deploy-toggle-2">' +
+                        '<a href="#" onclick="guardarNoticia(2)" class="deploy-toggle-2">' +
                             'Comienza traslado de Avianca al nuevo aeropuerto El Dorado' +
                         '</a>' +
                         '<div class="toggle-content">' +
                             '<p style="text-align:justify;">' +
                                 '<label>' +
-                                    'Fecha Publicación: 01/06/2014</label><br />' +
+                                    'Fecha Publicación: 02/08/2014</label><br />' +
                                 'A partir de mañana 8 de junio, Avianca estará atendiendo desde el terminal T1 en' +
                                 'el Aeropuerto El Dorado a los viajeros que vuelan entre Bogotá y Barranquilla, Bucaramanga,' +
                                 'Cali, Cartagena, Medellín, Pasto, Pereira y San Andrés.' +
@@ -127,6 +174,8 @@ function cargarOfertas()
                         '</div>' +
                     '</div>' +
                 '</div>'; 
+        }
+        
     }
 
     $("#ofertas").html(texto);
