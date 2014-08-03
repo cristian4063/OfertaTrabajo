@@ -46,75 +46,80 @@
                 <div class="sidebar-shortcuts">
                     <a href="#" class="shortcut-close"></a>
                 </div>
-                
                 <div class="sidebar-search">
                     <div class="search-box">
-                        <input type="text" class="search-field" name="search" onfocus="if(this.value == 'Looking for something?') { this.value = ''; }" value="Looking for something?">
+                        <input type="text" class="search-field" name="search" onfocus="if(this.value == 'Looking for something?') { this.value = ''; }"
+                            value="Looking for something?">
                         <a href="#" class="search-close"></a>
                     </div>
                 </div>
-                
                 <div class="sidebar-logo">
                     <img src="images/drugs/logo_odc.png" height="52" alt="img">
                 </div>
-                
-                <div class="sidebar-breadcrumb">NAVEGACIÓN</div>
+                <div class="sidebar-breadcrumb">
+                    NAVEGACIÓN</div>
                 <div class="navigation-item">
                     <a href="index.html" class="nav-item home-icon">Inicio<em class="unselected-item"></em></a>
                 </div>
-                <div class="sidebar-decoration"></div>
-                <div class="navigation-item">
-                    <a href="ConsultarOfertasMapa.html" class="nav-item home-locales">Ofertas en el mapa<em class="unselected-item"></em></a>
+                <div class="sidebar-decoration">
                 </div>
-                <div class="sidebar-decoration"></div>
                 <div class="navigation-item">
-                    <a href="lista_ofertas.html" class="nav-item home-diagnostic">Listado ofertas<em class="selected-item"></em></a>
-                </div>   
-                <div class="sidebar-decoration"></div>
+                    <a href="ConsultarOfertasMapa.html" class="nav-item home-locales">Ofertas en el mapa<em
+                        class="unselected-item"></em></a>
+                </div>
+                <div class="sidebar-decoration">
+                </div>
                 <div class="navigation-item">
-                    <a href="#" class="nav-item home-estadisticas submenu-deploy">Sección del empleador<em class="dropdown-item"></em></a>
-                    <div class="sidebar-decoration"></div>
+                    <a href="lista_ofertas.html" class="nav-item home-diagnostic">Listado ofertas<em
+                        class="selected-item"></em></a>
+                </div>
+                <div class="sidebar-decoration">
+                </div>
+                <div class="navigation-item">
+                    <a href="#" class="nav-item home-estadisticas submenu-deploy">Sección del empleador<em
+                        class="dropdown-item"></em></a>
+                    <div class="sidebar-decoration">
+                    </div>
                     <div class="nav-submenu">
                         <a href="inicio-sesion.html">Inicio sesion<em class="unselected-item"></em></a>
-                        <a id="opc_Registrar" name="opc_Registrar" href="UbicarOferta.html">Registrar nueva oferta<em class="unselected-item"></em></a>
-                        <a id="opc_VerMias" name="opc_VerMias" href="lista_ofertas_empleador.html">Ver mis ofertas<em class="unselected-item"></em></a>
+                        <a id="opc_Registrar" name="opc_Registrar" href="UbicarOferta.html">Registrar nueva
+                            oferta<em class="unselected-item"></em></a> <a id="opc_VerMias" name="opc_VerMias"
+                                href="lista_ofertas_empleador.html">Ver mis ofertas<em class="unselected-item"></em></a>
                     </div>
                 </div>
-                <div class="sidebar-decoration"></div>         
+                <div class="sidebar-decoration">
+                </div>
                 <div class="navigation-item">
                     <a href="lista_noticias.html" class="nav-item home-noticias">Noticias<em class="unselected-item"></em></a>
                 </div>
-                <div class="sidebar-decoration"></div>         
+                <div class="sidebar-decoration">
+                </div>
                 <div class="navigation-item">
                     <a href="faqs.html" class="nav-item home-faqs">Preguntas Frecuentes<em class="unselected-item"></em></a>
                 </div>
-                
-                <div class="sidebar-breadcrumb">INFORMACIÓN</div>
-                
+                <div class="sidebar-breadcrumb">
+                    INFORMACIÓN</div>
                 <div class="navigation-item">
                     <a href="acerca.html" class="nav-item home-info-about">Acerca de<em class="unselected-item"></em></a>
-                </div>    
-     
-                <div class="sidebar-breadcrumb">Actualizaciones</div>  
-                
-                <div class="sidebar-decoration"></div>  
-
+                </div>
+                <div class="sidebar-breadcrumb">
+                    Actualizaciones</div>
+                <div class="sidebar-decoration">
+                </div>
                 <div class="page-update">
-                    <span class="update-icon"></span>
-                    <a href="#" class="update-button notification-update">
-                        <strong style="color: #000000;">Notificación</strong>
-                        <em style="color: #000000;">Se ha agregado nueva información</em>
-                    </a>
+                    <span class="update-icon"></span><a href="#" class="update-button notification-update">
+                        <strong style="color: #000000;">Notificación</strong> <em style="color: #000000;">Se
+                            ha agregado nueva información</em> </a>
                     <div class="page-update-text" style="color: #000000;">
                         Existen nuevas actualizaciones en el catálogo de datos
                     </div>
                 </div>
-                
-                <div class="sidebar-decoration"></div>
-                
-                <div class="sidebar-breadcrumb">SERVICIO DE EMPLEO 2014
+                <div class="sidebar-decoration">
                 </div>
-            </div>         
+                <div class="sidebar-breadcrumb">
+                    SERVICIO DE EMPLEO 2014
+                </div>
+            </div>
         </div>
         <div id="content" class="page-content">
             <div class="page-header">
@@ -142,8 +147,21 @@
                         </p>
                     </div>
                 </div>
-                <div id ="ofertas">
-                    
+                <div class="container no-bottom">
+                    <div class="formValidationError" id="contactNameFieldError">
+                        <div class="static-notification-red tap-dismiss-notification">
+                            <p class="center-text uppercase">
+                                Debe palabra o frase de búsqueda</p>
+                        </div>
+                    </div>
+                    <div class="formFieldWrap">
+                        <label class="field-title contactNameField" for="contactNameField">
+                            Palabra clave o frase:</label>
+                        <input type="text" name="contactNameField" value="" class="contactField requiredField"
+                            id="contactNameField" />
+                    </div>
+                </div>
+                <div id="ofertas">
                 </div>
                 <!--<div class="container">
                     <div class="toggle-2">
