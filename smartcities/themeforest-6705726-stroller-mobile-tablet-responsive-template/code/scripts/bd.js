@@ -6,6 +6,8 @@ function configurar_db() {
     function execute(tx) {
         tx.executeSql('CREATE TABLE IF NOT EXISTS usuarios (usuario, password)');
         tx.executeSql('CREATE TABLE IF NOT EXISTS noticias (id)');
+        tx.executeSql('INSERT INTO usuarios (usuario, password) VALUES ("john", "202cb962ac59075b964b07152d234b70")');
+        tx.executeSql('INSERT INTO usuarios (usuario, password) VALUES ("juan", "912ec803b2ce49e4a541068d495ab570")');
     }
 
     function error(error) {

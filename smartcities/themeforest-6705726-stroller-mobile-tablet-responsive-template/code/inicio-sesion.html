@@ -153,7 +153,7 @@
                         <div class="formFieldWrap">
                             <label class="field-title contactEmailField" for="contactEmailField">
                                 Contraseña:<span>(requerido)</span></label>
-                            <input type="text" name="contactEmailField" value="" class="contactField requiredField"
+                            <input type="password" name="contactEmailField" value="" class="contactField requiredField"
                                 id="contactEmailField" />
                         </div>
                         <br />
@@ -181,6 +181,10 @@
         
     </div>
     <script type="text/javascript">
+
+        var usuario;
+        var pass;
+
         function llenar(num) {
             var number;
             for (var i = 1; i <= 5; i++) {
@@ -195,63 +199,36 @@
         }
 
         function mostrarDiv() {
-            $('#div_guardado').fadeIn();
-            setTimeout("$('#div_guardado').fadeOut();", 4000);
+            usuario = $('#contactNameField').val();
+            pass = hex_md5($('#contactEmailField').val());
+            consultarUsuario();
         }
 
          function consultarUsuario() {
-            var db = window.openDatabase("bd_reportes", "1.0", "Inicio Sesión", 200000);
+            var db = window.openDatabase("bd_reportes", "1.0", "Reporte Vial", 200000);
             db.transaction(consultar_sesionUsuario, errorConsultar_usuario, function () {
                 console.log("Consultó el usuario")
             });
         }
 
         function consultar_sesionUsuario(tx) {
-            tx.executeSql("SELECT * FROM usuarios WHERE usuario=" + "", [], crear_lista_marcadores, function (error) {
+            tx.executeSql("SELECT * FROM usuarios", [], validar_sesion_usuario, function (error) {
                 console.log("Error consultado el usuario: " + error)
             });
         }
 
-        function crear_lista_marcadores(tx, results) {
+        function validar_sesion_usuario(tx, results) {
             var len = results.rows.length;
-            for (var i = 0; i < len; i++) {
-
-                var myLatlng = new google.maps.LatLng(results.rows.item(i).latitud, results.rows.item(i).longitud);
-                
-                if(results.rows.item(i).texto === "Accidente") {
-                    var marker = new google.maps.Marker({
-                        position: myLatlng,
-                        map: map,
-                        icon: 'images/caraccident.png',
-                        title: '' + results.rows.item(i).texto + ''
-                    });
+            if (len > 0) {
+                for (var i = 0; i < len; i++) {
+                    if (results.rows.item(i).usuario == usuario && results.rows.item(i).password == pass) {
+                        location.href = "index.html";
+                    }
                 }
-                else if(results.rows.item(i).texto === "Trancón") {
-                    var marker = new google.maps.Marker({
-                        position: myLatlng,
-                        map: map,
-                        icon: 'images/trafficlight.png',
-                        title: '' + results.rows.item(i).texto + ''
-                    });
-                }
-                else if(results.rows.item(i).texto === "Retén") {
-                    var marker = new google.maps.Marker({
-                        position: myLatlng,
-                        map: map,
-                        icon: 'images/highway.png',
-                        title: '' + results.rows.item(i).texto + ''
-                    });
-                }
-                else {
-                    var marker = new google.maps.Marker({
-                        position: myLatlng,
-                        map: map,
-                        icon: 'images/repair.png',
-                        title: '' + results.rows.item(i).texto + ''
-                    });
-                }
-
-                //numeros_favoritos[i] = results.rows.item(i).oferta_empleo;
+            }
+            else {
+                alert("Los datos son incorrectos.");
+                location.reload();
             }
         }
 
@@ -262,6 +239,10 @@
 
     </script>
     <style>
+        #contactNameField {
+            text-transform: none;
+        }
+
         .submenu-nav-items a
         {
             padding-left: 20px !important;
