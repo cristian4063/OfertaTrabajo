@@ -346,45 +346,45 @@
 
         function crear_lista_marcadores(tx, results) {
             var len = results.rows.length;
-            for (var i = 0; i < len; i++) {
+//            for (var i = 0; i < len; i++) {
 
-                var myLatlng = new google.maps.LatLng(results.rows.item(i).latitud, results.rows.item(i).longitud);
-                
-                if(results.rows.item(i).texto === "Accidente") {
-                    var marker = new google.maps.Marker({
-                        position: myLatlng,
-                        map: map,
-                        icon: 'images/caraccident.png',
-                        title: '' + results.rows.item(i).texto + ''
-                    });
-                }
-                else if(results.rows.item(i).texto === "Trancón") {
-                    var marker = new google.maps.Marker({
-                        position: myLatlng,
-                        map: map,
-                        icon: 'images/trafficlight.png',
-                        title: '' + results.rows.item(i).texto + ''
-                    });
-                }
-                else if(results.rows.item(i).texto === "Retén") {
-                    var marker = new google.maps.Marker({
-                        position: myLatlng,
-                        map: map,
-                        icon: 'images/highway.png',
-                        title: '' + results.rows.item(i).texto + ''
-                    });
-                }
-                else {
-                    var marker = new google.maps.Marker({
-                        position: myLatlng,
-                        map: map,
-                        icon: 'images/repair.png',
-                        title: '' + results.rows.item(i).texto + ''
-                    });
-                }
+//                var myLatlng = new google.maps.LatLng(results.rows.item(i).latitud, results.rows.item(i).longitud);
+//                
+//                if(results.rows.item(i).texto === "Accidente") {
+//                    var marker = new google.maps.Marker({
+//                        position: myLatlng,
+//                        map: map,
+//                        icon: 'images/caraccident.png',
+//                        title: '' + results.rows.item(i).texto + ''
+//                    });
+//                }
+//                else if(results.rows.item(i).texto === "Trancón") {
+//                    var marker = new google.maps.Marker({
+//                        position: myLatlng,
+//                        map: map,
+//                        icon: 'images/trafficlight.png',
+//                        title: '' + results.rows.item(i).texto + ''
+//                    });
+//                }
+//                else if(results.rows.item(i).texto === "Retén") {
+//                    var marker = new google.maps.Marker({
+//                        position: myLatlng,
+//                        map: map,
+//                        icon: 'images/highway.png',
+//                        title: '' + results.rows.item(i).texto + ''
+//                    });
+//                }
+//                else {
+//                    var marker = new google.maps.Marker({
+//                        position: myLatlng,
+//                        map: map,
+//                        icon: 'images/repair.png',
+//                        title: '' + results.rows.item(i).texto + ''
+//                    });
+//                }
 
-                //numeros_favoritos[i] = results.rows.item(i).oferta_empleo;
-            }
+//                //numeros_favoritos[i] = results.rows.item(i).oferta_empleo;
+//            }
         }
 
         function errorConsultar_marcadores(err) {
