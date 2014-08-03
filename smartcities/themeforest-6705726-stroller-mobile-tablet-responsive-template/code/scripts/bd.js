@@ -138,3 +138,20 @@ function cargarOfertas()
     });
 
 }
+
+
+
+$(document).ready(function () {
+    if (localStorage.getItem("nombreUsuario") != null) {
+        localStorage.setItem("nombreUsuario", localStorage.getItem("nombreUsuario"));
+        $("#opc_Registrar").show();
+        $("#opc_VerMias").show();
+    }
+    else{
+        $("#opc_Registrar").hide();
+        $("#opc_VerMias").hide();
+    }
+
+});
+
+
