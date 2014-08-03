@@ -237,12 +237,10 @@ $(document).ready(function () {
         localStorage.setItem("nombreUsuario", localStorage.getItem("nombreUsuario"));
         $("#opc_Registrar").show();
         $("#opc_VerMias").show();
-        $('#user_login').text = "Log In";
     }
     else{
         $("#opc_Registrar").hide();
         $("#opc_VerMias").hide();
-        $('#user_login').text = "Log Out";
     }
 
 });

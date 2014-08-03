@@ -222,11 +222,17 @@
         function validar_sesion_usuario(tx, results) {
             var len = results.rows.length;
             if (len > 0) {
+                var n = 0;
                 for (var i = 0; i < len; i++) {
                     if (results.rows.item(i).usuario == usuario && results.rows.item(i).password == pass) {
                         localStorage.setItem("nombreUsuario", $("#contactNameField").val());
                         location.href = "index.html";
+                        n = 1;
                     }
+                }
+                if (n == 0) {
+                    alert("Los datos son incorrectos.");
+                    location.reload();
                 }
             }
             else {
