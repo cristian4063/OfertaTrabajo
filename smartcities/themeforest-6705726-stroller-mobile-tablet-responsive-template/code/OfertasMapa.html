@@ -315,7 +315,7 @@
                             //indica el mapa donde va a poner el marker
                             map: map
                             });
-                            marker.Message = "<a href='#' onclick='verInformacion(\"" + i + "\")' class='no-bottom demo-button button-minimal black-minimal boton_atras'>Consultar oferta</a>";
+                            marker.Message = "<a href='#' onclick='verInformacion(\"" + x + "\")' class='no-bottom demo-button button-minimal black-minimal boton_atras'>Consultar oferta</a>";
                             google.maps.event.addListener(marker, 'click', function () {
                                 infowindow.setContent(this.Message)
                                 infowindow.open(map, this);
@@ -329,6 +329,11 @@
                 }, 
                 timeout: 15000                          
             });
+        }
+
+        function verInformacion(id){
+            localStorage.setItem("id_oferta_mapa", id);
+            document.location.href="DetalleOferta.html";
         }
 
     </script>
