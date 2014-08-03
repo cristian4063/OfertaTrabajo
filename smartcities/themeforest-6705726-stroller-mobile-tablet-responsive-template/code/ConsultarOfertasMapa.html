@@ -33,6 +33,7 @@
     <script type="text/javascript" src="scripts/custom.js"></script>
     <script type="text/javascript" src="scripts/framework.js"></script>
     <script type="text/javascript" src="scripts/framework.launcher.js"></script>
+    <script type="text/javascript" src="scripts/bd.js"></script>
 </head>
 <body>
     <div id="preloader">
@@ -59,13 +60,14 @@
                 <div class="sidebar-logo">
                     <img src="images/drugs/logo_odc.png" height="52" alt="img">
                 </div>
+                
                 <div class="sidebar-breadcrumb">NAVEGACIÓN</div>
                 <div class="navigation-item">
-                    <a href="index.html" class="nav-item home-icon">Inicio<em class="selected-item"></em></a>
+                    <a href="index.html" class="nav-item home-icon">Inicio<em class="unselected-item"></em></a>
                 </div>
                 <div class="sidebar-decoration"></div>
                 <div class="navigation-item">
-                    <a href="ConsultarOfertasMapa.html" class="nav-item home-locales">Ofertas en el mapa<em class="unselected-item"></em></a>
+                    <a href="ConsultarOfertasMapa.html" class="nav-item home-locales">Ofertas en el mapa<em class="selected-item"></em></a>
                 </div>
                 <div class="sidebar-decoration"></div>
                 <div class="navigation-item">
@@ -77,7 +79,8 @@
                     <div class="sidebar-decoration"></div>
                     <div class="nav-submenu">
                         <a href="inicio-sesion.html">Inicio sesion<em class="unselected-item"></em></a>
-                        <a href="UbicarOferta.html">Registrar ofertas<em class="unselected-item"></em></a>
+                        <a id="opc_Registrar" name="opc_Registrar" href="UbicarOferta.html">Registrar nueva oferta<em class="unselected-item"></em></a>
+                        <a id="opc_VerMias" name="opc_VerMias" href="lista_ofertas_empleador.html">Ver mis ofertas<em class="unselected-item"></em></a>
                     </div>
                 </div>
                 <div class="sidebar-decoration"></div>         
@@ -112,7 +115,7 @@
                 
                 <div class="sidebar-decoration"></div>
                 
-                <div class="sidebar-breadcrumb">MINTRANSPORTE 2014
+                <div class="sidebar-breadcrumb">SERVICIO DE EMPLEO 2014
                 </div>
             </div>         
         </div>
@@ -137,6 +140,22 @@
                 <div class="container no-bottom">
                     <form method="post" class="contactForm" id="contactForm">
                     <fieldset>
+                        <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Departamento: <span>(requerido)</span></label>
+                                    <select class="styled-select" name="selectVacantes" id="selectVacantes">
+                                            <option value='1'>Cundinamarca</option>
+                                            <option value='2'>Antioquia</option>
+                                            <option value='3'>Caldas</option>
+                                        </select>
+                                </div>
+                                <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Municipio: <span>(requerido)</span></label>
+                                    <select class="styled-select" name="selectVacantes" id="selectVacantes">
+                                            <option value='1'>Bogotá</option>
+                                            <option value='2'>Fusagasugá</option>
+                                            <option value='3'>Tabio</option>
+                                        </select>
+                                </div>
                         <div class="formFieldWrap">
                             <label class="field-title contactNameField" for="contactNameField">
                                  Nivel educativo:</label>
@@ -169,7 +188,7 @@
                         <a href="#" class="facebook-footer"></a><a href="#" class="goup-footer"></a><a href="#"
                             class="twitter-footer"></a>
                     </div>
-                   <p class="copyright uppercase center-text no-bottom">Servicio de empleo 2014<br> Todos los derechos reservados</p>      
+                   <p class="copyright uppercase center-text no-bottom">SERVICIO DE EMPLEO 2014<br> Todos los derechos reservados</p>      
                 </div>
             </div>
         </div>

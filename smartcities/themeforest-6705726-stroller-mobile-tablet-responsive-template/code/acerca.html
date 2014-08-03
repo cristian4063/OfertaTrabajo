@@ -33,7 +33,7 @@
         <script type="text/javascript" src="scripts/custom.js"></script>
         <script type="text/javascript" src="scripts/framework.js"></script>
         <script type="text/javascript" src="scripts/framework.launcher.js"></script>
-
+        <script type="text/javascript" src="scripts/bd.js"></script>
 
         </head>
         <body>
@@ -48,7 +48,7 @@
 
 
         <div class="all-elements">
-          <div id="sidebar" class="page-sidebar">
+               <div id="sidebar" class="page-sidebar">
             <div class="page-sidebar-scroll">
                 <div class="sidebar-shortcuts">
                     <a href="#" class="shortcut-close"></a>
@@ -67,7 +67,7 @@
                 
                 <div class="sidebar-breadcrumb">NAVEGACIÓN</div>
                 <div class="navigation-item">
-                    <a href="index.html" class="nav-item home-icon">Inicio<em class="selected-item"></em></a>
+                    <a href="index.html" class="nav-item home-icon">Inicio<em class="unselected-item"></em></a>
                 </div>
                 <div class="sidebar-decoration"></div>
                 <div class="navigation-item">
@@ -83,7 +83,8 @@
                     <div class="sidebar-decoration"></div>
                     <div class="nav-submenu">
                         <a href="inicio-sesion.html">Inicio sesion<em class="unselected-item"></em></a>
-                        <a href="UbicarOferta.html">Registrar ofertas<em class="unselected-item"></em></a>
+                        <a id="opc_Registrar" name="opc_Registrar" href="UbicarOferta.html">Registrar nueva oferta<em class="unselected-item"></em></a>
+                        <a id="opc_VerMias" name="opc_VerMias" href="lista_ofertas_empleador.html">Ver mis ofertas<em class="unselected-item"></em></a>
                     </div>
                 </div>
                 <div class="sidebar-decoration"></div>         
@@ -118,9 +119,10 @@
                 
                 <div class="sidebar-decoration"></div>
                 
-                <div class="sidebar-breadcrumb">MINTRANSPORTE 2014
+                <div class="sidebar-breadcrumb">SERVICIO DE EMPLEO 2014
                 </div>
             </div>         
+        </div>
         </div>
         <div id="content" class="page-content"> 
             	 <div class="page-header">
@@ -148,8 +150,6 @@
                     	Cristian Montes
                     	<br>
                     	John Eduard Lopez
-                    	<br>
-                    	Steven Muñoz
 					</div> 
 					<br>
                 	<div class="container no-bottom">
@@ -172,13 +172,13 @@
                             <a href="#" class="goup-footer"></a>
                             <a href="#" class="twitter-footer"></a>
                         </div>
-                        <p class="copyright uppercase center-text no-bottom">MINTRANSPORTE 2014<br> Todos los derechos reservados</p>        
+                        <p class="copyright uppercase center-text no-bottom">SERVICIO DE EMPLEO 2014<br> Todos los derechos reservados</p>        
                  </div>
         		</div>  
                       
-                </div>       
-            </div>  
-        </div>
+        </div>       
+        
+        
         <style>
         .submenu-nav-items a {
             padding-left: 20px !important;

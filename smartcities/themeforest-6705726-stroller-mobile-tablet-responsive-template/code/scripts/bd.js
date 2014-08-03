@@ -82,18 +82,65 @@ function cargarOfertas()
 
     for(var i = 0; i < 3; i++) {
         
-        texto += '<div class="container">' +
+        if(i == 0)
+        {
+            texto += '<div class="container">' +
+                        '<div class="toggle-2">' +
+                            '<a href="#" onclick="guardarNoticia(1)" class="deploy-toggle-2 toggle-2">' +
+                                'Auxiliar de servicio general' +
+                            '</a>' +
+                        '<div class="toggle-content">' +
+                            '<p style="text-align:justify;">' +
+                                '<label>' +
+                                    'Fecha Publicación: 02/08/2014</label><br />' +
+                                'Importante temporal requiere para su equipo de trabajo, mujer con experienica minima de un años como auxiliar de servicio general, preferiblemnete que haya trabajo en aseo capital,responsable, honesta y trabajadora.' +
+                                'Actvidad: asear los frentes de las casas del cojunto, aseo de oficina, recoger y sacar la basura.' +
+                            '</p>' +
+                            '<div class="toggle-content" style="display:block;">' +
+                                '<p><strong>Datos del Empleador:</strong></p>' +
+                                '<div class="one-half-responsive ">' +
+                                    '<div class="submenu-navigation">' +
+                                        '<div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>' +
+                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li class="right-list">Tel. 33347-14189</li>' +
+                                            '</ul>' +
+                                        '</a>' +
+                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li class="right-list">Ciudad: Bogotá </li>' +
+                                            '</ul>' +
+                                        '</a>' +
+                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li>' +
+                                                    '<img src="images/misc/facebook.png" class="star" onclick="abrirPaginaFacebook()">' +
+                                                    '<img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter()">' + 
+                                                '</li>' +
+                                            '</ul>' +
+                                        '</a>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+                '</div>';
+        }
+        else if(i == 1) 
+        {
+            texto += '<div class="container">' +
                     '<div class="toggle-2">' +
-                        '<a href="#" onclick="guardarNoticia(1)" class="deploy-toggle-2">' +
-                            'Comienza traslado de Avianca al nuevo aeropuerto El Dorado' +
+                        '<a href="#" onclick="guardarNoticia(2)" class="deploy-toggle-2">' +
+                            'Oficial de obra civil' +
                         '</a>' +
                         '<div class="toggle-content">' +
                             '<p style="text-align:justify;">' +
                                 '<label>' +
-                                    'Fecha Publicación: 01/06/2014</label><br />' +
-                                'A partir de mañana 8 de junio, Avianca estará atendiendo desde el terminal T1 en' +
-                                'el Aeropuerto El Dorado a los viajeros que vuelan entre Bogotá y Barranquilla, Bucaramanga,' +
-                                'Cali, Cartagena, Medellín, Pasto, Pereira y San Andrés.' +
+                                    'Fecha Publicación: 02/08/2014</label><br />' +
+                                'Debe saber leer y escribir, debe ser bachiller y tener preferiblemente' +
+                                '2 años de experiencia como oficial de construcción u oficial de obra en' +
+                                'el sector de hidrocarburos' +
                             '</p>' +
                             '<div class="toggle-content">' +
                                 '<p><strong>Datos del Empleador:</strong></p>' +
@@ -102,17 +149,12 @@ function cargarOfertas()
                                         '<div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>' +
                                         '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
                                             '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                '<li class="right-list">Tel. 3116099950</li>' +
+                                                '<li class="right-list">Tel. 33342-10170</li>' +
                                             '</ul>' +
                                         '</a>' +
                                         '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
                                             '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                '<li class="right-list">Correo: arturogomez@gmail.com </li>' +
-                                            '</ul>' +
-                                        '</a>' +
-                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
-                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                '<li class="right-list">Cliente consumidor de grandes cantidades de naranja</li>' +
+                                                '<li class="right-list">Castilla la nueva</li>' +
                                             '</ul>' +
                                         '</a>' +
                                         '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
@@ -129,6 +171,53 @@ function cargarOfertas()
                         '</div>' +
                     '</div>' +
                 '</div>'; 
+        }
+        else
+        {
+            texto += '<div class="container">' +
+                    '<div class="toggle-2">' +
+                        '<a href="#" onclick="guardarNoticia(2)" class="deploy-toggle-2">' +
+                            'Ingenieros en construcción y obras civiles' +
+                        '</a>' +
+                        '<div class="toggle-content">' +
+                            '<p style="text-align:justify;">' +
+                                '<label>' +
+                                    'Fecha Publicación: 02/08/2014</label><br />' +
+                                'Experiencia superior a 3 años en diseños de sistemas de acueductos' +
+                                'con manejo de programas como autocad, arcgis, entre otros más, trabajo en equipo' +
+                                'trabajo bajo presión entre otros' +
+                            '</p>' +
+                            '<div class="toggle-content">' +
+                                '<p><strong>Datos del Empleador:</strong></p>' +
+                                '<div class="one-half-responsive ">' +
+                                    '<div class="submenu-navigation">' +
+                                        '<div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>' +
+                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li class="right-list">Tel. 33342-10170</li>' +
+                                            '</ul>' +
+                                        '</a>' +
+                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li class="right-list">Castilla la nueva</li>' +
+                                            '</ul>' +
+                                        '</a>' +
+                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li>' +
+                                                    '<img src="images/misc/facebook.png" class="star" onclick="abrirPaginaFacebook()">' +
+                                                    '<img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter()">' +
+                                                '</li>' +
+                                            '</ul>' +
+                                        '</a>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
+        }
+        
     }
 
     $("#ofertas").html(texto);
@@ -140,3 +229,20 @@ function cargarOfertas()
     });
 
 }
+
+
+
+$(document).ready(function () {
+    if (localStorage.getItem("nombreUsuario") != null) {
+        localStorage.setItem("nombreUsuario", localStorage.getItem("nombreUsuario"));
+        $("#opc_Registrar").show();
+        $("#opc_VerMias").show();
+    }
+    else{
+        $("#opc_Registrar").hide();
+        $("#opc_VerMias").hide();
+    }
+
+});
+
+

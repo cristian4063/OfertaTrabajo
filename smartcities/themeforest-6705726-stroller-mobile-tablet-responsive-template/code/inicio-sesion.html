@@ -34,6 +34,7 @@
     <script type="text/javascript" src="scripts/framework.js"></script>
     <script type="text/javascript" src="scripts/framework.launcher.js"></script>
     <script type="text/javascript" src="http://pajhome.org.uk/crypt/md5/2.2/md5-min.js"></script>
+    <script type="text/javascript" src="scripts/bd.js"></script>
 </head>
 <body>
     <div id="preloader">
@@ -63,7 +64,7 @@
                 
                 <div class="sidebar-breadcrumb">NAVEGACIÓN</div>
                 <div class="navigation-item">
-                    <a href="index.html" class="nav-item home-icon">Inicio<em class="selected-item"></em></a>
+                    <a href="index.html" class="nav-item home-icon">Inicio<em class="unselected-item"></em></a>
                 </div>
                 <div class="sidebar-decoration"></div>
                 <div class="navigation-item">
@@ -78,8 +79,9 @@
                     <a href="#" class="nav-item home-estadisticas submenu-deploy">Sección del empleador<em class="dropdown-item"></em></a>
                     <div class="sidebar-decoration"></div>
                     <div class="nav-submenu">
-                        <a href="inicio-sesion.html">Inicio sesion<em class="unselected-item"></em></a>
-                        <a href="UbicarOferta.html">Registrar ofertas<em class="unselected-item"></em></a>
+                        <a href="inicio-sesion.html">Inicio sesion<em class="selected-item"></em></a>
+                        <a id="opc_Registrar" name="opc_Registrar" href="UbicarOferta.html">Registrar nueva oferta<em class="unselected-item"></em></a>
+                        <a id="opc_VerMias" name="opc_VerMias" href="lista_ofertas_empleador.html">Ver mis ofertas<em class="unselected-item"></em></a>
                     </div>
                 </div>
                 <div class="sidebar-decoration"></div>         
@@ -114,7 +116,7 @@
                 
                 <div class="sidebar-decoration"></div>
                 
-                <div class="sidebar-breadcrumb">MINTRABAJO 2014
+                <div class="sidebar-breadcrumb">SERVICIO DE EMPLEO 2014
                 </div>
             </div>         
         </div>
@@ -174,7 +176,7 @@
                         <a href="#" class="facebook-footer"></a><a href="#" class="goup-footer"></a><a href="#"
                             class="twitter-footer"></a>
                     </div>
-                   <p class="copyright uppercase center-text no-bottom">MINTRABAJO 2014<br> Todos los derechos reservados</p>      
+                   <p class="copyright uppercase center-text no-bottom">SERVICIO DE EMPLEO 2014<br> Todos los derechos reservados</p>      
                 </div>
             </div>
         </div>
@@ -222,6 +224,7 @@
             if (len > 0) {
                 for (var i = 0; i < len; i++) {
                     if (results.rows.item(i).usuario == usuario && results.rows.item(i).password == pass) {
+                        localStorage.setItem("nombreUsuario", $("#contactNameField").val());
                         location.href = "index.html";
                     }
                 }
