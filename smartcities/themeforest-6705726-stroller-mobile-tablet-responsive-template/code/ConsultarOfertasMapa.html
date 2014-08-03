@@ -66,11 +66,11 @@
                 </div>
                 <div class="sidebar-decoration"></div>
                 <div class="navigation-item">
-                    <a href="#" class="nav-item home-sites submenu-deploy">Reportar<em class="dropdown-item"></em></a>
+                    <a href="#" class="nav-item home-sites submenu-deploy">Ofertas de empleo<em class="dropdown-item"></em></a>
                     <div class="sidebar-decoration"></div>
                     <div class="nav-submenu">
-                        <a href="reporte_vial.html">  Incidentes <em class="unselected-item"></em></a>
-                        <a href="reporte_conduccion.html">  Conductor   <em class="selected-item"></em></a>
+                        <a href="#">  Lista de ofertas <em class="unselected-item"></em></a>
+                        <a href="OfertasMapa.html">  Ofertas en el mapa   <em class="selected-item"></em></a>
                     </div>
                 </div>
                 <div class="sidebar-decoration"></div>
@@ -143,7 +143,7 @@
                 </div>
                 <div class="container no-bottom">
                     <h3>
-                        Reporte de Conducción
+                        Criterios de busqueda de ofertas
                     </h3>
                 </div>
                 <div class="decoration">
@@ -154,9 +154,18 @@
                         <div class="formFieldWrap">
                             <label class="field-title contactNameField" for="contactNameField">
                                  Nivel educativo:</label>
-                                <select class="styled-select" name="select_nivel" id="select_nivel" onchange="cargar_empleos();">
+                                <select class="styled-select" name="select_nivel" id="select_nivel">
                                     <option value='1'>Preescolar</option>
                                     <option value='2'>Básica primaria</option>
+                                </select>
+                        </div>
+                        <br />
+                        <div class="formFieldWrap">
+                            <label class="field-title contactNameField" for="contactNameField">
+                                 Sector empresarial:</label>
+                                <select class="styled-select" name="select_sector" id="select_sector">
+                                    <option value='1'>Cultivos agrícolas permanentes</option>
+                                    <option value='2'>Cultivos agrícolas transitorios.</option>
                                 </select>
                         </div>
                         <br />
@@ -174,30 +183,77 @@
                         <a href="#" class="facebook-footer"></a><a href="#" class="goup-footer"></a><a href="#"
                             class="twitter-footer"></a>
                     </div>
-                   <p class="copyright uppercase center-text no-bottom">MINTRANSPORTE 2014<br> Todos los derechos reservados</p>      
+                   <p class="copyright uppercase center-text no-bottom">Servicio de empleo 2014<br> Todos los derechos reservados</p>      
                 </div>
             </div>
         </div>
         
     </div>
     <script type="text/javascript">
-        function llenar(num) {
-            var number;
-            for (var i = 1; i <= 5; i++) {
-                if (i <= num) {
-                    number = 'images/estrella_llena.png'
-                }
-                else {
-                    number = 'images/estrella_vacia.png'
-                }
-                $('#star' + i).attr('src', number);
-            }
-        }
-
+        
         function mostrarMapa() {
             document.location.href="OfertasMapa.html"
         }
 
+        function cargar_niveles() {
+            $("#select_nivel>option").remove();
+            var texto = "";
+            var url = "http://servicedatosabiertoscolombia.cloudapp.net/v1/Unidad_Administrativa_Especial_Servicio_Publico_de_Empleo/niveleducativo?$format=json";
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'jsonp',
+                crossDomain: true,
+                success: function (data) {
+                    $.each(data, function (i, field) {
+                        var cant = field.length;
+                        $.each(field, function (x, item) {
+                            texto += " <option value='" + field[x].ided + "'>" + field[x].niveleductivo + "</option>";
+                        });
+                        $("#select_nivel").append(texto);
+                        $("#select_nivel").val("4");
+                        $("#select_nivel").selectmenu('refresh');
+                    });
+                },
+                error: function (x, y, z) {
+                    
+                }, 
+                timeout: 15000                          
+            });
+        }
+
+        function cargar_sectores() {
+            $("#select_sector>option").remove();
+            var texto = "";
+            var url = "http://servicedatosabiertoscolombia.cloudapp.net/v1/Unidad_Administrativa_Especial_Servicio_Publico_de_Empleo/sectorempresarial?$format=json";
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'jsonp',
+                crossDomain: true,
+                success: function (data) {
+                    $.each(data, function (i, field) {
+                        var cant = field.length;
+                        texto += " <option value='-1'>--TODOS--</option>";
+                        $.each(field, function (x, item) {
+                            texto += " <option value='" + field[x].idsector + "'>" + field[x].descripcion + "</option>";
+                        });
+                        $("#select_sector").append(texto);
+                        $("#select_sector").val("-1");
+                        $("#select_sector").selectmenu('refresh');
+                    });
+                },
+                error: function (x, y, z) {
+                    
+                }, 
+                timeout: 15000                          
+            });
+        }
+
+        $(document).ready(function () {
+            cargar_niveles();
+            cargar_sectores();
+        });
     </script>
     <style>
         .submenu-nav-items a

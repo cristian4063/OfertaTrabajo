@@ -275,14 +275,19 @@
 
         var map;
         var markersArray = [];
+        var infowindow = new google.maps.InfoWindow({
+            content: ""
+        })
+        var posX = [4.763957, 4.632906, 4.626405, 4.641804, 4.763957, 4.632906, 4.626405, 4.641804, 4.763957, 4.632906, 4.626405, 4.641804, 4.626405];
+        var posY = [-74.276225, -74.157435, -74.089801, -74.061648, -74.276225, -74.157435, -74.089801, -74.061648, -74.276225, -74.157435, -74.089801, -74.061648, -74.061648];
 
         google.maps.event.addDomListener(window, 'load', initialize);
 
         function initialize() {
 
-            var latlng = new google.maps.LatLng(4.598055599999999, -74.0758333);
+            var latlng = new google.maps.LatLng(4.763957, -74.276225);
             var myOptions = {
-                zoom: 6,
+                zoom: 10,
                 center: latlng,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
@@ -290,110 +295,40 @@
 
             consultarMarcadores();
 
-            // add a click event handler to the map object
-            google.maps.event.addListener(map, "click", function(event)
-            {
-                // place a marker
-                placeMarker(event.latLng);
-
-                // display the lat/lng in your form's lat/lng fields
-
-                //document.getElementById("latFld").value = event.latLng.lat();
-                //document.getElementById("lngFld").value = event.latLng.lng();
-
-                localStorage.setItem("latitud", event.latLng.lat());
-                localStorage.setItem("longitud", event.latLng.lng());
-            });
-        }
-
-        function placeMarker(location) {
-            // first remove all markers if there are any
-            deleteOverlays();
-
-            var marker = new google.maps.Marker({
-                position: location, 
-                map: map
-            });
-
-            // add marker in markers array
-            markersArray.push(marker);
-
-            //map.setCenter(location);
-        }
-
-        // Deletes all markers in the array by removing references to them
-        function deleteOverlays() {
-            if (markersArray) {
-                for (i in markersArray) {
-                    markersArray[i].setMap(null);
-                }
-            markersArray.length = 0;
-            }
         }
 
         function consultarMarcadores() {
-            var db = window.openDatabase("bd_reportes", "1.0", "Reporte Vial", 200000);
-            db.transaction(consultar_lista_marcadores, errorConsultar_marcadores, function () {
-                console.log("Consultó los narcadores")
+            var url = "http://servicedatosabiertoscolombia.cloudapp.net/v1/Unidad_Administrativa_Especial_Servicio_Publico_de_Empleo/niveleducativo?$format=json";
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'jsonp',
+                crossDomain: true,
+                success: function (data) {
+                    $.each(data, function (i, field) {
+                        var cant = field.length;
+                        $.each(field, function (x, item) {
+                            marker = new google.maps.Marker({
+                            //asigna a posicion un objeto position de google
+                            position: new google.maps.LatLng(posX[x], posY[x]),
+                            //icon: 'images/icon.png',
+                            //indica el mapa donde va a poner el marker
+                            map: map
+                            });
+                            marker.Message = "<a href='#' onclick='verInformacion(\"" + i + "\")' class='no-bottom demo-button button-minimal black-minimal boton_atras'>Consultar oferta</a>";
+                            google.maps.event.addListener(marker, 'click', function () {
+                                infowindow.setContent(this.Message)
+                                infowindow.open(map, this);
+                            });
+                            markersArray.push(marker);
+                        });
+                    });
+                },
+                error: function (x, y, z) {
+                    
+                }, 
+                timeout: 15000                          
             });
-        }
-
-        function consultar_lista_marcadores(tx) {
-            tx.executeSql("SELECT * FROM marcadores", [], crear_lista_marcadores, function (error) {
-                console.log("Error consultado marcadores: " + error)
-            });
-        }
-
-        function crear_lista_marcadores(tx, results) {
-            var len = results.rows.length;
-            for (var i = 0; i < len; i++) {
-
-                var myLatlng = new google.maps.LatLng(results.rows.item(i).latitud, results.rows.item(i).longitud);
-                
-                if(results.rows.item(i).texto === "Accidente") {
-                    var marker = new google.maps.Marker({
-                        position: myLatlng,
-                        map: map,
-                        icon: 'images/caraccident.png',
-                        title: '' + results.rows.item(i).texto + ''
-                    });
-                }
-                else if(results.rows.item(i).texto === "Trancón") {
-                    var marker = new google.maps.Marker({
-                        position: myLatlng,
-                        map: map,
-                        icon: 'images/trafficlight.png',
-                        title: '' + results.rows.item(i).texto + ''
-                    });
-                }
-                else if(results.rows.item(i).texto === "Retén") {
-                    var marker = new google.maps.Marker({
-                        position: myLatlng,
-                        map: map,
-                        icon: 'images/highway.png',
-                        title: '' + results.rows.item(i).texto + ''
-                    });
-                }
-                else {
-                    var marker = new google.maps.Marker({
-                        position: myLatlng,
-                        map: map,
-                        icon: 'images/repair.png',
-                        title: '' + results.rows.item(i).texto + ''
-                    });
-                }
-
-                //numeros_favoritos[i] = results.rows.item(i).oferta_empleo;
-            }
-        }
-
-        function errorConsultar_marcadores(err) {
-            console.log(err);
-            alert("Error consultando listado marcadores" + err);
-        }
-
-        function registrar() {
-            document.location.href="registrar_reporte.html";            
         }
 
     </script>
