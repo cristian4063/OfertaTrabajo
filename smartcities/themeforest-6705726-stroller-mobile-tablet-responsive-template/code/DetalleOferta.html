@@ -58,60 +58,66 @@
                     <img src="images/drugs/logo_odc.png" height="52" alt="img">
                 </div>
                 
-                <div class="sidebar-breadcrumb">NAVEGACIÓN</div>
+                <div class="sidebar-breadcrumb">
+                    BUSCO EMPLEO</div>
                 <div class="navigation-item">
-                    <a href="index.html" class="nav-item home-icon">Inicio<em class="selected-item"></em></a>
+                    <a href="index.html" class="nav-item home-icon">Inicio<em class="unselected-item"></em></a>
                 </div>
-                <div class="sidebar-decoration"></div>
-                <div class="navigation-item">
-                    <a href="ConsultarOfertasMapa.html" class="nav-item home-locales">Ofertas en el mapa<em class="unselected-item"></em></a>
+                <div class="sidebar-decoration">
                 </div>
-                <div class="sidebar-decoration"></div>
                 <div class="navigation-item">
-                    <a href="lista_ofertas.html" class="nav-item home-diagnostic">Listado ofertas<em class="unselected-item"></em></a>
-                </div>   
-                <div class="sidebar-decoration"></div>
-                <div class="navigation-item">
-                    <a href="#" class="nav-item home-estadisticas submenu-deploy">Sección del empleador<em class="dropdown-item"></em></a>
-                    <div class="sidebar-decoration"></div>
-                    <div class="nav-submenu">
-                        <a href="inicio-sesion.html">Inicio sesion<em class="unselected-item"></em></a>
-                        <a href="UbicarOferta.html">Registrar ofertas<em class="unselected-item"></em></a>
-                    </div>
+                    <a href="lista_ofertas.html" class="nav-item home-diagnostic">Listado de vacantes<em
+                        class="unselected-item"></em></a>
                 </div>
-                <div class="sidebar-decoration"></div>         
+                <div class="sidebar-decoration">
+                </div>
+                <div class="navigation-item">
+                    <a href="ConsultarOfertasMapa.html" class="nav-item home-locales">Vacantes en el mapa<em
+                        class="selected-item"></em></a>
+                </div>
+                <div class="sidebar-decoration">
+                </div>
+                <div class="navigation-item">
+                    <a href="vacantes_favoritas.html" class="nav-item home-locales">Mis vacantes favoritas<em
+                        class="unselected-item"></em></a>
+                </div>
+                <div class="sidebar-decoration">
+                </div>
+                <div class="sidebar-breadcrumb">
+                    INFORMACIÓN</div>
                 <div class="navigation-item">
                     <a href="lista_noticias.html" class="nav-item home-noticias">Noticias<em class="unselected-item"></em></a>
                 </div>
-                <div class="sidebar-decoration"></div>         
+                <div class="sidebar-decoration">
+                </div>
                 <div class="navigation-item">
                     <a href="faqs.html" class="nav-item home-faqs">Preguntas Frecuentes<em class="unselected-item"></em></a>
                 </div>
-                
-                <div class="sidebar-breadcrumb">INFORMACIÓN</div>
-                
+                <div class="sidebar-decoration">
+                </div>
                 <div class="navigation-item">
                     <a href="acerca.html" class="nav-item home-info-about">Acerca de<em class="unselected-item"></em></a>
-                </div>    
-     
-                <div class="sidebar-breadcrumb">Actualizaciones</div>  
-                
-                <div class="sidebar-decoration"></div>  
-
-                <div class="page-update">
-                    <span class="update-icon"></span>
-                    <a href="#" class="update-button notification-update">
-                        <strong style="color: #000000;">Notificación</strong>
-                        <em style="color: #000000;">Se ha agregado nueva información</em>
-                    </a>
-                    <div class="page-update-text" style="color: #000000;">
-                        Existen nuevas actualizaciones en el catálogo de datos
+                </div>
+                <div class="sidebar-breadcrumb">
+                    SOY EMPLEADOR</div>
+                <div class="navigation-item">
+                    <a href="#" class="nav-item home-estadisticas submenu-deploy">Sección del empleador<em
+                        class="dropdown-item"></em></a>
+                    <div class="sidebar-decoration">
+                    </div>
+                    <div class="nav-submenu">
+                        <a href="inicio-sesion.html">Inicio sesion<em class="unselected-item"></em>
+                        </a>
+                        <a id="opc_Registrar" name="opc_Registrar" href="UbicarOferta.html">Registrar nueva vacante<em class="unselected-item"></em>
+                        </a>
+                        <a id="opc_VerMias" name="opc_VerMias" href="lista_ofertas_empleador.html">Ver vacantes registradas<em class="unselected-item"></em>
+                        </a>
                     </div>
                 </div>
+                <div class="sidebar-decoration">
+                </div>
                 
-                <div class="sidebar-decoration"></div>
-                
-                <div class="sidebar-breadcrumb">MINTRABAJO 2014
+                <div class="sidebar-breadcrumb">SERVICIO DE EMPLEO 2014
                 </div>
             </div>         
         </div>
@@ -132,7 +138,7 @@
                 <div class="decoration">
                 </div>
                 <div class="container no-bottom">
-                    <div class="big-notification red-notification">
+                    <div class="big-notification blue-notification">
                         <h4 class="uppercase">
                             AYUDA</h4>
                         <a href="#" class="close-big-notification">x</a>
@@ -184,6 +190,10 @@
                                             </ul>
                                         </a>
                                     </div>
+                                </div>
+                                <div class="one-half-responsive">
+                                    <div style="padding-left: 20px; width: 50%; float: left;"><img id="estrella3" class="star" src="images/estrella_vacia.png" onclick="cambiarEstrella(3)" style="width: 20px;" /><label>Agregar a favoritas</label></div>
+                                    <div style="padding-left: 20px; width: 50%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red">Denunciar</a></div>
                                 </div>
                             </div>
                         </div>
@@ -378,6 +388,15 @@
 
         function mostrarMapa() {
             document.location.href="OfertasMapa.html"
+        }
+
+        function enviar(formul) {
+            var nomb = formul.contactNameField.value;
+            cargarOfertas();
+        }
+
+        function cambiarEstrella(id_estrella) {
+            $("#estrella" + id_estrella).attr("src", "images/estrella_llena.png")
         }
 
         function agregarCliente() {
