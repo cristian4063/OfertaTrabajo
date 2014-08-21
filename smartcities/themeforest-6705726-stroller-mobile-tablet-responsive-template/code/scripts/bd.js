@@ -96,7 +96,7 @@ function cargarOfertas()
                                 'Importante temporal requiere para su equipo de trabajo, mujer con experienica minima de un años como auxiliar de servicio general, preferiblemnete que haya trabajo en aseo capital,responsable, honesta y trabajadora.' +
                                 'Actvidad: asear los frentes de las casas del cojunto, aseo de oficina, recoger y sacar la basura.' +
                             '</p>' +
-                            '<div class="toggle-content" style="display:block;">' +
+                            '<div class="toggle-content">' +
                                 '<p><strong>Datos del Empleador:</strong></p>' +
                                 '<div class="one-half-responsive ">' +
                                     '<div class="submenu-navigation">' +
@@ -120,6 +120,10 @@ function cargarOfertas()
                                             '</ul>' +
                                         '</a>' +
                                     '</div>' +
+                                '</div>' +
+                                '<div class="one-half-responsive ">' +
+                                     '<div style="padding-left: 20px; width: 50%; float: left;"><img id="estrella1" class="star" src="images/estrella_vacia.png" onclick="cambiarEstrella(1)" style="width: 20px;" /><label>Agregar a favoritas</label></div>' +
+                                     '<div style="padding-left: 20px; width: 50%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red">Denunciar</a></div>' +
                                 '</div>' +
                             '</div>' +
                         '</div>' +
@@ -167,6 +171,10 @@ function cargarOfertas()
                                         '</a>' +
                                     '</div>' +
                                 '</div>' +
+                                '<div class="one-half-responsive ">' +
+                                     '<div style="padding-left: 20px; width: 50%; float: left;"><img id="estrella2" class="star" src="images/estrella_vacia.png" onclick="cambiarEstrella(2)" style="width: 20px;" /><label>Agregar a favoritas</label></div>' +
+                                     '<div style="padding-left: 20px; width: 50%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red">Denunciar</a></div>' +
+                                '</div>' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
@@ -211,6 +219,10 @@ function cargarOfertas()
                                             '</ul>' +
                                         '</a>' +
                                     '</div>' +
+                                '</div>' +
+                                '<div class="one-half-responsive ">' +
+                                     '<div style="padding-left: 20px; width: 50%; float: left;"><img id="estrella3" class="star" src="images/estrella_vacia.png" onclick="cambiarEstrella(3)" style="width: 20px;" /><label>Agregar a favoritas</label></div>' +
+                                     '<div style="padding-left: 20px; width: 50%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red">Denunciar</a></div>' +
                                 '</div>' +
                             '</div>' +
                         '</div>' +
