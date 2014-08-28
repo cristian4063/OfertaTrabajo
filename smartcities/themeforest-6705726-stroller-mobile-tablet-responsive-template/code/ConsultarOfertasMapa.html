@@ -147,7 +147,7 @@
                     <fieldset>
                         <div class="formTextareaWrap">
                                     <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Departamento: <span>(requerido)</span></label>
-                                    <select class="styled-select" name="selectVacantes" id="selectVacantes">
+                                    <select class="styled-select" name="selectDepartamentos" id="selectDepartamentos">
                                             <option value='1'>Cundinamarca</option>
                                             <option value='2'>Antioquia</option>
                                             <option value='3'>Caldas</option>
@@ -155,7 +155,7 @@
                                 </div>
                                 <div class="formTextareaWrap">
                                     <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Municipio: <span>(requerido)</span></label>
-                                    <select class="styled-select" name="selectVacantes" id="selectVacantes">
+                                    <select class="styled-select" name="selectMunicipios" id="selectMunicipios">
                                             <option value='1'>Bogotá</option>
                                             <option value='2'>Fusagasugá</option>
                                             <option value='3'>Tabio</option>
@@ -165,8 +165,6 @@
                             <label class="field-title contactNameField" for="contactNameField">
                                  Nivel educativo:</label>
                                 <select class="styled-select" name="select_nivel" id="select_nivel">
-                                    <option value='1'>Preescolar</option>
-                                    <option value='2'>Básica primaria</option>
                                 </select>
                         </div>
                         <br />
@@ -174,8 +172,6 @@
                             <label class="field-title contactNameField" for="contactNameField">
                                  Sector empresarial:</label>
                                 <select class="styled-select" name="select_sector" id="select_sector">
-                                    <option value='1'>Cultivos agrícolas permanentes</option>
-                                    <option value='2'>Cultivos agrícolas transitorios.</option>
                                 </select>
                         </div>
                         <br />
@@ -205,8 +201,12 @@
         
     </div>
     <script type="text/javascript">
-        
+
         function mostrarMapa() {
+            localStorage.setItem('Departamento', $("#selectDepartamentos").val());
+            localStorage.setItem('Municipio', $("#selectMunicipios").val());
+            localStorage.setItem('Nivel', $("#select_nivel").val());
+            localStorage.setItem('Sector', $("#select_sector").val());
             document.location.href="OfertasMapa.html"
         }
 
@@ -227,7 +227,9 @@
                         });
                         $("#select_nivel").append(texto);
                         $("#select_nivel").val("4");
-                        $("#select_nivel").selectmenu('refresh');
+                        if (localStorage.getItem('Nivel')) {
+                            $("#select_nivel").val(localStorage.getItem('Nivel'));
+                        }
                     });
                 },
                 error: function (x, y, z) {
@@ -255,19 +257,28 @@
                         });
                         $("#select_sector").append(texto);
                         $("#select_sector").val("-1");
-                        $("#select_sector").selectmenu('refresh');
+                        
+                        if (localStorage.getItem('Sector')) {
+                            $("#select_sector").val(localStorage.getItem('Sector'));
+                        }
                     });
                 },
                 error: function (x, y, z) {
-                    
-                }, 
-                timeout: 15000                          
+
+                },
+                timeout: 15000
             });
         }
 
         $(document).ready(function () {
             cargar_niveles();
             cargar_sectores();
+            if (localStorage.getItem('Departamento')) {
+                $("#selectDepartamentos").val(localStorage.getItem('Departamento'));
+            }
+            if (localStorage.getItem('Municipio')) {
+                $("#selectMunicipios").val(localStorage.getItem('Municipio'));
+            }
         });
     </script>
     <style>
