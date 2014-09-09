@@ -393,7 +393,8 @@
         }
 
         function registrar() {
-            document.location.href="registrar_reporte.html";            
+            alert("La vacante se ha registrado exitosamente !!");
+            document.location.href="RegistrarOferta.html";            
         }
 
     </script>
@@ -403,8 +404,8 @@
         <div id="content" class="page-content">
             <div class="page-header">
                 <label class="texto-banner" style="display:inline;">
-                    <a href="index.html" class="no-bottom demo-button button-minimal black-minimal boton_atras">ATRÁS</a>
-                    <a href="RegistrarOferta.html" class="no-bottom demo-button button-minimal black-minimal boton_atras">Continuar</a>
+                    <a href="RegistrarOferta.html" class="no-bottom demo-button button-minimal black-minimal boton_atras">ATRÁS</a>
+                    <a class="no-bottom demo-button button-minimal black-minimal boton_atras" onclick="registrar()" >Continuar</a>
                     <br />
                 </label>
                 <!--<input type="text" id="txtOrigen" placeholder="Ingrese el origen">
