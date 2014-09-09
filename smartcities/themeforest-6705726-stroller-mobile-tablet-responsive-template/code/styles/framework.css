@@ -516,7 +516,7 @@ a{
 .button-magenta{			 background-color:#8e44ad;	}
 .button-magenta:active{	  background-color:#61267a;	}
 
-.button-dark{				background-color:#2c3e50;	}
+.button-dark{				background-color:#58595B;	}
 .button-dark:active{		 background-color:#0b1621;	}
 
 .button-yellow{			  background-color:#f1c40f;	}
@@ -1195,7 +1195,7 @@ table tr:hover td{
 }
 
 .blue-notification{
-	background-color:#2980b9;
+	background-color:#FBB036;
 	color:#FFFFFF;	
 }
 

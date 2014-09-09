@@ -34,7 +34,7 @@ body {
 }
 
 .page-sidebar{
-    background-color: #F67F7B;
+    background-color: #FBB036;
 	background-repeat:repeat;
 	background-size:75px 75px;
 	width:274px;
@@ -70,7 +70,7 @@ body {
 }
 
 .sidebar-shortcuts{
-	background-color:#ED2228;
+	background-color:#F36C21;
 	height:50px;	
 	border-bottom:solid 1px #2a2a2a;
 }
@@ -193,7 +193,7 @@ body {
 .sidebar-breadcrumb{
 	border-top:solid 1px rgba(255,255,255,0.05);
 	border-bottom:solid 1px rgba(255,255,255,0.05);
-	background-color:#ed2228;
+	background-color:#F36C21;
 	color: White;
 	font-weight: bold;
 	font-size:10px;
@@ -264,7 +264,7 @@ body {
 	width:10px;
 	height:10px;
 	border-radius:10px;
-	background-color:#ed2228;
+	background-color:#F36C21;
 	right:45px;
 	margin-top:23px;
 }
@@ -436,7 +436,7 @@ body {
 }
 
 .page-header{
-	background-color:#ED2228;
+	background-color:#F36C21;
 	height:49px;
 	width:100%;
 	position:fixed;
