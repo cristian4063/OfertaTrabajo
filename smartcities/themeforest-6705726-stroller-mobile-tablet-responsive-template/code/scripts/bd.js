@@ -245,9 +245,13 @@ function cargarOfertas()
 
 }
 
+function cerrar()
+{
+    localStorage.setItem("nombreUsuario", "");
+    document.location.href = "inicio-sesion.html";
+}
 
-
-$(document).ready(function () {
+/*$(document).ready(function () {
     if (localStorage.getItem("nombreUsuario") != null) {
         localStorage.setItem("nombreUsuario", localStorage.getItem("nombreUsuario"));
         $("#opc_Registrar").show();
@@ -258,6 +262,6 @@ $(document).ready(function () {
         $("#opc_VerMias").hide();
     }
 
-});
+});*/
 
 

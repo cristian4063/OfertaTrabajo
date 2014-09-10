@@ -34,6 +34,14 @@
 <script type="text/javascript" src="scripts/framework.js"></script>
 <script type="text/javascript" src="scripts/framework.launcher.js"></script>
 <script type="text/javascript" src="scripts/bd.js"></script>
+<script type="text/javascript">
+    $( document ).ready(function() {
+        if(localStorage.getItem("nombreUsuario") !== "")
+        {
+            $("#header").append('<a onclick="cerrar()" style="float:right;"><img style="width:35px;margin-top:-20px;" src="images/icons/user/exit.png" alt="img"></a>');
+        }
+    });
+</script>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
 <script type="text/javascript">
@@ -166,10 +174,10 @@
         </div>
      <div id="content" class="page-content"> 
     
-        <div class="page-header">
+        <div class="page-header" id="header">
              <a href="#" class="deploy-sidebar"></a>
-                <img class="header-logo" src="images/drugs/odc-texto.png" width="71" alt="img">
-                <a href="lista_mis_productos.html" class="deploy-contact"></a>
+             <img class="header-logo" src="images/drugs/odc-texto.png" width="71" alt="img" />
+             <!--<a href="inicio-sesion.html" style="float:right;"><img style="width:35px;margin-top:-20px;" src="images/icons/user/exit.png" alt="img"></a>-->
         </div>
         
         <div class="page-header-clear"></div>
@@ -198,48 +206,39 @@
                                     </div>
                                 </div> 
                                 <div class="formTextareaWrap">
-                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Título: <span>(requerido)</span></label>
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Título (*): <span>(requerido)</span></label>
                                     <input type="text" name="txtTitulo" value="" class="contactField requiredField" id="txtTitulo" />
                                 </div>
                                 <div class="formTextareaWrap">
-                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Descripción: <span>(requerido)</span></label>
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Descripción (*): <span>(requerido)</span></label>
                                     <textarea name="txtDescripcion" class="contactTextarea requiredField" id="txtDescripcion"></textarea>
                                 </div>
                                 <div class="formTextareaWrap">
-                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Dirección:</label>
-                                    <input type="text" name="txtDireccion" value="" class="contactField" id="txtDireccion" disabled />
-                                </div>
-                                <div class="formTextareaWrap">
-                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Tiempo de experiencia:</label>
-                                    <input type="text" name="txtExperiencia" value="" class="contactField requiredField" id="txtExperiencia" />
-                                </div>
-                                <div class="formTextareaWrap">
-                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Cantidad de vacantes: <span>(requerido)</span></label>
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Número de trabajadores requeridos: <span>(requerido)</span></label>
                                     <select class="styled-select" name="selectVacantes" id="selectVacantes">
-                                        <option value="" disabled selected>Cantidad</option>
-                                            <option value='1'>1</option>
-                                            <option value='2'>2</option>
-                                            <option value='3'>3</option>
-                                        </select>
-                                </div>
-                                <div class="formTextareaWrap">
-                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Cargo: <span>(requerido)</span></label>
-                                    <input type="text" name="txtCargo" value="" class="contactField requiredField" id="txtCargo" />
-                                </div>
-                                <div class="formTextareaWrap">
-                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Fecha de vencimiento: <span>(requerido)</span></label>
-                                    <div style="border:solid 1px #cacaca; margin-bottom:10px;">
-                                        <input style="width:100%; height:40px;" type="date" lass="contactField requiredField" name="fechaVencimiento" id="fechaVencimiento" />
-                                    </div>
-                                </div>
-                                <div class="formTextareaWrap">
-                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Nivel de estudio: </label>
-                                    <select class="styled-select" name="select_nivel" id="select_nivel">
+                                        <!--<option value="" disabled selected>Cantidad</option>-->
+                                        <option value='1'>1</option>
+                                        <option value='2'>2</option>
+                                        <option value='3'>3</option>
+                                        <option value='4'>4</option>
+                                        <option value='5'>5</option>
                                     </select>
                                 </div>
                                 <div class="formTextareaWrap">
-                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Profesión: </label>
-                                    <input type="text" name="txtProfesion" value="" class="contactField requiredField" id="txtProfesion" />
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Cargo (*): <span>(requerido)</span></label>
+                                    <input type="text" name="txtCargo" value="" class="contactField requiredField" id="txtCargo" />
+                                </div>
+                                <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Salario:</label>
+                                    <select class="styled-select" name="selectSalario" id="selectSalario">
+                                        <!--<option value="" disabled selected>Cantidad</option>-->
+                                        <option value='1'>Menos de 1 SMMLV</option>
+                                        <option value='2'>Más de 1 SMMLV hasta 2 SMMLV</option>
+                                        <option value='3'>Más de 2 SMMLV hasta 3 SMMLV</option>
+                                        <option value='4'>Más de 3 SMMLV hasta 5 SMMLV</option>
+                                        <option value='5'>Más de 5 SMMLV hasta 7 SMMLV</option>
+                                        <option value='6'>Más de 7 SMMLV</option>
+                                    </select>
                                 </div>
                                 <div class="formFieldWrap">
                                     <label class="field-title contactNameField" for="contactNameField">
@@ -248,11 +247,26 @@
                                         </select>
                                 </div>
                                 <div class="formTextareaWrap">
-                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Salario: <span>(requerido)</span></label>
-                                    <input type="text" name="txtSalario" value="" class="contactField requiredField" id="txtSalario" />
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Experiencia mínima:</label>
+                                    <select class="styled-select" name="selectExperiencia" id="selectExperiencia">
+                                        <!--<option value="" disabled selected>Cantidad</option>-->
+                                        <option value='1'>De 0 a  6 meses</option>
+                                        <option value='2'>De 7 a 12 meses</option>
+                                        <option value='3'>De 13 a 24 meses</option>
+                                        <option value='4'>Más de 24 meses</option>
+                                    </select>
                                 </div>
                                 <div class="formTextareaWrap">
-                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Departamento: <span>(requerido)</span></label>
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Nivel de estudio mínimo requerido (*): </label>
+                                    <select class="styled-select" name="select_nivel" id="select_nivel">
+                                    </select>
+                                </div>
+                                <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Profesión: </label>
+                                    <input type="text" name="txtProfesion" value="" class="contactField requiredField" id="txtProfesion" />
+                                </div>
+                                <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Departamento (*): <span>(requerido)</span></label>
                                     <select class="styled-select" name="selectVacantes" id="selectVacantes">
                                             <option value='1'>Cundinamarca</option>
                                             <option value='2'>Antioquia</option>
@@ -260,15 +274,33 @@
                                         </select>
                                 </div>
                                 <div class="formTextareaWrap">
-                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Municipio: <span>(requerido)</span></label>
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Municipio (*): <span>(requerido)</span></label>
                                     <select class="styled-select" name="selectVacantes" id="selectVacantes">
                                             <option value='1'>Bogotá</option>
                                             <option value='2'>Fusagasugá</option>
                                             <option value='3'>Tabio</option>
                                         </select>
                                 </div>
+                                <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Dirección de referencia: <span>(requerido)</span></label>
+                                    <input type="text" name="txtCargo" value="" class="contactField requiredField" id="txtCargo" />
+                                </div>
+                                <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Correo electrónico de contacto (*): <span>(requerido)</span></label>
+                                    <input type="text" name="txtCargo" value="" class="contactField requiredField" id="txtCargo" />
+                                </div>
+                                <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Teléfono de contacto (*): <span>(requerido)</span></label>
+                                    <input type="text" name="txtCargo" value="" class="contactField requiredField" id="txtCargo" />
+                                </div>
+                                <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Fecha de vencimiento (*): <span>(requerido)</span></label>
+                                    <div style="border:solid 1px #cacaca; margin-bottom:10px;">
+                                        <input style="width:100%; height:40px;" type="date" lass="contactField requiredField" name="fechaVencimiento" id="fechaVencimiento" />
+                                    </div>
+                                </div>
                                 <div class="formSubmitButtonErrorsWrap">
-                                    <input type="submit" class="buttonWrap button button-dark contactSubmitButton" id="contactSubmitButton" value="ENVIAR" data-formId="contactForm" onclick="guardar() "/>
+                                    <input type="submit" class="buttonWrap button button-dark contactSubmitButton" id="contactSubmitButton" value="PUBLICAR VACANTE" data-formId="contactForm" onclick="guardar() "/>
                                     <!--<input type="button" class="buttonWrap button button-dark contactSubmitButton" id="btnRegresar" value="VOLVER" onclick="regresar() "/>-->
                                 </div>
                             </fieldset>
