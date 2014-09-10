@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 /* CSS Document */
 
 body {
@@ -835,12 +835,12 @@ body {
 	background-image:url(../images/icons/files/documenttext.png);
 }
 
-.home-estadisticas{
-	background-image:url(../images/icons/charts/graph.png);
+.home-admin{
+	background-image:url(../images/icons/user/adminuser.png);
 }
 
-.home-locales{
-	background-image:url(../images/icons/location/marker.png);
+.home-favoritas{
+	background-image:url(../images/icons/commerce/pricetag2.png);
 }
 
 .home-compras{
@@ -848,7 +848,7 @@ body {
 }
 
 .home-faqs{
-	background-image:url(../images/icons/communication/speechbubble2.png);
+	background-image:url(../images/icons/communication/speechbubble4.png);
 }
 
 .home-info-about{
