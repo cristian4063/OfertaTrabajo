@@ -87,12 +87,13 @@ function cargarOfertas()
             texto += '<div class="container">' +
                         '<div class="toggle-2">' +
                             '<a href="#" onclick="guardarNoticia(1)" class="deploy-toggle-2 toggle-2">' +
-                                'Auxiliar de servicio general' +
+                                'Auxiliar de servicio general - Vence en 3 días' +
                             '</a>' +
                         '<div class="toggle-content">' +
                             '<p style="text-align:justify;">' +
                                 '<label>' +
-                                    'Fecha Publicación: 02/08/2014</label><br />' +
+                                    'Fecha Publicación: 02/08/2014</label>' +
+                                    'Fecha Vencimiento: 05/08/2014</label><br /><br />' +
                                 'Importante temporal requiere para su equipo de trabajo, mujer con experienica minima de un años como auxiliar de servicio general, preferiblemnete que haya trabajo en aseo capital,responsable, honesta y trabajadora.' +
                                 'Actvidad: asear los frentes de las casas del cojunto, aseo de oficina, recoger y sacar la basura.' +
                             '</p>' +
@@ -136,12 +137,13 @@ function cargarOfertas()
             texto += '<div class="container">' +
                     '<div class="toggle-2">' +
                         '<a href="#" onclick="guardarNoticia(2)" class="deploy-toggle-2">' +
-                            'Oficial de obra civil' +
+                            'Oficial de obra civil - Vence en 7 días'+
                         '</a>' +
                         '<div class="toggle-content">' +
                             '<p style="text-align:justify;">' +
                                 '<label>' +
-                                    'Fecha Publicación: 02/08/2014</label><br />' +
+                                    'Fecha Publicación: 02/08/2014</label>' +
+                                    'Fecha Vencimiento: 09/08/2014</label><br /><br />' +
                                 'Debe saber leer y escribir, debe ser bachiller y tener preferiblemente' +
                                 '2 años de experiencia como oficial de construcción u oficial de obra en' +
                                 'el sector de hidrocarburos' +
@@ -185,12 +187,13 @@ function cargarOfertas()
             texto += '<div class="container">' +
                     '<div class="toggle-2">' +
                         '<a href="#" onclick="guardarNoticia(2)" class="deploy-toggle-2">' +
-                            'Ingenieros en construcción y obras civiles' +
+                            'Ingenieros en construcción y obras civiles - Vence en 15 días' +
                         '</a>' +
                         '<div class="toggle-content">' +
                             '<p style="text-align:justify;">' +
                                 '<label>' +
-                                    'Fecha Publicación: 02/08/2014</label><br />' +
+                                    'Fecha Publicación: 02/08/2014</label>' +
+                                    'Fecha Vencimiento: 17/08/2014</label><br /><br />' +
                                 'Experiencia superior a 3 años en diseños de sistemas de acueductos' +
                                 'con manejo de programas como autocad, arcgis, entre otros más, trabajo en equipo' +
                                 'trabajo bajo presión entre otros' +
