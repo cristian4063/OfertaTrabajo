@@ -87,7 +87,7 @@ function cargarOfertas()
             texto += '<div class="container">' +
                         '<div class="toggle-2">' +
                             '<a href="#" onclick="guardarNoticia(1)" class="deploy-toggle-2 toggle-2">' +
-                                'Auxiliar de servicio general - Vence en 3 días' +
+                                'Auxiliar de servicio general <label style="font-weight: bolder; font-size: 12px; color: black; text-decoration:underline;">Vence en 3 días</label>' +
                             '</a>' +
                         '<div class="toggle-content">' +
                             '<p style="text-align:justify;">' +
@@ -137,7 +137,7 @@ function cargarOfertas()
             texto += '<div class="container">' +
                     '<div class="toggle-2">' +
                         '<a href="#" onclick="guardarNoticia(2)" class="deploy-toggle-2">' +
-                            'Oficial de obra civil - Vence en 7 días'+
+                            'Oficial de obra civil <label style="font-weight: bolder; font-size: 12px; color: black; text-decoration:underline;">Vence en 7 días</label>'+
                         '</a>' +
                         '<div class="toggle-content">' +
                             '<p style="text-align:justify;">' +
@@ -187,7 +187,7 @@ function cargarOfertas()
             texto += '<div class="container">' +
                     '<div class="toggle-2">' +
                         '<a href="#" onclick="guardarNoticia(2)" class="deploy-toggle-2">' +
-                            'Ingenieros en construcción y obras civiles - Vence en 15 días' +
+                            'Ingenieros en construcción y obras civiles <label style="font-weight: bolder; font-size: 12px; color: black; text-decoration:underline;">Vence en 15 días</label>' +
                         '</a>' +
                         '<div class="toggle-content">' +
                             '<p style="text-align:justify;">' +

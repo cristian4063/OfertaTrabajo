@@ -160,7 +160,7 @@
                             Encuentre las dudas más frecuentes de la comunidad</p>
                     </div>
                 </div>
-                <div class="container no-bottom">
+                <div id="preguntas" class="container no-bottom">
                     <div class="clear" style="height: 10px;">
                     </div>
                     <em class="speach-left-title">
@@ -214,40 +214,42 @@
     </div>
     </div>
     <script type="text-javascript">
-        function cargar_listaDrogas() {
-                    var texto = "";
-                    var url = "http://servicedatosabiertoscolombia.cloudapp.net/v1/PNUD/uarivsoyvictima?$format=json";
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        dataType: 'jsonp',
-                        crossDomain: true,
-                        success: function (data) {
-                            $.each(data, function (i, field) {
-                                var cant = field.length;
-                                var categorias_ingresadas = "";
-                                $.each(field, function (x, item) {
-                                    if (categorias_ingresadas.indexOf("-" + field[x].idcategoria + "-") == -1) {
-                                        texto += " <option value='" + field[x].idcategoria + "'>" + field[x].categoria + "</option>";
-                                        categorias_ingresadas = categorias_ingresadas + "-" + field[x].idcategoria + "-";
-                                    }
-                                });
-                                $("#combo_categoria").append(texto);
-                                $("#combo_categoria").val("1");
-                                $("#combo_categoria").selectmenu('refresh');
-                                $('#div_cargando').hide();
-                            });
-                        },
-                        error: function (x, y, z) {
-                            if(y == "timeout"){
-                                $('#div_sininternet').show();
-                                $('#filtro').hide();
-                                $('#div_cargando').hide();
-                            }
-                        }, 
-                        timeout: 15000                          
+        function cargar_preguntas() {
+            var texto = "";
+            var url = "http://apiempleo.apphb.com/api/Vacante/obtenerVacantesXEmpleador";
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                crossDomain: true,
+                success: function (data, textStatus, xhr) {
+
+                    $.each(data, function (i, val) {
+                        //alert(val['Titulo']);
+                        texto+='<div class="clear" style="height: 10px;">'+
+                    '</div>'+
+                    '<em class="speach-left-title">'+
+                        '<h3>'+
+                            'Pregunta:</h3>'+
+                    '</em>'+
+                    '<p class="speach-left">'+
+                        val['Pregunta'] + '</p>'+
+                    '<em class="speach-right-title">'+
+                        '<h3>'+
+                            'Respuesta:</h3>'+
+                    '</em>'+
+                    '<p class="speach-right blue-bubble">'+
+                        val['Respuesta'] +'</p>'+
+                    '<div class="decoration">'+
+                    '</div>';
                     });
+                    $("#preguntas").html(texto);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert(errorThrown);
                 }
+            });
+        }
     </script>
 </body>
 </html> 
