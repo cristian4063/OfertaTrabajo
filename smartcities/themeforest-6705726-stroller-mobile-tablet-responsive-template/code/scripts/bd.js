@@ -251,8 +251,28 @@ function cerrar()
     document.location.href = "inicio-sesion.html";
 }
 
-/*$(document).ready(function () {
-    if (localStorage.getItem("nombreUsuario") != null) {
+$(document).ready(function () {
+
+    /*var d = new Date();
+    d.getHours();
+    d.getMinutes();
+    d.getSeconds();
+
+    alert(d.getMinutes());*/ 
+
+    if(localStorage.getItem("nombreUsuario") !== "")
+    {
+        $("#header").append('<a onclick="cerrar()" style="float:right;"><img style="width:35px;margin-top:-30px;" src="images/icons/user/exit.png" alt="img"></a>');
+        $("#opc_Sesion").css("display", "none");
+    }
+    else
+    {
+        $("#opc_Sesion").css("display", "block");
+        $("#opc_Registrar").css("display", "none");
+        $("#opc_VerMias").css("display", "none");
+    }
+
+    /*if (localStorage.getItem("nombreUsuario") != null) {
         localStorage.setItem("nombreUsuario", localStorage.getItem("nombreUsuario"));
         $("#opc_Registrar").show();
         $("#opc_VerMias").show();
@@ -260,8 +280,8 @@ function cerrar()
     else{
         $("#opc_Registrar").hide();
         $("#opc_VerMias").hide();
-    }
+    }*/
 
-});*/
+});
 
 

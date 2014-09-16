@@ -23,6 +23,12 @@
 <link href="styles/swipebox.css"         rel="stylesheet" type="text/css">
 <link href="styles/colorbox.css"         rel="stylesheet" type="text/css">
 
+<style>
+    .letter {
+        text-align: justify;
+    }
+</style>
+
 <script type="text/javascript" src="scripts/jquery.js"></script>
 <script type="text/javascript" src="scripts/jqueryui.js"></script>
 <script type="text/javascript" src="scripts/owl.carousel.min.js"></script>
@@ -34,42 +40,8 @@
 <script type="text/javascript" src="scripts/framework.js"></script>
 <script type="text/javascript" src="scripts/framework.launcher.js"></script>
 <script type="text/javascript" src="scripts/bd.js"></script>
-<script type="text/javascript">
-    $( document ).ready(function() {
-        if(localStorage.getItem("nombreUsuario") !== "")
-        {
-            $("#header").append('<a onclick="cerrar()" style="float:right;"><img style="width:35px;margin-top:-20px;" src="images/icons/user/exit.png" alt="img"></a>');
-        }
-    });
-</script>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
-<script type="text/javascript">
-
-    function ReverseGeocode(){
-
-        var latitude = localStorage.getItem("latitud");
-        var longitude = localStorage.getItem("longitud");
-        var reverseGeocoder = new google.maps.Geocoder();
-        var currentPosition = new google.maps.LatLng(latitude, longitude);
-        reverseGeocoder.geocode({'latLng': currentPosition}, function(results, status) {
-     
-                if (status == google.maps.GeocoderStatus.OK) {
-                        if (results[0]) {
-                            $("#adress").val(results[0].formatted_address);
-                        //navigator.notification.alert('Address : ' + results[0].formatted_address + ',' + 'Type : ' + results[0].types);
-                        }
-                else {
-                        navigator.notification.alert('Unable to detect your address.');
-                        }
-            } else {
-                navigator.notification.alert('Unable to detect your address.');
-            }
-        });
-    }
-
-</script>
-
 
 </head>
 <body onload="ReverseGeocode()">
@@ -138,7 +110,7 @@
                 <div class="sidebar-decoration">
                 </div>
                 <div class="nav-submenu">
-                    <a href="inicio-sesion.html">
+                    <a id="opc_Sesion" href="inicio-sesion.html">
                         Inicio sesion<em class="unselected-item"></em>
                     </a>
                     <a id="opc_Registrar" name="opc_Registrar" href="RegistrarOferta.html">
@@ -174,7 +146,7 @@
             </div>
         </div>
     </div>
-     <div id="content" class="page-content"> 
+    <div id="content" class="page-content"> 
     
         <div class="page-header" id="header">
              <a href="#" class="deploy-sidebar"></a>
@@ -185,7 +157,7 @@
         <div class="page-header-clear"></div>
         <div class="decoration"></div>
         
-        <div class="content">
+        <div class="content" id="formularioVacante">
             <div class="decoration"></div>
             <div>
                 <h4>Ingrese los datos</h4>
@@ -269,7 +241,7 @@
                                 </div>
                                 <div class="formTextareaWrap">
                                     <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Departamento (*): <span>(requerido)</span></label>
-                                    <select class="styled-select" name="selectVacantes" id="selectVacantes">
+                                    <select class="styled-select" name="selectVacantes" id="selectDepto">
                                             <option value='1'>Cundinamarca</option>
                                             <option value='2'>Antioquia</option>
                                             <option value='3'>Caldas</option>
@@ -277,7 +249,7 @@
                                 </div>
                                 <div class="formTextareaWrap">
                                     <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Municipio (*): <span>(requerido)</span></label>
-                                    <select class="styled-select" name="selectVacantes" id="selectVacantes">
+                                    <select class="styled-select" name="selectVacantes" id="selectMuni">
                                             <option value='1'>Bogotá</option>
                                             <option value='2'>Fusagasugá</option>
                                             <option value='3'>Tabio</option>
@@ -285,15 +257,15 @@
                                 </div>
                                 <div class="formTextareaWrap">
                                     <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Dirección de referencia: <span>(requerido)</span></label>
-                                    <input type="text" name="txtCargo" value="" class="contactField requiredField" id="txtCargo" />
+                                    <input type="text" name="txtCargo" value="" class="contactField requiredField" id="txtDireccion" />
                                 </div>
                                 <div class="formTextareaWrap">
                                     <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Correo electrónico de contacto (*): <span>(requerido)</span></label>
-                                    <input type="text" name="txtCargo" value="" class="contactField requiredField" id="txtCargo" />
+                                    <input type="text" name="txtCargo" value="" class="contactField requiredField" id="txtCorreo" />
                                 </div>
                                 <div class="formTextareaWrap">
                                     <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Teléfono de contacto (*): <span>(requerido)</span></label>
-                                    <input type="text" name="txtCargo" value="" class="contactField requiredField" id="txtCargo" />
+                                    <input type="text" name="txtCargo" value="" class="contactField requiredField" id="txtTelefono" />
                                 </div>
                                 <div class="formTextareaWrap">
                                     <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Fecha de vencimiento (*): <span>(requerido)</span></label>
@@ -312,6 +284,57 @@
                         <h4 class="uppercase">REGISTRO EXITOSO</h4>
                         <!--<a href="#" class="close-big-notification">x</a>-->
                         <p>La vacante ha sido guardada exitosamente!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="decoration"></div>
+        </div>
+
+        <div class="content" id="detalleVacante" style="display:none;">
+            <div class="decoration"></div>
+            <div>
+                <h4>Datos de la vacante</h4>
+                <div class="container no-bottom">
+                    <div class="contact-form no-bottom">
+                        <form action="php/contact.php" method="post" class="contactForm" id="contactForm">
+                            <fieldset>
+                                <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea letter" for="contactMessageTextarea">Título:</label>
+                                    <label class="letter" id="detalleTitulo"></label>
+                                </div>
+                                <br />
+                                <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea letter" for="contactMessageTextarea">Descripción:</label>
+                                    <label class="letter" id="detalleDesc"></label>
+                                </div>
+                                <br />
+                                <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea letter" for="contactMessageTextarea">Cargo:</label>
+                                    <label class="letter" id="detalleCargo"></label>
+                                </div>
+                                <br />
+                                <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea letter" for="contactMessageTextarea">Salario:</label>
+                                    <label class="letter" id="detalleSalario"></label>
+                                </div>
+                                <br />
+                                <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea letter" for="contactMessageTextarea">Departamento:</label>
+                                    <label class="letter" id="detalleDepto"></label>
+                                </div>
+                                <br />
+                                <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea letter" for="contactMessageTextarea">Municipio:</label>
+                                    <label class="letter" id="detalleMuni"></label>
+                                </div>
+                                <br />
+                                <div class="formSubmitButtonErrorsWrap">
+                                    <input type="submit" class="buttonWrap button button-dark contactSubmitButton" id="contactSubmitButton" value="CONTINUAR" data-formId="contactForm" onclick="confirmar() "/>
+                                    </br>
+                                    <input type="button" class="buttonWrap button button-dark contactSubmitButton" id="btnRegresar" value="REGRESAR" onclick="regresar() "/>
+                                </div>
+                            </fieldset>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -361,45 +384,12 @@
 </style>
 
 <script type="text/javascript">
-    function guardar()
-    {
-        document.location.href="UbicarOferta.html";
-        /*var txtTitulo = $("#txtTitulo").val();
-        if(txtTitulo != "")
-        {
-            $("#notificacion").fadeIn();
-        }*/
-    }
-
-    function regresar()
-    {
-        document.location.href="UbicarOferta.html";
-    }
-
-    function ReverseGeocode(){
-
-        var latitude = localStorage.getItem("latitud");
-        var longitude = localStorage.getItem("longitud");
-        var reverseGeocoder = new google.maps.Geocoder();
-        var currentPosition = new google.maps.LatLng(latitude, longitude);
-        reverseGeocoder.geocode({'latLng': currentPosition}, function(results, status) {
-     
-                if (status == google.maps.GeocoderStatus.OK) {
-                        if (results[0]) {
-                            $("#txtDireccion").val(results[0].formatted_address);
-                        //navigator.notification.alert('Address : ' + results[0].formatted_address + ',' + 'Type : ' + results[0].types);
-                        }
-                else {
-                        navigator.notification.alert('Unable to detect your address.');
-                        }
-            } else {
-                navigator.notification.alert('Unable to detect your address.');
-            }
-        });
-    }
-</script>
-<script type="text/javascript">
     
+        $(document).ready(function () {
+            cargar_niveles();
+            cargar_sectores();
+        });
+
         function cargar_niveles() {
             $("#select_nivel>option").remove();
             var texto = "";
@@ -454,10 +444,47 @@
             });
         }
 
-        $(document).ready(function () {
-            cargar_niveles();
-            cargar_sectores();
-        });
+        function guardar()
+        {
+            var titulo = $("#txtTitulo").val();
+            $("#detalleTitulo").text(titulo);
+
+            var descripcion = $("#txtDescripcion").val();
+            $("#detalleDesc").text(descripcion);
+
+            var cargo = $("#txtCargo").val();
+            $("#detalleCargo").text(cargo);
+
+            var salario = $("#selectSalario option:selected").html();
+            $("#detalleSalario").text(salario);
+
+            var departamento = $("#selectDepto option:selected").html();
+            $("#detalleDepto").text(departamento);
+
+            var municipio = $("#selectMuni option:selected").html();
+            $("#detalleMuni").text(municipio);
+
+            $("#formularioVacante").css("display", "none");
+            $("#detalleVacante").css("display", "block");
+        }
+
+        function regresar()
+        {
+            $("#detalleVacante").css("display", "none");
+            $("#formularioVacante").css("display", "block");
+        }
+
+        function confirmar()
+        {
+            var conf = confirm("Desea ubicar la dirección de la vacante en el mapa ?");
+            if (conf == true) {
+                document.location.href="UbicarOferta.html"; 
+            } else {
+                alert("la vacante ha sido registrada exitosamente!!");
+                document.location.href="lista_ofertas_empleador.html"; 
+            }
+        }
+
     </script>
 </body>
 </html>
