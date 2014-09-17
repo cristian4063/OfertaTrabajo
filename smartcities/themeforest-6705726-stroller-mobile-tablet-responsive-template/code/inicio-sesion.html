@@ -245,7 +245,6 @@
                 var n = 0;
                 for (var i = 0; i < len; i++) {
                     if (results.rows.item(i).usuario == usuario && results.rows.item(i).password == pass) {
-						alert("ok");
                         localStorage.setItem("nombreUsuario", $("#contactNameField").val());
                         document.location.href = "lista_ofertas_empleador.html";
                         n = 1;
