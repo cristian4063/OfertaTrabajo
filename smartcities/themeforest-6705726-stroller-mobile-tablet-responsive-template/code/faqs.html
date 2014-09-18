@@ -34,6 +34,51 @@
     <script type="text/javascript" src="scripts/framework.js"></script>
     <script type="text/javascript" src="scripts/framework.launcher.js"></script>
     <script type="text/javascript" src="scripts/bd.js"></script>
+    <script>
+
+    function cargar_preguntas() {
+            var texto = "";
+            
+            var url = "http://apiempleo.apphb.com/api/Vacante/obtenerFAQs";
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                crossDomain: true,
+                success: function (data, textStatus, xhr) {
+
+                    $.each(data, function (i, val) {
+                        //alert(val['Titulo']);
+                        texto+='<div class="clear" style="height: 10px;">'+
+                    '</div>'+
+                    '<em class="speach-left-title">'+
+                        '<h3>'+
+                            'Pregunta:</h3>'+
+                    '</em>'+
+                    '<p class="speach-left">'+
+                        val['Pregunta'] + '</p>'+
+                    '<em class="speach-right-title">'+
+                        '<h3>'+
+                            'Respuesta:</h3>'+
+                    '</em>'+
+                    '<p class="speach-right blue-bubble">'+
+                        val['Respuesta'] +'</p>'+
+                    '<div class="decoration">'+
+                    '</div>';
+                    });
+                    $("#preguntas").html(texto);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            cargar_preguntas();
+        });
+    </script>
+
 </head>
 <body>
     <div id="preloader">
@@ -156,40 +201,6 @@
                     </div>
                 </div>
                 <div id="preguntas" class="container no-bottom">
-                    <div class="clear" style="height: 10px;">
-                    </div>
-                    <em class="speach-left-title">
-                        <h3>
-                            Pregunta:</h3>
-                    </em>
-                    <p class="speach-left">
-                        ¿Puedo buscar vacantes laborales en mi ciudad?</p>
-                    <em class="speach-right-title">
-                        <h3>
-                            Respuesta:</h3>
-                    </em>
-                    <p class="speach-right blue-bubble">
-                        Para consultar vacantes en su departamento y municipio, seleccione la opción "Vacantes en el mapa" del menú principal.</p>
-                    <div class="decoration">
-                    </div>
-                    <div class="clear" style="height: 10px;">
-                    </div>
-                    <em class="speach-left-title">
-                        <h3>
-                            Pregunta:</h3>
-                    </em>
-                    <p class="speach-left">
-                        ¿Como registro una vacante laboral?</p>
-                    <em class="speach-right-title">
-                        <h3>
-                            Respuesta:</h3>
-                    </em>
-                    <p class="speach-right blue-bubble">
-                        Para poder registrar vacantes laborales debe iniciar sesión en la página "Inicio sesión" de la "Sección del empleador" que encontrará en el menú principal, después de iniciar sesión encontrará la opción de menú "Registrar nueva vacante"</p>
-                    <div class="decoration">
-                    </div>
-                    <div class="clear" style="height: 10px;">
-                    </div>
                 </div>
                 
                 <div class="container">
@@ -207,44 +218,6 @@
             </div>
         </div>
     </div>
-    </div>
-    <script type="text-javascript">
-        function cargar_preguntas() {
-            var texto = "";
-            var url = "http://apiempleo.apphb.com/api/Vacante/obtenerVacantesXEmpleador";
-            $.ajax({
-                url: url,
-                type: 'POST',
-                dataType: 'json',
-                crossDomain: true,
-                success: function (data, textStatus, xhr) {
-
-                    $.each(data, function (i, val) {
-                        //alert(val['Titulo']);
-                        texto+='<div class="clear" style="height: 10px;">'+
-                    '</div>'+
-                    '<em class="speach-left-title">'+
-                        '<h3>'+
-                            'Pregunta:</h3>'+
-                    '</em>'+
-                    '<p class="speach-left">'+
-                        val['Pregunta'] + '</p>'+
-                    '<em class="speach-right-title">'+
-                        '<h3>'+
-                            'Respuesta:</h3>'+
-                    '</em>'+
-                    '<p class="speach-right blue-bubble">'+
-                        val['Respuesta'] +'</p>'+
-                    '<div class="decoration">'+
-                    '</div>';
-                    });
-                    $("#preguntas").html(texto);
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    alert(errorThrown);
-                }
-            });
-        }
-    </script>
+    
 </body>
 </html> 

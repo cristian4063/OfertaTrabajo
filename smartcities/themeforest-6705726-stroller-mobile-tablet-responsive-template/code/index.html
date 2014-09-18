@@ -453,6 +453,20 @@
         }
 
         $(document).ready(function () {
+            $.ajax({
+                url: 'http://apiempleo.apphb.com/api/Vacante/obtenerFAQs',
+                type: 'POST',
+                dataType: 'json',
+                success: function (data, textStatus, xhr) {
+                    $.each(data, function (i, val) {
+                        alert(val['Pregunta']);
+                        alert(val['Respuesta']);
+                    });
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
             cargar_niveles();
             if (localStorage.getItem('Departamento')) {
                 $("#selectDepartamentos").val(localStorage.getItem('Departamento'));
