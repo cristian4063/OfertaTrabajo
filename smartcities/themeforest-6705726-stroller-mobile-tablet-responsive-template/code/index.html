@@ -30,11 +30,6 @@
     <script type="text/javascript" src="scripts/framework.js"></script>
     <script type="text/javascript" src="scripts/framework.launcher.js"></script>
     <script type="text/javascript" src="scripts/bd.js"></script>
-	<script>
-		$(document).ready(function () {
-			configurar_db();
-		});
-	</script>
 </head>
 <body>
     <div id="preloader">
@@ -99,7 +94,7 @@
                     <div class="sidebar-decoration">
                     </div>
                     <div class="nav-submenu">
-                        <a id="opc_Sesion" href="inicio-sesion.html">
+                        <a href="inicio-sesion.html">
                             Inicio sesion<em class="unselected-item"></em>
                         </a>
                         <a id="opc_Registrar" name="opc_Registrar" href="RegistrarOferta.html"> 
@@ -114,6 +109,11 @@
                 </div>
                 <div class="sidebar-breadcrumb">
                     INFORMACIÓN
+                </div>
+                <div class="navigation-item">
+                    <a href="lista_noticias.html" class="nav-item home-noticias">Noticias<em class="unselected-item"></em></a>
+                </div>
+                <div class="sidebar-decoration">
                 </div>
                 <div class="navigation-item">
                     <a href="faqs.html" class="nav-item home-faqs">Preguntas Frecuentes<em class="unselected-item"></em></a>
@@ -131,7 +131,7 @@
             </div>
         </div>
         <div id="content" class="page-content">
-            <div class="page-header" id="header">
+            <div class="page-header">
                 <a href="#" class="deploy-sidebar"></a>
                 <img class="header-logo" src="images/texto_banner.png" width="71" alt="img">
                 <!--<label class="header-logo">OPORTUNIDADES DE EMPLEO</label>-->
@@ -453,20 +453,6 @@
         }
 
         $(document).ready(function () {
-            $.ajax({
-                url: 'http://apiempleo.apphb.com/api/Vacante/obtenerFAQs',
-                type: 'POST',
-                dataType: 'json',
-                success: function (data, textStatus, xhr) {
-                    $.each(data, function (i, val) {
-                        alert(val['Pregunta']);
-                        alert(val['Respuesta']);
-                    });
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    alert(errorThrown);
-                }
-            });
             cargar_niveles();
             if (localStorage.getItem('Departamento')) {
                 $("#selectDepartamentos").val(localStorage.getItem('Departamento'));
