@@ -885,4 +885,23 @@ height: 100%;
 background-color: rgba(0,0,0,0.7);
 }
 
+.CargandoModalBackground
+        {
+            overflow: hidden;
+            background-color: transparent;
+            filter: alpha(opacity=80);
+            opacity: 0.8;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            text-align: center;
+            vertical-align: middle;
+            padding-top: 15%;
+            padding-bottom: 36%;
+            padding-left: 47%;
+            padding-right: 51%;
+            display: none;
+            z-index: 1;
+        }
+
 

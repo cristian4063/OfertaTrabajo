@@ -74,28 +74,70 @@ function operacionEfectuada() {
     console.log("Operación Exitosa!");
 }
 
-function cargarOfertas()
+function cargarOfertas(palabra)
 {
+    MostrarDivCargando();
+    var vectorConectores = ["a", "ante", "bajo", "con", "contra", "de", "desde", "en", "entre","hacia","hasta","para","por","según","segun","sin", "sobre","tras", " ", "  ", "   ", ""];
+    //alert(palabra);
+    if(palabra != ""){
+        palabra = palabra.trim();
+        var palabrasSeparadas = palabra.split(" ");
+        var fraseDefinitiva = "";
+        var palabraAuxiliar = "";
+
+        for (x=0;x<palabrasSeparadas.length;x++){
+            palabraAuxiliar = palabrasSeparadas[x];
+            palabrasSeparadas[x] = palabraAuxiliar.trim().toLowerCase();
+        }
+
+        fraseDefinitiva += palabrasSeparadas[0];
+
+        for (x=1;x<palabrasSeparadas.length;x++){
+            if($.inArray(palabrasSeparadas[x], vectorConectores) == -1){
+                fraseDefinitiva+=" AND ";
+                fraseDefinitiva += palabrasSeparadas[x];
+            }
+        }
+
+        palabra = fraseDefinitiva;
+    }
+    //alert(palabra);
     var texto = "";
     var ofertas = $("#ofertas");
     ofertas.empty();
 
-    for(var i = 0; i < 3; i++) {
-        
-        if(i == 0)
-        {
-            texto += '<div class="container">' +
+    var nom_mun = localStorage.getItem('NombreMunicipio'); 
+    var nom_sal = localStorage.getItem('NombreSalario'); 
+    var nom_exp = localStorage.getItem('NombreExperiencia'); 
+    var nom_niv = localStorage.getItem('NombreNivel'); 
+    var municipio = localStorage.getItem('Municipio'); 
+    var tipo = localStorage.getItem('Oportunidad');   
+    var salario =  localStorage.getItem('Salario');
+    var experiencia = localStorage.getItem('Experiencia');
+    var nivel = localStorage.getItem('Nivel');
+
+    $.ajax({
+        url: 'http://apiempleo.apphb.com/api/Vacante/obtenerVacantes?palabra=' + palabra + '&tipo=' + tipo + '&salario=' + salario + '&experiencia=' + experiencia + '&nivel=' + nivel + '&municipio=' + municipio,
+        type: 'POST',
+        dataType: 'json',
+        success: function (data, textStatus, xhr) {
+            var cantidad = data.length;
+            if(cantidad==0){
+                alert("No existen vacantes con los filtros seleccionados, intente seleccionando valores diferentes.")
+            }
+            $.each(data, function (i, val) {
+                //alert(val['Titulo']);
+                texto += '<div class="container">' +
                         '<div class="toggle-2">' +
                             '<a href="#" onclick="guardarNoticia(1)" class="deploy-toggle-2 toggle-2">' +
-                                'Auxiliar de servicio general <label style="font-weight: bolder; font-size: 12px; color: black; text-decoration:underline;">Vence en 3 días</label>' +
+                                val['Titulo'] + '<label style="font-weight: bolder; font-size: 15px; color: black;">Vence en '+val['DiasVence']+' días</label>' +
                             '</a>' +
                         '<div class="toggle-content">' +
                             '<p style="text-align:justify;">' +
                                 '<label>' +
-                                    'Fecha Publicación: 02/08/2014</label>' +
-                                    'Fecha Vencimiento: 05/08/2014</label><br /><br />' +
-                                'Importante temporal requiere para su equipo de trabajo, mujer con experienica minima de un años como auxiliar de servicio general, preferiblemnete que haya trabajo en aseo capital,responsable, honesta y trabajadora.' +
-                                'Actvidad: asear los frentes de las casas del cojunto, aseo de oficina, recoger y sacar la basura.' +
+                                    'Fecha Publicación: '+val['Fecha_publicacion']+'</label>' +
+                                    'Fecha Vencimiento: '+val['Fecha_vencimiento']+'</label><br /><br />' +
+                                val['Descripcion'] +
                             '</p>' +
                             '<div class="toggle-content">' +
                                 '<p><strong>Datos del Empleador:</strong></p>' +
@@ -104,144 +146,85 @@ function cargarOfertas()
                                         '<div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>' +
                                         '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
                                             '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                '<li class="right-list">Tel. 33347-14189</li>' +
+                                                '<li class="right-list">Ciudad: '+nom_mun+' </li>' +
                                             '</ul>' +
                                         '</a>' +
                                         '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
                                             '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                '<li class="right-list">Ciudad: Bogotá </li>' +
+                                                '<li class="right-list">Número de vacantes: '+val['Num_vacantes']+' </li>' +
                                             '</ul>' +
                                         '</a>' +
                                         '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
                                             '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                '<li>' +
-                                                    '<img src="images/misc/facebook.png" class="star" onclick="abrirPaginaFacebook()">' +
-                                                    '<img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter()">' + 
+                                                '<li class="right-list">Cargo: '+val['Cargo']+' </li>' +
+                                            '</ul>' +
+                                        '</a>' +
+                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li class="right-list">Sector: '+val['Sector']+' </li>' +
+                                            '</ul>' +
+                                        '</a>' +
+                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li class="right-list">Profesión: '+val['Profesion']+' </li>' +
+                                            '</ul>' +
+                                        '</a>' +
+                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li class="right-list">Salario: '+nom_sal+' </li>' +
+                                            '</ul>' +
+                                        '</a>' +
+                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li class="right-list">Experiencia: '+nom_exp+' </li>' +
+                                            '</ul>' +
+                                        '</a>' +
+                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li class="right-list">Nivel: '+nom_niv+' </li>' +
+                                            '</ul>' +
+                                        '</a>' +
+                                        '<a href="#" style="text-align:center !important; border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                        'Comparta esta oportunidad de trabajo'+
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li style="padding-left:0px !important;">' +
+                                                    '<img src="images/misc/facebook.png" style="margin: 0px !important;" class="star" onclick="abrirPaginaFacebook(\''+val['Titulo']+'\', '+val['ID']+')">' +
+                                                    '<img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter(\''+val['Titulo']+'\', '+val['ID']+')">' + 
                                                 '</li>' +
                                             '</ul>' +
                                         '</a>' +
                                     '</div>' +
                                 '</div>' +
-                                '<div class="one-half-responsive ">' +
-                                     '<div style="padding-left: 20px; width: 50%; float: left;"><img id="estrella1" class="star" src="images/estrella_vacia.png" onclick="cambiarEstrella(1)" style="width: 20px;" /><label>Agregar a favoritas</label></div>' +
-                                     '<div style="padding-left: 20px; width: 50%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red">Denunciar</a></div>' +
+                                '<div class="one-half-responsive" style="text-align:center !important;">' +
+                                     '<div onclick="agregarFavoritos('+val['ID']+')" style="width: 50%; float: left;"><img id="estrella'+val['ID']+'" class="star" style="margin: 0px !important; width:auto !important;" src="images/estrella_vacia.png" style="width: 20px;" /><label>Agregar a favoritas</label></div>' +
+                                     '<div style="padding-left: 20px; width: 50%; float: left;margin-top: 5px;"><a href="#" onclick="Denunciar('+val['ID']+')" class="button-icon icon-setting button-red">Denunciar</a></div>' +
                                 '</div>' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
                 '</div>' +
                 '</div>';
-        }
-        else if(i == 1) 
-        {
-            texto += '<div class="container">' +
-                    '<div class="toggle-2">' +
-                        '<a href="#" onclick="guardarNoticia(2)" class="deploy-toggle-2">' +
-                            'Oficial de obra civil <label style="font-weight: bolder; font-size: 12px; color: black; text-decoration:underline;">Vence en 7 días</label>'+
-                        '</a>' +
-                        '<div class="toggle-content">' +
-                            '<p style="text-align:justify;">' +
-                                '<label>' +
-                                    'Fecha Publicación: 02/08/2014</label>' +
-                                    'Fecha Vencimiento: 09/08/2014</label><br /><br />' +
-                                'Debe saber leer y escribir, debe ser bachiller y tener preferiblemente' +
-                                '2 años de experiencia como oficial de construcción u oficial de obra en' +
-                                'el sector de hidrocarburos' +
-                            '</p>' +
-                            '<div class="toggle-content">' +
-                                '<p><strong>Datos del Empleador:</strong></p>' +
-                                '<div class="one-half-responsive ">' +
-                                    '<div class="submenu-navigation">' +
-                                        '<div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>' +
-                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
-                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                '<li class="right-list">Tel. 33342-10170</li>' +
-                                            '</ul>' +
-                                        '</a>' +
-                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
-                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                '<li class="right-list">Castilla la nueva</li>' +
-                                            '</ul>' +
-                                        '</a>' +
-                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
-                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                '<li>' +
-                                                    '<img src="images/misc/facebook.png" class="star" onclick="abrirPaginaFacebook()">' +
-                                                    '<img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter()">' +
-                                                '</li>' +
-                                            '</ul>' +
-                                        '</a>' +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="one-half-responsive ">' +
-                                     '<div style="padding-left: 20px; width: 50%; float: left;"><img id="estrella2" class="star" src="images/estrella_vacia.png" onclick="cambiarEstrella(2)" style="width: 20px;" /><label>Agregar a favoritas</label></div>' +
-                                     '<div style="padding-left: 20px; width: 50%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red">Denunciar</a></div>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>'; 
-        }
-        else
-        {
-            texto += '<div class="container">' +
-                    '<div class="toggle-2">' +
-                        '<a href="#" onclick="guardarNoticia(2)" class="deploy-toggle-2">' +
-                            'Ingenieros en construcción y obras civiles <label style="font-weight: bolder; font-size: 12px; color: black; text-decoration:underline;">Vence en 15 días</label>' +
-                        '</a>' +
-                        '<div class="toggle-content">' +
-                            '<p style="text-align:justify;">' +
-                                '<label>' +
-                                    'Fecha Publicación: 02/08/2014</label>' +
-                                    'Fecha Vencimiento: 17/08/2014</label><br /><br />' +
-                                'Experiencia superior a 3 años en diseños de sistemas de acueductos' +
-                                'con manejo de programas como autocad, arcgis, entre otros más, trabajo en equipo' +
-                                'trabajo bajo presión entre otros' +
-                            '</p>' +
-                            '<div class="toggle-content">' +
-                                '<p><strong>Datos del Empleador:</strong></p>' +
-                                '<div class="one-half-responsive ">' +
-                                    '<div class="submenu-navigation">' +
-                                        '<div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>' +
-                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
-                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                '<li class="right-list">Tel. 33342-10170</li>' +
-                                            '</ul>' +
-                                        '</a>' +
-                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
-                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                '<li class="right-list">Castilla la nueva</li>' +
-                                            '</ul>' +
-                                        '</a>' +
-                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
-                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                '<li>' +
-                                                    '<img src="images/misc/facebook.png" class="star" onclick="abrirPaginaFacebook()">' +
-                                                    '<img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter()">' +
-                                                '</li>' +
-                                            '</ul>' +
-                                        '</a>' +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="one-half-responsive ">' +
-                                     '<div style="padding-left: 20px; width: 50%; float: left;"><img id="estrella3" class="star" src="images/estrella_vacia.png" onclick="cambiarEstrella(3)" style="width: 20px;" /><label>Agregar a favoritas</label></div>' +
-                                     '<div style="padding-left: 20px; width: 50%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red">Denunciar</a></div>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>';
-        }
-        
-    }
+            });
+            $("#ofertas").html(texto);
 
-    $("#ofertas").html(texto);
-
-    $('.deploy-toggle-2').click(function(){
-        $(this).parent().find('.toggle-content').toggle(100);
-        $(this).toggleClass('toggle-2-active');
-        return false;
+            $('.deploy-toggle-2').click(function(){
+                $(this).parent().find('.toggle-content').toggle(100);
+                $(this).toggleClass('toggle-2-active');
+                return false;
+            });
+            OcultarDivCargando();
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            //alert(errorThrown);
+            OcultarDivCargando();
+            alert("Ha ocurrido un problema, inténtelo nuevamente.");
+        }
     });
+        
+
+    
+
+    
 
 }
 
@@ -249,6 +232,16 @@ function cerrar()
 {
     localStorage.setItem("nombreUsuario", "");
     document.location.href = "inicio-sesion.html";
+}
+
+//Ocultar Div cargando...
+function OcultarDivCargando(data) {
+    $('#loading').css("display", "none");
+}
+
+//Mostrar Div cargando...
+function MostrarDivCargando(data) {
+    $('#loading').css("display", "block");
 }
 
 $(document).ready(function () {
