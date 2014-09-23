@@ -338,13 +338,63 @@
             }
         }
 
-        function agregarFavoritos(id) {
+        function agregarFavoritos(id, titulo, empleador, municipio, vacantes, cargo, sector, profesion, salario, experiencia, nivel, descripcion) {
             //$("#estrella" + id).attr("src", "images/estrella_llena.png")
             alert("Favoritos: "+id);
+            localStorage.setItem("id_guardar",id);
+            localStorage.setItem("titulo_guardar",titulo);
+            localStorage.setItem("empleador_guardar",empleador);
+            localStorage.setItem("municipio_guardar",municipio); 
+            localStorage.setItem("vacantes_guardar",vacantes);
+            localStorage.setItem("cargo_guardar",cargo);
+            localStorage.setItem("sector_guardar",sector);
+            localStorage.setItem("profesion_guardar",profesion);
+            localStorage.setItem("salario_guardar",salario);
+            localStorage.setItem("experiencia_guardar",experiencia);
+            localStorage.setItem("nivel_guardar",nivel);
+            localStorage.setItem("descripcion_guardar",descripcion);
+            guardarVacante();
         }
 
         function Denunciar(id) {
-            alert("Denuncia: "+id)
+            $("#btnDen"+id).hide();
+            $("#comboDen"+id).show();
+            //alert("Denuncia: "+id)
+        }
+
+        function GuardarDenuncia(id){
+            //alert("Guardar: "+id+" Motivo: "+$("#selectMotivoDenuncia"+id).val());
+            var denuncia = new Object();
+            denuncia.Fecha = null;
+            denuncia.Tipo = $("#selectMotivoDenuncia"+id+" option:selected").html();
+            denuncia.vacanteID = id;
+
+            $.ajax({
+                url: 'http://apiempleo.apphb.com/api/Vacante/agregarDenuncia',
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify(denuncia),
+                success: function (data, textStatus, xhr) {
+                    alert(data);
+                    if(data=="Denuncia creada correctamente"){
+                        $("#btnDen"+id).show();
+                        $("#comboDen"+id).hide();
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+
+        function CancelarDenuncia(id){
+            $("#btnDen"+id).show();
+            $("#comboDen"+id).hide();
+        }
+
+        function yaAgregado(){
+            alert("La vacante ya ha sido agregada como favorita.");
         }
 
         function abrirPaginaFacebook(nombre, id) {
@@ -429,6 +479,7 @@
         }
 
         $(document).ready(function () {
+            configurar_db();
             if (localStorage.getItem('Nivel')) {
                 $("#selectNivel").val(localStorage.getItem('selectNivel'));
             }

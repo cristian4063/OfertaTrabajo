@@ -4,10 +4,7 @@ var listaId = "";
 function configurar_db() {
 
     function execute(tx) {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS usuarios (usuario, password)');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS noticias (id)');
-        tx.executeSql('INSERT INTO usuarios (usuario, password) VALUES ("john", "202cb962ac59075b964b07152d234b70")');
-        tx.executeSql('INSERT INTO usuarios (usuario, password) VALUES ("juan", "912ec803b2ce49e4a541068d495ab570")');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS vacantes (id, titulo, descripcion, vacantes, cargo, nombre_salario, sector, experiencia, nivel, profesion, municipio, empleador)');
     }
 
     function error(error) {
@@ -18,50 +15,31 @@ function configurar_db() {
         console.log("Configuración exitosa")
     }
 
-    var db = window.openDatabase("bd_reportes", "1.0", "Reporte Vial", 200000);
+    var db = window.openDatabase("bd_vacantes", "1.0", "Vacantes", 200000);
     db.transaction(execute, error, exito);
 
 }
 
-function guardarMarcador() {
-    var db = window.openDatabase("bd_reportes", "1.0", "Guardar Marcador", 100000);
-    db.transaction(GuardarMarca, errorOperacion, operacionEfectuada);
+function guardarVacante() {
+    var db = window.openDatabase("bd_vacantes", "1.0", "Vacantes", 100000);
+    db.transaction(GuardarVacanteBD, errorOperacion, operacionEfectuada);
 }
 
-function GuardarMarca(tx) {
-    var latitud = localStorage.getItem("latitud");
-    var longitud = localStorage.getItem("longitud");
-    var texto = localStorage.getItem("texto");
+function GuardarVacanteBD(tx) {
+    var id = localStorage.getItem("id_guardar");
+    var titulo = localStorage.getItem("titulo_guardar");
+    var empleador = localStorage.getItem("empleador_guardar");
+    var municipio = localStorage.getItem("municipio_guardar"); 
+    var vacantes = localStorage.getItem("vacantes_guardar");
+    var cargo = localStorage.getItem("cargo_guardar");
+    var sector = localStorage.getItem("sector_guardar");
+    var profesion = localStorage.getItem("profesion_guardar");
+    var salario = localStorage.getItem("salario_guardar");
+    var experiencia = localStorage.getItem("experiencia_guardar");
+    var nivel = localStorage.getItem("nivel_guardar");
+    var descripcion = localStorage.getItem("descripcion_guardar");
     
-    tx.executeSql('INSERT INTO marcadores (latitud, longitud, texto) VALUES ("' + latitud + '", "' + longitud + '", "' + texto + '")');
-}
-
-/*Guarda en bd las noticias que no considera nuevas*/
-
-function guardarNoticia(ident){
-    
-    var n = listaId.indexOf("" + ident + "");
-
-    if(n == -1)
-    {
-        listaId += ident;
-        localStorage.setItem("listaId", listaId);
-    }
-}
-
-function guardarNoticia1(ident) {
-    id = ident;
-    var db = window.openDatabase("bd_reportes", "1.0", "Gestionar Noticia", 100000);
-    db.transaction(EliminarNoticia, errorOperacion, operacionEfectuada);
-    db.transaction(GuardarNoticia, errorOperacion, operacionEfectuada);
-}
-
-function EliminarNoticia(tx) {
-    tx.executeSql('DELETE FROM noticias WHERE id = "' + id + '"');
-}
-
-function GuardarNoticia(tx) {
-    tx.executeSql('INSERT INTO noticias (id) VALUES ("' + id + '")');
+    tx.executeSql('INSERT INTO vacantes (id, titulo, descripcion, vacantes, cargo, nombre_salario, sector, experiencia, nivel, profesion, municipio, empleador) VALUES ("' + id+ '", "' + titulo+ '", "' + descripcion+ '", "' + vacantes+ '", "' + cargo+ '", "' + salario+ '", "' + sector+ '", "' + experiencia+ '", "' + nivel+ '", "' + profesion+ '", "' + municipio+ '", "' + empleador+ '")');
 }
 
 // Transaction error callback
@@ -71,6 +49,9 @@ function errorOperacion(err) {
 }
 
 function operacionEfectuada() {
+    alert("La vacante ha sido almacenada como favorita.");
+    $("#estrella" + localStorage.getItem("id_guardar")).attr("src", "images/estrella_llena.png")
+    localStorage.setItem("vacantesGuardadas", localStorage.getItem("vacantesGuardadas")+",id"+ localStorage.getItem("id_guardar"));
     console.log("Operación Exitosa!");
 }
 
@@ -115,7 +96,7 @@ function cargarOfertas(palabra)
     var salario =  localStorage.getItem('Salario');
     var experiencia = localStorage.getItem('Experiencia');
     var nivel = localStorage.getItem('Nivel');
-
+    var vacantesGuardadas = localStorage.getItem("vacantesGuardadas");
     $.ajax({
         url: 'http://apiempleo.apphb.com/api/Vacante/obtenerVacantes?palabra=' + palabra + '&tipo=' + tipo + '&salario=' + salario + '&experiencia=' + experiencia + '&nivel=' + nivel + '&municipio=' + municipio,
         type: 'POST',
@@ -127,9 +108,22 @@ function cargarOfertas(palabra)
             }
             $.each(data, function (i, val) {
                 //alert(val['Titulo']);
+                var rutaEstrella = "images/estrella_vacia.png";
+                var metodoFavorito ='agregarFavoritos('+val['ID']+',\''+val['Titulo']+'\',\''+val['Empleador']+'\',\''+nom_mun+'\',\''+val['Num_vacantes']+'\',\''+val['Cargo']+'\',\''+val['Sector']+'\',\''+val['Profesion']+'\',\''+nom_sal+'\',\''+nom_exp+'\',\''+nom_niv+'\',\''+val['Descripcion']+'\')';
+                var textoFavorita ="Agregar a favoritas";
+                if (localStorage.getItem('vacantesGuardadas')){
+                    if(vacantesGuardadas.indexOf("id"+val['ID'])==-1){
+                        rutaEstrella="images/estrella_vacia.png";
+                    }
+                    else{
+                        rutaEstrella="images/estrella_llena.png";
+                        metodoFavorito="yaAgregado()";
+                        textoFavorita ="Agregada a favoritas";
+                    }
+                }
                 texto += '<div class="container">' +
                         '<div class="toggle-2">' +
-                            '<a href="#" onclick="guardarNoticia(1)" class="deploy-toggle-2 toggle-2">' +
+                            '<a href="#" class="deploy-toggle-2 toggle-2">' +
                                 val['Titulo'] + '<label style="font-weight: bolder; font-size: 15px; color: black;">Vence en '+val['DiasVence']+' días</label>' +
                             '</a>' +
                         '<div class="toggle-content">' +
@@ -144,6 +138,11 @@ function cargarOfertas(palabra)
                                 '<div class="one-half-responsive ">' +
                                     '<div class="submenu-navigation">' +
                                         '<div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>' +
+                                        '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li class="right-list">Empleador: '+val['Empleador']+' </li>' +
+                                            '</ul>' +
+                                        '</a>' +
                                         '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
                                             '<ul style="margin-bottom:0px;" class="icon-list">' +
                                                 '<li class="right-list">Ciudad: '+nom_mun+' </li>' +
@@ -196,8 +195,17 @@ function cargarOfertas(palabra)
                                     '</div>' +
                                 '</div>' +
                                 '<div class="one-half-responsive" style="text-align:center !important;">' +
-                                     '<div onclick="agregarFavoritos('+val['ID']+')" style="width: 50%; float: left;"><img id="estrella'+val['ID']+'" class="star" style="margin: 0px !important; width:auto !important;" src="images/estrella_vacia.png" style="width: 20px;" /><label>Agregar a favoritas</label></div>' +
-                                     '<div style="padding-left: 20px; width: 50%; float: left;margin-top: 5px;"><a href="#" onclick="Denunciar('+val['ID']+')" class="button-icon icon-setting button-red">Denunciar</a></div>' +
+                                     '<div onclick=\"'+metodoFavorito+'\" style="width: 50%; float: left;"><img id="estrella'+val['ID']+'" class="star" style="margin: 0px !important; width:auto !important;" src="'+rutaEstrella+'" style="width: 20px;" /><label>'+textoFavorita+'</label></div>' +
+                                     '<div id="btnDen'+val['ID']+'" style="padding-left: 20px; width: 50%; float: left;margin-top: 5px; display:block;"><a href="#" onclick="Denunciar('+val['ID']+')" class="button-icon icon-setting button-red">Denunciar</a></div>' +
+                                     '<div id="comboDen'+val['ID']+'" style="padding-left: 20px; width: 50%; float: left;margin-top: 5px; display:none;">Motivo de la denuncia: <br />'+ 
+                                     '<select class="styled-select" name="selectMotivoDenuncia'+val['ID']+'" id="selectMotivoDenuncia'+val['ID']+'">'+
+                                        '<option value="1">Vacante sospechosa / engañosa</option>'+
+                                        '<option value="2">Lenguaje no adecuado</option>'+
+                                        '<option value="3">Información de contacto errónea </option>'+
+                                        '<option value="4">Sospecha de Trata de personas</option>'+
+                                    '</select>'+
+                                    '<br /> <a href="#" onclick="GuardarDenuncia('+val['ID']+')" class="button-icon icon-setting button-red">Confirmar denuncia</a>&nbsp;<a href="#" onclick="CancelarDenuncia('+val['ID']+')" class="button-icon icon-setting button-red">Cancelar</a>'+
+                                    '</div>' +
                                 '</div>' +
                             '</div>' +
                         '</div>' +
