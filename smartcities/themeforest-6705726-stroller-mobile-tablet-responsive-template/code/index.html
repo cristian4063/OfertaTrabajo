@@ -19,6 +19,30 @@
             margin: 0px 0px 0px 47px;
         }
     </style>
+
+    
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+    <!-- This css is to ensure that the google map contols (zoom bar etc) show and size correctly. -->
+    <style>
+        #map_canvas img {
+            max-width: none;
+        }
+    </style>
+
+    <!-- This css is to give a nice big popup "info window" when a marker is clicked on the map -->
+    <style>
+        .infoDiv {
+            height: 220px;
+            width: 200px;
+            -webkit-user-select: none;
+            background-color: white;
+        }
+
+        div {
+            overflow:visible;
+        }
+    </style>
+
     <script type="text/javascript" src="scripts/jquery.js"></script>
     <script type="text/javascript" src="scripts/jqueryui.js"></script>
     <script type="text/javascript" src="scripts/owl.carousel.min.js"></script>
@@ -30,6 +54,11 @@
     <script type="text/javascript" src="scripts/framework.js"></script>
     <script type="text/javascript" src="scripts/framework.launcher.js"></script>
     <script type="text/javascript" src="scripts/bd.js"></script>
+    
+    <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+    <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
+    <script type="text/javascript" src="scripts/map.js"></script>
+
 </head>
 <body>
     <div id="preloader">
@@ -155,7 +184,7 @@
                         </h4>
                         <a href="#" class="close-big-notification">x</a>
                         <p>
-                            En este modulo podrá encontrar noticias y acontecimientos recientes
+                            En este módulo podrá encontrar el listado con las vacantes disponibles.
                         </p>
                     </div>
                 </div>
@@ -175,26 +204,63 @@
                                 id="contactNameField" />
                     </div>
                     <div class="formTextareaWrap">
-                        <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Departamento: <span>(requerido)</span></label>
-                        <select class="styled-select" name="selectDepartamentos" id="selectDepartamentos">
-                            <option value='1'>Cundinamarca</option>
-                            <option value='2'>Antioquia</option>
-                            <option value='3'>Caldas</option>
+                        <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Tipo de oportunidad: <span>(requerido)</span></label>
+                        <select class="styled-select" name="selectTipoOportunidad" id="selectTipoOportunidad">
+                            <option value="1">Empleo</option>
+                            <option value="2">Pasantía</option>
+                            <option value="3">Práctica laboral</option>
+                            <option value="4">Contrato de aprendizaje</option>
                         </select>
                     </div>
                     <div class="formTextareaWrap">
-                        <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Municipio: <span>(requerido)</span></label>
-                        <select class="styled-select" name="selectMunicipios" id="selectMunicipios">
-                            <option value='1'>Bogotá</option>
-                            <option value='2'>Fusagasugá</option>
-                            <option value='3'>Tabio</option>
+                        <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Salario: <span>(requerido)</span></label>
+                        <select class="styled-select" name="selectSalario" id="selectSalario">
+                            <option value="1">Menos de 1 SMMLV</option>
+                            <option value="2">1 SMMLV hasta 2 SMMLV</option>
+                            <option value="3">Más de 2 SMMLV hasta 3 SMMLV</option>
+                            <option value="4">Más de 3 SMMLV hasta 5 SMMLV</option>
+                            <option value="5">Más de 5 SMMLV hasta 7 SMMLV</option>
+                            <option value="6">Más de 7 SMMLV</option>
+                        </select>
+                    </div>
+                    <div class="formTextareaWrap">
+                        <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Experiencia laboral: <span>(requerido)</span></label>
+                        <select class="styled-select" name="selectExperiencia" id="selectExperiencia">
+                            <option value="1">De 0 a  6 meses</option>
+                            <option value="2">De 7 a 12 meses</option>
+                            <option value="3">De 13 a 24 meses</option>
+                            <option value="4">Más de 24 meses</option>
                         </select>
                     </div>
                     <div class="formFieldWrap">
                         <label class="field-title contactNameField" for="contactNameField">
                             Nivel educativo:
                         </label>
-                        <select class="styled-select" name="select_nivel" id="select_nivel"></select>
+                        <select class="styled-select" name="selectNivel" id="selectNivel">
+                            <option value="1">Cualquiera</option>
+                            <option value="2">Preescolar</option>
+                            <option value="3">Básica Primaria (1 - 5)</option>
+                            <option value="4">Básica Secundaria (6 - 9) </option>
+                            <option value="5">Media (10 - 13) </option>
+                            <option value="6">Postgrado </option>
+                            <option value="7">Técnica Laboral</option>
+                            <option value="8">Técnica Profesional</option>
+                            <option value="9">Tecnológica</option>
+                            <option value="10">Universitaria</option>
+                            <option value="11">Especialización</option>
+                            <option value="12">Maestría</option>
+                            <option value="13">Doctorado</option>
+                        </select>
+                    </div>
+                    <div class="formTextareaWrap">
+                        <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Departamento: <span>(requerido)</span></label>
+                        <select class="styled-select" name="selectDepartamentos" id="selectDepartamentos" onchange="cargarMunicipios();">
+                        </select>
+                    </div>
+                    <div class="formTextareaWrap">
+                        <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Municipio: <span>(requerido)</span></label>
+                        <select class="styled-select" name="selectMunicipios" id="selectMunicipios">
+                        </select>
                     </div>
                     <br />
                     <div class="formSubmitButtonErrorsWrap">
@@ -202,154 +268,19 @@
                                value="Consultar lista de vacantes" data-formid="contactForm" onclick="enviar();" />
                         <br />
                         <input type="submit" class="buttonWrap button button-dark contactSubmitButton" id="mapButton"
-                               value="Ver vacantes en el mapa" data-formid="contactForm" onclick="mostrarMapa();" />
+                               value="Ver vacantes en el mapa" data-formid="contactForm" onclick="cargarVacantesMapa();" />
                     </div>
                 </div>
                 <div class="decoration">
                 </div>
+                <div id="map_canvas" style="height: 400px;"></div>
+                <div class="decoration">
+                </div>
                 <div id="ofertas">
                 </div>
-                <!--<div class="container">
-                    <div class="toggle-2">
-                        <a href="#" onclick="guardarNoticia(1)" class="deploy-toggle-2">
-                            Comienza traslado de Avianca al nuevo aeropuerto El Dorado
-                        </a>
-                        <div class="toggle-content">
-                            <p style="text-align:justify;">
-                                <label>
-                                    Fecha Publicación: 01/06/2014</label><br />
-                                A partir de mañana 8 de junio, Avianca estará atendiendo desde el terminal T1 en
-                                el Aeropuerto El Dorado a los viajeros que vuelan entre Bogotá y Barranquilla, Bucaramanga,
-                                Cali, Cartagena, Medellín, Pasto, Pereira y San Andrés.
-                            </p>
-                            <div class="toggle-content">
-                                <p><strong>Datos del Empleador:</strong></p>
-                                <div class="one-half-responsive ">
-                                    <div class="submenu-navigation">
-                                        <div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Tel. 3116099950</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" onclick="consultarProductos('GRANOS PROCESADOS')" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Correo: arturogomez@gmail.com </li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Cliente consumidor de grandes cantidades de naranja</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li>
-                                                    <img src="images/misc/facebook.png" class="star" onclick="abrirPaginaFacebook()">
-                                                    <img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter()">
-                                                </li>
-                                            </ul>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div id="loading" class="CargandoModalBackground" style="padding-top: 150px;">
+                    <img src="images/bx_loader.gif" alt="loding" />
                 </div>
-                <div class="container">
-                    <div class="toggle-2">
-                        <a href="#" onclick="guardarNoticia(2)" class="deploy-toggle-2">
-                            Comienza traslado de Avianca al nuevo aeropuerto El Dorado
-                        </a>
-                        <div class="toggle-content">
-                            <p style="text-align:justify;">
-                                <label>
-                                    Fecha Publicación: 01/06/2014</label><br />
-                                A partir de mañana 8 de junio, Avianca estará atendiendo desde el terminal T1 en
-                                el Aeropuerto El Dorado a los viajeros que vuelan entre Bogotá y Barranquilla, Bucaramanga,
-                                Cali, Cartagena, Medellín, Pasto, Pereira y San Andrés.
-                            </p>
-                            <div class="toggle-content">
-                                <p><strong>Datos del Empleador:</strong></p>
-                                <div class="one-half-responsive ">
-                                    <div class="submenu-navigation">
-                                        <div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Tel. 3116099950</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" onclick="consultarProductos('GRANOS PROCESADOS')" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Correo: arturogomez@gmail.com </li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Cliente consumidor de grandes cantidades de naranja</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li>
-                                                    <img src="images/misc/facebook.png" class="star" onclick="abrirPaginaFacebook()">
-                                                    <img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter()">
-                                                </li>
-                                            </ul>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="toggle-2">
-                        <a href="#" onclick="guardarNoticia(3)" class="deploy-toggle-2">
-                            Comienza traslado de Avianca al nuevo aeropuerto El Dorado
-                        </a>
-                        <div class="toggle-content">
-                            <p style="text-align:justify;">
-                                <label>
-                                    Fecha Publicación: 01/06/2014</label><br />
-                                A partir de mañana 8 de junio, Avianca estará atendiendo desde el terminal T1 en
-                                el Aeropuerto El Dorado a los viajeros que vuelan entre Bogotá y Barranquilla, Bucaramanga,
-                                Cali, Cartagena, Medellín, Pasto, Pereira y San Andrés.
-                            </p>
-                            <div class="toggle-content">
-                                <p><strong>Datos del Empleador:</strong></p>
-                                <div class="one-half-responsive ">
-                                    <div class="submenu-navigation">
-                                        <div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Tel. 3116099950</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" onclick="consultarProductos('GRANOS PROCESADOS')" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Correo: arturogomez@gmail.com </li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Cliente consumidor de grandes cantidades de naranja</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li>
-                                                    <img src="images/misc/facebook.png" class="star" onclick="abrirPaginaFacebook()">
-                                                    <img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter()">
-                                                </li>
-                                            </ul>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
                 <div class="decoration">
                 </div>
                 <div class="container">
@@ -391,75 +322,209 @@
     </style>
     <script>
         function mostrarMapa() {
-            localStorage.setItem('Departamento', $("#selectDepartamentos").val());
-            localStorage.setItem('Municipio', $("#selectMunicipios").val());
-            localStorage.setItem('Nivel', $("#select_nivel").val());
-            document.location.href = "OfertasMapa.html"
+            if($("#selectDepartamentos").val() == null){
+                alert("Debe seleccionar un departamento.")
+            }
+            else{
+                if($("#selectMunicipios").val() == null){
+                    alert("Debe seleccionar un municipio.")
+                }
+                else{
+                    localStorage.setItem('Departamento', $("#selectDepartamentos").val());
+                    localStorage.setItem('Municipio', $("#selectMunicipios").val());
+                    localStorage.setItem('Nivel', $("#selectNivel").val());
+                    localStorage.setItem('Oportunidad', $("#selectTipoOportunidad").val());
+                    localStorage.setItem('Salario', $("#selectSalario").val());
+                    localStorage.setItem('Experiencia', $("#selectExperiencia").val());
+                    localStorage.setItem('NombreMunicipio', $("#selectMunicipios option:selected").html());
+                    localStorage.setItem('NombreNivel', $("#selectNivel option:selected").html());
+                    localStorage.setItem('NombreExperiencia', $("#selectExperiencia option:selected").html());
+                    localStorage.setItem('NombreSalario', $("#selectSalario option:selected").html());
+                    document.location.href = "OfertasMapa.html"
+                }
+            }
         }
 
         function enviar() {
-            localStorage.setItem('Departamento', $("#selectDepartamentos").val());
-            localStorage.setItem('Municipio', $("#selectMunicipios").val());
-            localStorage.setItem('Nivel', $("#select_nivel").val());
-            //alert($("#contactNameField").val());
-            cargarOfertas();
+            //alert($("#selectDepartamentos").val());
+            if($("#selectDepartamentos").val() == null){
+                alert("Debe seleccionar un departamento.")
+            }
+            else{
+                if($("#selectMunicipios").val() == null){
+                    alert("Debe seleccionar un municipio.")
+                }
+                else{
+                    localStorage.setItem('Departamento', $("#selectDepartamentos").val());
+                    localStorage.setItem('Municipio', $("#selectMunicipios").val());
+                    localStorage.setItem('Nivel', $("#selectNivel").val());
+                    localStorage.setItem('Oportunidad', $("#selectTipoOportunidad").val());
+                    localStorage.setItem('Salario', $("#selectSalario").val());
+                    localStorage.setItem('Experiencia', $("#selectExperiencia").val());
+                    localStorage.setItem('NombreMunicipio', $("#selectMunicipios option:selected").html());
+                    localStorage.setItem('NombreNivel', $("#selectNivel option:selected").html());
+                    localStorage.setItem('NombreExperiencia', $("#selectExperiencia option:selected").html());
+                    localStorage.setItem('NombreSalario', $("#selectSalario option:selected").html());
+                    cargarOfertas($("#contactNameField").val());
+                }
+            }
         }
 
-        function cambiarEstrella(id_estrella) {
-            $("#estrella" + id_estrella).attr("src", "images/estrella_llena.png")
+        function agregarFavoritos(id, titulo, empleador, municipio, vacantes, cargo, sector, profesion, salario, experiencia, nivel, descripcion) {
+            //$("#estrella" + id).attr("src", "images/estrella_llena.png")
+            //alert("Favoritos: "+id);
+            localStorage.setItem("id_guardar",id);
+            localStorage.setItem("titulo_guardar",titulo);
+            localStorage.setItem("empleador_guardar",empleador);
+            localStorage.setItem("municipio_guardar",municipio); 
+            localStorage.setItem("vacantes_guardar",vacantes);
+            localStorage.setItem("cargo_guardar",cargo);
+            localStorage.setItem("sector_guardar",sector);
+            localStorage.setItem("profesion_guardar",profesion);
+            localStorage.setItem("salario_guardar",salario);
+            localStorage.setItem("experiencia_guardar",experiencia);
+            localStorage.setItem("nivel_guardar",nivel);
+            localStorage.setItem("descripcion_guardar",descripcion);
+            guardarVacante();
         }
 
-        function agregarCliente() {
-            location.href = "registro_cliente.html"
+        function Denunciar(id) {
+            $("#btnDen"+id).hide();
+            $("#comboDen"+id).show();
+            //alert("Denuncia: "+id)
         }
 
-        function abrirPaginaFacebook() {
+        function GuardarDenuncia(id){
+            //alert("Guardar: "+id+" Motivo: "+$("#selectMotivoDenuncia"+id).val());
+            var denuncia = new Object();
+            denuncia.Fecha = null;
+            denuncia.Tipo = $("#selectMotivoDenuncia"+id+" option:selected").html();
+            denuncia.vacanteID = id;
 
+            $.ajax({
+                url: 'http://apiempleo.apphb.com/api/Vacante/agregarDenuncia',
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify(denuncia),
+                success: function (data, textStatus, xhr) {
+                    alert(data);
+                    if(data=="Denuncia creada correctamente"){
+                        $("#btnDen"+id).show();
+                        $("#comboDen"+id).hide();
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+
+        function CancelarDenuncia(id){
+            $("#btnDen"+id).show();
+            $("#comboDen"+id).hide();
+        }
+
+        function yaAgregado(){
+            alert("La vacante ya ha sido agregada como favorita.");
+        }
+
+        function abrirPaginaFacebook(nombre, id) {
             window.open("https://www.facebook.com/share.php?u=https://www.mintransporte.gov.co/noticias.php/", "_blank", "closebuttoncaption=Regresar");
         }
 
-        function abrirPaginaTwitter() {
-
-            window.open("https://twitter.com/home?status=He visto vacante en la app Empleo App, la cuál puede interesarte " + " " + "https://www.mintransporte.gov.co/noticias.php/", "_blank", "closebuttoncaption=Regresar");
+        function abrirPaginaTwitter(nombre, id) {
+            window.open("https://twitter.com/home?status=Oportunidad de trabajo: " + "Nombre vacante" + "https://www.mintransporte.gov.co/noticias.php/", "_blank", "closebuttoncaption=Regresar");
         }
 
-        function cargar_niveles() {
-            $("#select_nivel>option").remove();
+        function cargarDeptos(){
+            MostrarDivCargando();
+            $("#selectDepartamentos>option").remove();
             var texto = "";
-            var url = "http://servicedatosabiertoscolombia.cloudapp.net/v1/Unidad_Administrativa_Especial_Servicio_Publico_de_Empleo/niveleducativo?$format=json";
+            var url = "http://www.dane.gov.co/Divipola/ControladorDivipola?tipoConsulta=depa";
             $.ajax({
                 url: url,
                 type: 'GET',
-                dataType: 'jsonp',
+                dataType: 'xml',
                 crossDomain: true,
+                contentType: "application/xml; charset=utf-8",
                 success: function (data) {
-                    $.each(data, function (i, field) {
-                        var cant = field.length;
-                        $.each(field, function (x, item) {
-                            texto += " <option value='" + field[x].ided + "'>" + field[x].niveleductivo + "</option>";
-                        });
-                        $("#select_nivel").append(texto);
-                        $("#select_nivel").val("4");
-                        if (localStorage.getItem('Nivel')) {
-                            $("#select_nivel").val(localStorage.getItem('Nivel'));
-                        }
+                    $(data).find('DEPARTAMENTO').each(function () {
+                        var CODIGO_DEPARTAMENTO = $(this).find('CODIGO_DEPARTAMENTO').text();
+                        var NOMBRE_DEPARTAMENTO = $(this).find('NOMBRE_DEPARTAMENTO').text();
+                        texto += " <option value='" + CODIGO_DEPARTAMENTO + "'>" + NOMBRE_DEPARTAMENTO + "</option>";
                     });
+                    //alert(texto);
+                    $("#selectDepartamentos").append(texto);
+                    //$("#selectDepartamentos").val("4");
+                    if (localStorage.getItem('Departamento')) {
+                        $("#selectDepartamentos").val(localStorage.getItem('Departamento'));
+                    }
+                    else{
+                        localStorage.setItem('Departamento', $("#selectDepartamentos").val());
+                    }
+                    cargarMunicipios();
+                    //OcultarDivCargando();
                 },
                 error: function (x, y, z) {
-
+                    OcultarDivCargando();
+                    alert("Ha ocurrido un problema, inténtelo nuevamente.");
                 },
-                timeout: 15000
+                timeout: 60000
+            });
+        }
+
+        function cargarMunicipios(){
+            MostrarDivCargando();
+            $("#selectMunicipios>option").remove();
+            var texto = "";
+            var url = "http://www.dane.gov.co/Divipola/ControladorDivipola?tipoConsulta=municpio&idDepa="+$("#selectDepartamentos").val();
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'xml',
+                crossDomain: true,
+                contentType: "application/xml; charset=utf-8",
+                success: function (data) {
+                    $(data).find('MUNICIPIO').each(function () {
+                        var CODIGO_DPTO_MPIO = $(this).find('CODIGO_DPTO_MPIO').text();
+                        var NOMBRE_MUNICIPIO = $(this).find('NOMBRE_MUNICIPIO').text();
+                        texto += " <option value='" + CODIGO_DPTO_MPIO + "'>" + NOMBRE_MUNICIPIO + "</option>";
+                    });
+                    //alert(texto);
+                    $("#selectMunicipios").append(texto);
+                    //$("#selectDepartamentos").val("4");
+                    if (localStorage.getItem('Municipio')) {
+                        $("#selectMunicipios").val(localStorage.getItem('Departamento'));
+                    }
+                    else{
+                        localStorage.setItem('Municipio', $("#selectMunicipios").val());
+                    }
+                    OcultarDivCargando();
+                },
+                error: function (x, y, z) {
+                    OcultarDivCargando();
+                    alert("Ha ocurrido un problema, inténtelo nuevamente.")
+                },
+                timeout: 60000
             });
         }
 
         $(document).ready(function () {
-            cargar_niveles();
-            if (localStorage.getItem('Departamento')) {
-                $("#selectDepartamentos").val(localStorage.getItem('Departamento'));
+            configurar_db();
+            if (localStorage.getItem('Nivel')) {
+                $("#selectNivel").val(localStorage.getItem('selectNivel'));
             }
-            if (localStorage.getItem('Municipio')) {
-                $("#selectMunicipios").val(localStorage.getItem('Municipio'));
+            if (localStorage.getItem('Oportunidad')) {
+                $("#selectTipoOportunidad").val(localStorage.getItem('Oportunidad'));
             }
+            if (localStorage.getItem('Salario')) {
+                $("#selectSalario").val(localStorage.getItem('Salario'));
+            }
+            if (localStorage.getItem('Experiencia')) {
+                $("#selectExperiencia").val(localStorage.getItem('Experiencia'));
+            }
+            cargarDeptos();
         });
 
     </script>
