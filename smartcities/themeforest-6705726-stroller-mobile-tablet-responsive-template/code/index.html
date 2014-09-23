@@ -19,6 +19,30 @@
             margin: 0px 0px 0px 47px;
         }
     </style>
+
+    
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+    <!-- This css is to ensure that the google map contols (zoom bar etc) show and size correctly. -->
+    <style>
+        #map_canvas img {
+            max-width: none;
+        }
+    </style>
+
+    <!-- This css is to give a nice big popup "info window" when a marker is clicked on the map -->
+    <style>
+        .infoDiv {
+            height: 220px;
+            width: 200px;
+            -webkit-user-select: none;
+            background-color: white;
+        }
+
+        div {
+            overflow:visible;
+        }
+    </style>
+
     <script type="text/javascript" src="scripts/jquery.js"></script>
     <script type="text/javascript" src="scripts/jqueryui.js"></script>
     <script type="text/javascript" src="scripts/owl.carousel.min.js"></script>
@@ -30,6 +54,11 @@
     <script type="text/javascript" src="scripts/framework.js"></script>
     <script type="text/javascript" src="scripts/framework.launcher.js"></script>
     <script type="text/javascript" src="scripts/bd.js"></script>
+    
+    <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+    <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
+    <script type="text/javascript" src="scripts/map.js"></script>
+
 </head>
 <body>
     <div id="preloader">
@@ -239,9 +268,12 @@
                                value="Consultar lista de vacantes" data-formid="contactForm" onclick="enviar();" />
                         <br />
                         <input type="submit" class="buttonWrap button button-dark contactSubmitButton" id="mapButton"
-                               value="Ver vacantes en el mapa" data-formid="contactForm" onclick="mostrarMapa();" />
+                               value="Ver vacantes en el mapa" data-formid="contactForm" onclick="cargarVacantesMapa();" />
                     </div>
                 </div>
+                <div class="decoration">
+                </div>
+                <div id="map_canvas" style="height: 400px;"></div>
                 <div class="decoration">
                 </div>
                 <div id="ofertas">
