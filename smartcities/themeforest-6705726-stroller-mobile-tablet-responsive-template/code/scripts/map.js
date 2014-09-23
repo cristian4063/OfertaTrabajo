@@ -1,6 +1,6 @@
 // This code tells the browser to execute the "Initialize" method only when the complete document model has been loaded. -->
 $(document).ready(function () {
-    Initialize();
+    $("#map_canvas").hide();
 });
 
 function Initialize() {
@@ -65,24 +65,46 @@ function Initialize() {
 }
 
 function cargarVacantesMapa() {
+
+    MostrarDivCargando();
+
     var palabra = "mensajero AND moto AND bachiller";
-    var tipo = $("#selectTipoOportunidad").val(); // Empleo
-    var salario = $("#selectSalario").val(); // 1 SMMLV hasta 2 SMMLV
-    var experiencia = $("#selectExperiencia").val(); // De 13 a 24 meses
-    var nivel = $("#selectNivel").val(); // MEDIA (10 - 13)
-    var municipio = $("#selectMunicipios").val(); // Manizales
+    var tipo = "1"; // Empleo
+    var salario = "2"; // 1 SMMLV hasta 2 SMMLV
+    var experiencia = "3"; // De 13 a 24 meses
+    var nivel = "5"; // MEDIA (10 - 13)
+    var municipio = "17001"; // Manizales
     $.ajax({
         url: 'http://apiempleo.apphb.com/api/Vacante/obtenerVacantesMapa?palabra=' + palabra + '&tipo=' + tipo + '&salario=' + salario + '&experiencia=' + experiencia + '&nivel=' + nivel + '&municipio=' + municipio,
         type: 'POST',
         dataType: 'json',
         success: function (data, textStatus, xhr) {
+            var cantidad = data.length;
+            if(cantidad==0){
+                alert("No existen vacantes con los filtros seleccionados, intente seleccionando valores diferentes.")
+            }
             $.each(data, function (i, val) {
                 alert(val['Titulo']);
                 alert(val['Latitud']);
+                alert(val['Longitud']);
             });
+            Initialize();
+            $("#map_canvas").show();
+            OcultarDivCargando();
         },
         error: function (xhr, textStatus, errorThrown) {
-            alert(errorThrown);
+            alert("Ha ocurrido un problema, inténtelo nuevamente.");
+            OcultarDivCargando();
         }
     });
+}
+
+//Ocultar Div cargando...
+function OcultarDivCargando(data) {
+    $('#loading').css("display", "none");
+}
+
+//Mostrar Div cargando...
+function MostrarDivCargando(data) {
+    $('#loading').css("display", "block");
 }

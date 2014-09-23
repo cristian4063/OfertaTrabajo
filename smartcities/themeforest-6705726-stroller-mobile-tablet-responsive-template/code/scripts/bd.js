@@ -1,5 +1,6 @@
 var id = 0;
 var listaId = "";
+var listData = [];
 
 function configurar_db() {
 
@@ -57,6 +58,9 @@ function operacionEfectuada() {
 
 function cargarOfertas(palabra)
 {
+    var map_canvas = $("#map_canvas");
+    map_canvas.empty();
+
     MostrarDivCargando();
     var vectorConectores = ["a", "ante", "bajo", "con", "contra", "de", "desde", "en", "entre","hacia","hasta","para","por","según","segun","sin", "sobre","tras", " ", "  ", "   ", ""];
     //alert(palabra);
@@ -228,12 +232,100 @@ function cargarOfertas(palabra)
             alert("Ha ocurrido un problema, inténtelo nuevamente.");
         }
     });
-        
+}
 
-    
+function cargarVacantesMapa() {
 
-    
+    var ofertas = $("#ofertas");
+    ofertas.empty();
 
+    MostrarDivCargando();
+
+    var palabra = "mensajero AND moto AND bachiller";
+    var tipo = "1"; // Empleo
+    var salario = "2"; // 1 SMMLV hasta 2 SMMLV
+    var experiencia = "3"; // De 13 a 24 meses
+    var nivel = "5"; // MEDIA (10 - 13)
+    var municipio = "17001"; // Manizales
+    $.ajax({
+        url: 'http://apiempleo.apphb.com/api/Vacante/obtenerVacantesMapa?palabra=' + palabra + '&tipo=' + tipo + '&salario=' + salario + '&experiencia=' + experiencia + '&nivel=' + nivel + '&municipio=' + municipio,
+        type: 'POST',
+        dataType: 'json',
+        success: function (data, textStatus, xhr) {
+            var cantidad = data.length;
+            if(cantidad==0){
+                alert("No existen vacantes con los filtros seleccionados, intente seleccionando valores diferentes.")
+            }
+            $.each(data, function (i, val) {
+                listData[i] = { "Id": i, "PlaceName": "" + val['Titulo'] + "", "OpeningHours": "9-5, M-F", "GeoLong": "" + val['Latitud'] + "", "GeoLat": "" + val['Longitud'] + "" };
+                //listData[i] = { "Id": 2, "PlaceName": "Merseyside Maritime Museum ", "OpeningHours": "9-1,2-5, M-F", "GeoLong": "53.401217", "GeoLat": "-2.993052" };
+            });
+            Initialize(listData);
+            $("#map_canvas").show();
+            OcultarDivCargando();
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            alert("Ha ocurrido un problema, inténtelo nuevamente.");
+            OcultarDivCargando();
+        }
+    });
+}
+
+function Initialize(data) {
+    // Google has tweaked their interface somewhat - this tells the api to use that new UI
+    google.maps.visualRefresh = true;
+    //var Liverpool = new google.maps.LatLng(53.408841, -2.981397);
+    var city = new google.maps.LatLng(data[0].GeoLong, data[0].GeoLat);
+
+    // These are options that set initial zoom level, where the map is centered globally to start, and the type of map to show
+    var mapOptions = {
+        zoom: 14,
+        center: city,
+        mapTypeId: google.maps.MapTypeId.G_NORMAL_MAP
+    };
+
+    // This makes the div with id "map_canvas" a google map
+    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+    /*var myLatlng = new google.maps.LatLng(53.40091, -2.994464);
+
+    var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map,
+        title: 'Tate Gallery'
+    });
+
+    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')*/
+
+    /*var data = [
+              { "Id": 1, "PlaceName": "Liverpool Museum", "OpeningHours": "9-5, M-F", "GeoLong": "53.410146", "GeoLat": "-2.979919" },
+              { "Id": 2, "PlaceName": "Merseyside Maritime Museum ", "OpeningHours": "9-1,2-5, M-F", "GeoLong": "53.401217", "GeoLat": "-2.993052" },
+              { "Id": 3, "PlaceName": "Walker Art Gallery", "OpeningHours": "9-7, M-F", "GeoLong": "53.409839", "GeoLat": "-2.979447" },
+              { "Id": 4, "PlaceName": "National Conservation Centre", "OpeningHours": "10-6, M-F", "GeoLong": "53.407511", "GeoLat": "-2.984683" }
+    ];*/
+ 
+    // Using the JQuery "each" selector to iterate through the JSON list and drop marker pins
+    $.each(data, function (i, item) {
+        var marker = new google.maps.Marker({
+            'position': new google.maps.LatLng(item.GeoLong, item.GeoLat),
+            'map': map,
+            'title': item.PlaceName
+        });
+
+        // Make the marker-pin blue!
+        marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png')
+
+        // put in some information about each json object - in this case, the opening hours.
+        var infowindow = new google.maps.InfoWindow({
+            content: "<div class='infoDiv'><h2>" + item.PlaceName + "</h2>" + "<div><h4>Opening hours: " + item.OpeningHours + "</h4></div></div>"
+        });
+
+        // finally hook up an "OnClick" listener to the map so it pops up out info-window when the marker-pin is clicked!
+        google.maps.event.addListener(marker, 'click', function () {
+            infowindow.open(map, marker);
+        });
+
+    })
 }
 
 function cerrar()
@@ -272,6 +364,8 @@ $(document).ready(function () {
         $("#opc_Registrar").css("display", "none");
         $("#opc_VerMias").css("display", "none");
     }
+
+    $("#map_canvas").hide();
 
     /*if (localStorage.getItem("nombreUsuario") != null) {
         localStorage.setItem("nombreUsuario", localStorage.getItem("nombreUsuario"));

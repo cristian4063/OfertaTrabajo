@@ -53,11 +53,9 @@
     <script type="text/javascript" src="scripts/custom.js"></script>
     <script type="text/javascript" src="scripts/framework.js"></script>
     <script type="text/javascript" src="scripts/framework.launcher.js"></script>
-    <script type="text/javascript" src="scripts/bd.js"></script>
-    
     <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
     <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
-    <script type="text/javascript" src="scripts/map.js"></script>
+    <script type="text/javascript" src="scripts/bd.js"></script>
 
 </head>
 <body>
@@ -370,63 +368,13 @@
             }
         }
 
-        function agregarFavoritos(id, titulo, empleador, municipio, vacantes, cargo, sector, profesion, salario, experiencia, nivel, descripcion) {
+        function agregarFavoritos(id) {
             //$("#estrella" + id).attr("src", "images/estrella_llena.png")
-            //alert("Favoritos: "+id);
-            localStorage.setItem("id_guardar",id);
-            localStorage.setItem("titulo_guardar",titulo);
-            localStorage.setItem("empleador_guardar",empleador);
-            localStorage.setItem("municipio_guardar",municipio); 
-            localStorage.setItem("vacantes_guardar",vacantes);
-            localStorage.setItem("cargo_guardar",cargo);
-            localStorage.setItem("sector_guardar",sector);
-            localStorage.setItem("profesion_guardar",profesion);
-            localStorage.setItem("salario_guardar",salario);
-            localStorage.setItem("experiencia_guardar",experiencia);
-            localStorage.setItem("nivel_guardar",nivel);
-            localStorage.setItem("descripcion_guardar",descripcion);
-            guardarVacante();
+            alert("Favoritos: "+id);
         }
 
         function Denunciar(id) {
-            $("#btnDen"+id).hide();
-            $("#comboDen"+id).show();
-            //alert("Denuncia: "+id)
-        }
-
-        function GuardarDenuncia(id){
-            //alert("Guardar: "+id+" Motivo: "+$("#selectMotivoDenuncia"+id).val());
-            var denuncia = new Object();
-            denuncia.Fecha = null;
-            denuncia.Tipo = $("#selectMotivoDenuncia"+id+" option:selected").html();
-            denuncia.vacanteID = id;
-
-            $.ajax({
-                url: 'http://apiempleo.apphb.com/api/Vacante/agregarDenuncia',
-                type: 'POST',
-                dataType: 'json',
-                contentType: "application/json",
-                data: JSON.stringify(denuncia),
-                success: function (data, textStatus, xhr) {
-                    alert(data);
-                    if(data=="Denuncia creada correctamente"){
-                        $("#btnDen"+id).show();
-                        $("#comboDen"+id).hide();
-                    }
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    alert(errorThrown);
-                }
-            });
-        }
-
-        function CancelarDenuncia(id){
-            $("#btnDen"+id).show();
-            $("#comboDen"+id).hide();
-        }
-
-        function yaAgregado(){
-            alert("La vacante ya ha sido agregada como favorita.");
+            alert("Denuncia: "+id)
         }
 
         function abrirPaginaFacebook(nombre, id) {
@@ -511,7 +459,6 @@
         }
 
         $(document).ready(function () {
-            configurar_db();
             if (localStorage.getItem('Nivel')) {
                 $("#selectNivel").val(localStorage.getItem('selectNivel'));
             }
