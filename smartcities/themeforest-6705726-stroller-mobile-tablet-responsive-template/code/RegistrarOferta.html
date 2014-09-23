@@ -113,7 +113,7 @@
                 INFORMACIÓN
             </div>
             <div class="navigation-item">
-                <a href="faqs.html" class="nav-item home-faqs">Preguntas Frecuentes<em class="selected-item"></em></a>
+                <a href="faqs.html" class="nav-item home-faqs">Preguntas Frecuentes<em class="unselected-item"></em></a>
             </div>
             <div class="sidebar-decoration">
             </div>
@@ -136,23 +136,27 @@
         </div>
         
         <div class="page-header-clear"></div>
-        <div class="decoration"></div>
-        
         <div class="content" id="formularioVacante">
-            <div class="decoration"></div>
+            <div class="decoration">
+            </div>
+            <div class="container no-bottom" style="text-align: center;">
+                <h3>
+                    PUBLICAR NUEVA VACANTE
+                </h3>
+            </div>
+            <div class="decoration">
+            </div>
+            <div class="container no-bottom">
+                <div class="big-notification blue-notification">
+                    <h4>
+                        En esta sección, podrá especificar las características de la vacante y del trabajador que requiere, y publicarla de manera inmediata y gratuita
+                    </h4>
+                    <a href="#" class="close-big-notification">X</a>
+                </div>
+            </div>
             <div>
-                <h4>Ingrese los datos</h4>
-                <p>Use este formulario para registrar una nueva vacante de empleo</p>
                 <div class="container no-bottom">
                     <div class="contact-form no-bottom"> 
-                        <div class="formSuccessMessageWrap" id="formSuccessMessageWrap">
-                            <div class="big-notification green-notification">
-                                <h3 class="uppercase">Message Sent </h3>
-                                <a href="#" class="close-big-notification">x</a>
-                                <p>Your message has been successfuly sent. Please allow up to 48 hours for a reply! Thank you!</p>
-                            </div>
-                        </div>
-                    
                         <form action="php/contact.php" method="post" class="contactForm" id="contactForm">
                             <fieldset>
                                 <div class="formValidationError" id="contactMessageTextareaError">

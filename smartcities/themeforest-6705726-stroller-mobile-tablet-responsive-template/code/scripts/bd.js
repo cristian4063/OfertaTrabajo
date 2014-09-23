@@ -257,7 +257,7 @@ function cargarVacantesMapa() {
                 alert("No existen vacantes con los filtros seleccionados, intente seleccionando valores diferentes.")
             }
             $.each(data, function (i, val) {
-                listData[i] = { "Id": i, "PlaceName": "" + val['Titulo'] + "", "OpeningHours": "9-5, M-F", "GeoLong": "" + val['Latitud'] + "", "GeoLat": "" + val['Longitud'] + "" };
+                listData[i] = { "Id": i, "PlaceName": "" + val['Titulo'] + "", "OpeningHours": "9-5, M-F", "GeoLat": "" + val['Latitud'] + "", "GeoLong": "" + val['Longitud'] + "" };
                 //listData[i] = { "Id": 2, "PlaceName": "Merseyside Maritime Museum ", "OpeningHours": "9-1,2-5, M-F", "GeoLong": "53.401217", "GeoLat": "-2.993052" };
             });
             Initialize(listData);
@@ -275,7 +275,7 @@ function Initialize(data) {
     // Google has tweaked their interface somewhat - this tells the api to use that new UI
     google.maps.visualRefresh = true;
     //var Liverpool = new google.maps.LatLng(53.408841, -2.981397);
-    var city = new google.maps.LatLng(data[0].GeoLong, data[0].GeoLat);
+    var city = new google.maps.LatLng(data[0].GeoLat, data[0].GeoLong);
 
     // These are options that set initial zoom level, where the map is centered globally to start, and the type of map to show
     var mapOptions = {
@@ -307,13 +307,13 @@ function Initialize(data) {
     // Using the JQuery "each" selector to iterate through the JSON list and drop marker pins
     $.each(data, function (i, item) {
         var marker = new google.maps.Marker({
-            'position': new google.maps.LatLng(item.GeoLong, item.GeoLat),
+            'position': new google.maps.LatLng(item.GeoLat, item.GeoLong),
             'map': map,
             'title': item.PlaceName
         });
 
         // Make the marker-pin blue!
-        marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png')
+        marker.setIcon('images/marker.png')
 
         // put in some information about each json object - in this case, the opening hours.
         var infowindow = new google.maps.InfoWindow({
