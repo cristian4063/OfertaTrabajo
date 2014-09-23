@@ -1,4 +1,4 @@
-/*Epsilon Framework Version 2*/
+﻿/*Epsilon Framework Version 2*/
 /*Framework author: Enabled*/
 /*License: This stylesheet cannot be resold by anyone else except Enabled and Cosmin Cotor*/
 
@@ -923,7 +923,7 @@ table tr:hover td{
 }
 
 .blue-bubble{
-	background-color:#F36C21!important;
+	background-color:#E84427!important;
 	color:#FFFFFF!important;
 	border:none!important;
 }
@@ -1220,7 +1220,7 @@ table tr:hover td{
 }
 
 .blue-notification{
-	background-color:#FBB036;
+	background-color:#F9B234;
 	color:#FFFFFF;	
 }
 
@@ -1241,7 +1241,7 @@ table tr:hover td{
 }
 
 .big-notification h4{
-	font-family:'DinProBold', sans-serif;
+	font-family:'DinProLight', sans-serif;
 	font-weight:400;
 	color:#FFFFFF;
 	margin-bottom:5px;
@@ -1376,7 +1376,7 @@ table tr:hover td{
 }
 
 .toggle-1, .toggle-2, .toggle-3{
-	background-color:#eeeeee;   
+	background-color:#93B4AF;   
 }
 
 .toggle-3{

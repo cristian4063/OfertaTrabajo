@@ -34,9 +34,88 @@
     <script type="text/javascript" src="scripts/framework.js"></script>
     <script type="text/javascript" src="scripts/framework.launcher.js"></script>
     <script type="text/javascript" src="scripts/bd.js"></script>
+    <style type="text/css">
+        .CargandoModalBackground
+        {
+            overflow: hidden;
+            background-color: Gray;
+            filter: alpha(opacity=50);
+            opacity: 0.5;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            text-align: center;
+            vertical-align: middle;
+            padding-top: 200px;
+            padding-bottom: 36%;
+            padding-left: 50%;
+            padding-right: 51%;
+            display: none;
+            z-index: 999;
+            height: 100%;
+        }
+    </style>
     <script>
+        var pagina_actual = 1;
+        var ultima_pagina = 1;
+        var primera_pagina = 1;
+        var numero_items = 0;
 
-    function cargar_preguntas() {
+        function Paginacion() {
+            $('#preguntas .todas').hide();
+            $('#preguntas .' + primera_pagina).show();
+        }
+
+        function paginarSiguiente() {
+            if (pagina_actual != ultima_pagina) {
+                $('#preguntas .todas').hide();
+                pagina_actual = pagina_actual + 1;
+                if (pagina_actual == ultima_pagina) {
+                    $('#flechas_paginacion_der').hide();
+                    $('#flechas_paginacion_izq').show();
+                }
+                else {
+                    $('#flechas_paginacion_der').show();
+                    $('#flechas_paginacion_izq').show();
+                }
+                $('#preguntas .' + pagina_actual).show();
+                items_pagina = (5 * (pagina_actual - 1)) + 1;
+                if (pagina_actual == ultima_pagina) {
+                    items_final = numero_items;
+                }
+                else {
+                    items_final = 5 * pagina_actual;
+                }
+                $('#label_registros').text("FAQs " + items_pagina + " a " + items_final + " de " + cont);
+            }
+        }
+
+        function paginarAnterior() {
+            if (pagina_actual != primera_pagina) {
+                $('#preguntas .todas').hide();
+                pagina_actual = pagina_actual - 1;
+                if (pagina_actual == primera_pagina) {
+                    $('#flechas_paginacion_izq').hide();
+                    $('#flechas_paginacion_der').show();
+                }
+                else {
+                    $('#flechas_paginacion_izq').show();
+                    $('#flechas_paginacion_der').show();
+                }
+                $('#preguntas .' + pagina_actual).show();
+                items_pagina = (5 * (pagina_actual - 1)) + 1;
+                if (pagina_actual == 1) {
+                    items_final = 5;
+                }
+                else {
+                    items_final = 5 * pagina_actual;
+                }
+                $('#label_registros').text("FAQs " + items_pagina + " a " + items_final + " de " + cont);
+            }
+        }
+
+        function cargar_preguntas() {
+            $('#loading').css("display", "block");
             var texto = "";
             
             var url = "http://apiempleo.apphb.com/api/Vacante/obtenerFAQs";
@@ -46,30 +125,75 @@
                 dataType: 'json',
                 crossDomain: true,
                 success: function (data, textStatus, xhr) {
+                    pagina_actual = 1;
+                    ultima_pagina = 1;
+                    primera_pagina = 1;
+                    numero_items = 0;
+                    pagina = 1;
+                    numeropp = 0;
+                    cont = 0;
 
                     $.each(data, function (i, val) {
                         //alert(val['Titulo']);
-                        texto+='<div class="clear" style="height: 10px;">'+
-                    '</div>'+
-                    '<em class="speach-left-title">'+
-                        '<h3>'+
-                            'Pregunta:</h3>'+
-                    '</em>'+
-                    '<p class="speach-left">'+
-                        val['Pregunta'] + '</p>'+
-                    '<em class="speach-right-title">'+
-                        '<h3>'+
-                            'Respuesta:</h3>'+
-                    '</em>'+
-                    '<p class="speach-right blue-bubble">'+
-                        val['Respuesta'] +'</p>'+
-                    '<div class="decoration">'+
-                    '</div>';
+                        texto+='<div class="todas ' + pagina + '"><div class="clear" style="height: 10px;">'+
+                        '</div>'+
+                        '<em class="speach-left-title">'+
+                            '<h3>'+
+                                'Pregunta:</h3>'+
+                        '</em>'+
+                        '<p class="speach-left">'+
+                            val['Pregunta'] + '</p>'+
+                        '<em class="speach-right-title">'+
+                            '<h3>'+
+                                'Respuesta:</h3>'+
+                        '</em>'+
+                        '<p class="speach-right blue-bubble">'+
+                            val['Respuesta'] +'</p>'+
+                        '<div class="decoration">'+
+                        '</div></div>';
+
+                        cont++;
+                        numeropp++;
+
+                        if (numeropp == 5) {
+                            pagina++;
+                            numeropp = 0;
+                        }
                     });
+
+                    numero_items = cont;
+
+                    if (cont < 5) {
+                        $('#label_registros').text("FAQs 1 a " + cont + " de " + cont);
+                    }
+                    else {
+                        $('#label_registros').text("FAQs 1 a " + 5 * pagina_actual + " de " + cont);
+                    }
+
+                    if (cont % 5 == 0) {
+                        ultima_pagina = pagina - 1;
+                    }
+                    else {
+                        ultima_pagina = pagina;
+                    }
+
+                    if (ultima_pagina < 2) {
+                        $('#flechas_paginacion_izq').hide();
+                        $('#flechas_paginacion_der').hide();
+                    }
+                    else {
+                        $('#flechas_paginacion_izq').hide();
+                        $('#flechas_paginacion_der').show();
+                    }
+
                     $("#preguntas").html(texto);
+                    $('#preguntas .todas').hide();
+                    $('#preguntas .' + primera_pagina).show();
+                    $('#loading').css("display", "none");
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     alert(errorThrown);
+                    $('#loading').css("display", "none");
                 }
             });
         }
@@ -110,20 +234,6 @@
                 <div class="navigation-item">
                     <a href="index.html" class="nav-item home-icon">Oportunidades de empleo<em class="selected-item"></em></a>
                 </div>
-                <!--<div class="sidebar-decoration">
-            </div>
-            <div class="navigation-item">
-                <a href="lista_ofertas.html" class="nav-item home-diagnostic">
-                    Listado de vacantes<em class="selected-item"></em>
-                </a>
-            </div>
-            <div class="sidebar-decoration">
-            </div>
-            <div class="navigation-item">
-                <a href="ConsultarOfertasMapa.html" class="nav-item home-locales">
-                    Vacantes en el mapa<em class="unselected-item"></em>
-                </a>
-            </div>-->
                 <div class="sidebar-decoration">
                 </div>
                 <div class="navigation-item">
@@ -193,16 +303,28 @@
                 </div>
                 <div class="container no-bottom">
                     <div class="big-notification blue-notification">
-                        <h4 class="uppercase">
-                            AYUDA</h4>
-                        <a href="#" class="close-big-notification">x</a>
-                        <p>
-                            Encuentre las dudas más frecuentes de la comunidad</p>
+                        <h4>
+                            En esta sección encontrará respuesta a las preguntas más frecuentes sobre el funcionamiento del app</h4>
+                        <a href="#" class="close-big-notification">X</a>
                     </div>
                 </div>
                 <div id="preguntas" class="container no-bottom">
                 </div>
-                
+                <div>
+                    <h3>
+                        <label id="label_registros" style="text-align: center; color: black;">
+                        </label>
+                    </h3>
+                </div>
+                <div class="container no-bottom">
+                    <div style="float: left;">
+                        <img onclick="paginarAnterior()" id="flechas_paginacion_izq" src="images/flecha_izquierda.png" alt="Página anterior" style="width: 35px;" />
+                    </div>
+                    <div style="float: right;">
+                        <img onclick="paginarSiguiente()" id="flechas_paginacion_der" src="images/flecha_derecha.png" alt="Página anterior" style="width: 35px;" />
+                    </div>
+                </div>
+                <br />
                 <div class="container">
                     <div class="footer-socials" style="width:100%;">
                         <div style="float:left;width:50%;">
@@ -213,11 +335,13 @@
                             <a href="#" class="goup-footer" style="float:right;"></a>
                         </div>
                     </div>
-                   <p class="copyright uppercase center-text no-bottom">SERVICIO DE EMPLEO 2014<br> Todos los derechos reservados</p>      
+                   <p class="copyright uppercase center-text no-bottom">SERVICIO DE EMPLEO MÓVIL 2014<br> Todos los derechos reservados</p>      
                 </div>
+            </div>
+            <div id="loading" class="CargandoModalBackground">
+                <img src="images/bx_loader.gif" alt="loding" class="CargandoModalBackgroundImage" />
             </div>
         </div>
     </div>
-    
 </body>
 </html> 
