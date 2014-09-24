@@ -22,7 +22,8 @@ body {
 	background-color:#FFFFFF;
 	z-index:10;
 	display:block;
-	min-height:580px;		
+	min-height:580px;
+    overflow: auto;	
 }
 
 .page-content-wrapper{
