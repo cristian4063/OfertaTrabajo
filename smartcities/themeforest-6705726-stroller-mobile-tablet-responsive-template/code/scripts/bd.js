@@ -63,7 +63,7 @@ function cargarOfertas(palabra)
 
     MostrarDivCargando();
     var vectorConectores = ["a", "ante", "bajo", "con", "contra", "de", "desde", "en", "entre","hacia","hasta","para","por","según","segun","sin", "sobre","tras", " ", "  ", "   ", ""];
-    //alert(palabra);
+
     if(palabra != ""){
         palabra = palabra.trim();
         var palabrasSeparadas = palabra.split(" ");
@@ -86,7 +86,7 @@ function cargarOfertas(palabra)
 
         palabra = fraseDefinitiva;
     }
-    //alert(palabra);
+
     var texto = "";
     var ofertas = $("#ofertas");
     ofertas.empty();
@@ -234,34 +234,64 @@ function cargarOfertas(palabra)
     });
 }
 
-function cargarVacantesMapa() {
+function cargarVacantesMapa(palabra) {
 
     var ofertas = $("#ofertas");
     ofertas.empty();
 
     MostrarDivCargando();
 
-    var palabra = "mensajero AND moto AND bachiller";
-    var tipo = "1"; // Empleo
-    var salario = "2"; // 1 SMMLV hasta 2 SMMLV
-    var experiencia = "3"; // De 13 a 24 meses
-    var nivel = "5"; // MEDIA (10 - 13)
-    var municipio = "17001"; // Manizales
+    var vectorConectores = ["a", "ante", "bajo", "con", "contra", "de", "desde", "en", "entre","hacia","hasta","para","por","según","segun","sin", "sobre","tras", " ", "  ", "   ", ""];
+
+    if(palabra != ""){
+        palabra = palabra.trim();
+        var palabrasSeparadas = palabra.split(" ");
+        var fraseDefinitiva = "";
+        var palabraAuxiliar = "";
+
+        for (x=0;x<palabrasSeparadas.length;x++){
+            palabraAuxiliar = palabrasSeparadas[x];
+            palabrasSeparadas[x] = palabraAuxiliar.trim().toLowerCase();
+        }
+
+        fraseDefinitiva += palabrasSeparadas[0];
+
+        for (x=1;x<palabrasSeparadas.length;x++){
+            if($.inArray(palabrasSeparadas[x], vectorConectores) == -1){
+                fraseDefinitiva+=" AND ";
+                fraseDefinitiva += palabrasSeparadas[x];
+            }
+        }
+
+        palabra = fraseDefinitiva;
+    }
+
+    var nom_mun = localStorage.getItem('NombreMunicipio'); 
+    var nom_sal = localStorage.getItem('NombreSalario'); 
+    var nom_exp = localStorage.getItem('NombreExperiencia'); 
+    var nom_niv = localStorage.getItem('NombreNivel'); 
+    var municipio = localStorage.getItem('Municipio'); 
+    var tipo = localStorage.getItem('Oportunidad');   
+    var salario =  localStorage.getItem('Salario');
+    var experiencia = localStorage.getItem('Experiencia');
+    var nivel = localStorage.getItem('Nivel');
+    var vacantesGuardadas = localStorage.getItem("vacantesGuardadas");
     $.ajax({
         url: 'http://apiempleo.apphb.com/api/Vacante/obtenerVacantesMapa?palabra=' + palabra + '&tipo=' + tipo + '&salario=' + salario + '&experiencia=' + experiencia + '&nivel=' + nivel + '&municipio=' + municipio,
         type: 'POST',
         dataType: 'json',
         success: function (data, textStatus, xhr) {
             var cantidad = data.length;
-            if(cantidad==0){
-                alert("No existen vacantes con los filtros seleccionados, intente seleccionando valores diferentes.")
+            if(cantidad != 0){
+                $.each(data, function (i, val) {
+                    listData[i] = { "Id": i, "PlaceName": "" + val['Titulo'] + "", "OpeningHours": "9-5, M-F", "GeoLat": "" + val['Latitud'] + "", "GeoLong": "" + val['Longitud'] + "" };
+                });
+                Initialize(listData);
+                $("#map_canvas").show();
             }
-            $.each(data, function (i, val) {
-                listData[i] = { "Id": i, "PlaceName": "" + val['Titulo'] + "", "OpeningHours": "9-5, M-F", "GeoLat": "" + val['Latitud'] + "", "GeoLong": "" + val['Longitud'] + "" };
-                //listData[i] = { "Id": 2, "PlaceName": "Merseyside Maritime Museum ", "OpeningHours": "9-1,2-5, M-F", "GeoLong": "53.401217", "GeoLat": "-2.993052" };
-            });
-            Initialize(listData);
-            $("#map_canvas").show();
+            else {
+                alert("No existen vacantes con los filtros seleccionados, intente seleccionando valores diferentes.");
+            }
             OcultarDivCargando();
         },
         error: function (xhr, textStatus, errorThrown) {
@@ -346,6 +376,7 @@ function MostrarDivCargando(data) {
 
 $(document).ready(function () {
 
+    configurar_db();
     /*var d = new Date();
     d.getHours();
     d.getMinutes();
