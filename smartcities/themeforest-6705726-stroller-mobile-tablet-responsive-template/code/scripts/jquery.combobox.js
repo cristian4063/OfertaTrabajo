@@ -3428,6 +3428,8 @@ $.widget( "ui.tooltip", {
               .attr("title", value + " no se encuentra en la lista")
               .tooltip("open");
             this.element.val("");
+            $('input.ui-autocomplete-input:eq(1)').val("");
+            $('#selectMunicipios').empty();
             this._delay(function () {
                 this.input.tooltip("close").attr("title", "");
             }, 2500);

@@ -385,6 +385,7 @@
                 selectFirst: true,
                 select: function (event, ui) {
                     //                    alert(ui.item.text); alert(ui.item.value);
+                    $('input.ui-autocomplete-input:eq(1)').val("");
                     cargarMunicipios();
                 },
                 focus: function (event, ui) { event.preventDefault(); }
@@ -394,13 +395,10 @@
                 selectFirst: true,
                 focus: function (event, ui) { event.preventDefault(); }
             });
+
             $("#toggle").click(function () {
                 $("#selectMunicipios").toggle();
             });
-
-            $('#combobox option:first').attr('selected', 'selected');
-            $('input.ui-autocomplete-input').val($('#combobox option:first').text());
-
         });
 
         function mostrarMapa() {
@@ -428,13 +426,12 @@
         }
 
         function enviar() {
-            //alert($("#selectDepartamentos").val());
-            //alert($("#selectMunicipios").val());
-            if ($("#selectDepartamentos").val() == null) {
+            //alert($('input.ui-autocomplete-input:eq(0)').val());
+            if ($("#selectDepartamentos").val() == null || $('input.ui-autocomplete-input:eq(0)').val() == "") {
                 alert("Debe seleccionar un departamento.")
             }
             else {
-                if ($("#selectMunicipios").val() == null) {
+                if ($("#selectMunicipios").val() == null || $('input.ui-autocomplete-input:eq(1)').val() == "") {
                     alert("Debe seleccionar un municipio.")
                 }
                 else {
@@ -487,8 +484,6 @@
                         var NOMBRE_DEPARTAMENTO = $(this).find('NOMBRE_DEPARTAMENTO').text();
                         $('#selectDepartamentos').append('<option value=' + CODIGO_DEPARTAMENTO + '>' + NOMBRE_DEPARTAMENTO + '</option>');
                     });
-                    //alert(texto);
-                    //$("#selectDepartamentos").append(texto);
                    
                     if (localStorage.getItem('Departamento')) {
                         $("#selectDepartamentos").val(localStorage.getItem('Departamento'));
@@ -496,9 +491,9 @@
                     else {
                         localStorage.setItem('Departamento', $("#selectDepartamentos").val());
                     }
-
+                    $('input.ui-autocomplete-input:eq(0)').val($('#selectDepartamentos option:selected').text());
                     cargarMunicipios();
-                    //OcultarDivCargando();
+                    OcultarDivCargando();
                 },
                 error: function (x, y, z) {
                     OcultarDivCargando();
@@ -525,14 +520,13 @@
                         var NOMBRE_MUNICIPIO = $(this).find('NOMBRE_MUNICIPIO').text();
                         $('#selectMunicipios').append('<option value=' + CODIGO_DPTO_MPIO + '>' + NOMBRE_MUNICIPIO + '</option>');
                     });
-                    //alert(texto);
-                    //$("#selectMunicipios").append(texto);
                     if (localStorage.getItem('Municipio')) {
                         $("#selectMunicipios").val(localStorage.getItem('Departamento'));
                     }
                     else {
                         localStorage.setItem('Municipio', $("#selectMunicipios").val());
                     }
+                    $('input.ui-autocomplete-input:eq(1)').val($('#selectMunicipios option:selected').text());
                     OcultarDivCargando();
                 },
                 error: function (x, y, z) {
