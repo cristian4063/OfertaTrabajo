@@ -58,8 +58,7 @@ function operacionEfectuada() {
 
 function cargarOfertas(palabra)
 {
-    var map_canvas = $("#map_canvas");
-    map_canvas.empty();
+    $("#map_canvas").empty();
 
     MostrarDivCargando();
     var vectorConectores = ["a", "ante", "bajo", "con", "contra", "de", "desde", "en", "entre","hacia","hasta","para","por","según","segun","sin", "sobre","tras", " ", "  ", "   ", ""];
@@ -347,7 +346,7 @@ function Initialize(data) {
 
         // put in some information about each json object - in this case, the opening hours.
         var infowindow = new google.maps.InfoWindow({
-            content: "<div class='infoDiv'><h2>" + item.PlaceName + "</h2>" + "<div><h4>Opening hours: " + item.OpeningHours + "</h4></div></div>"
+            content: "<div class='infoDiv'><h2>" + item.PlaceName + "</h2><div><input type='submit' class='buttonWrap button button-dark contactSubmitButton' value='Ver detalles' /></div></div>"
         });
 
         // finally hook up an "OnClick" listener to the map so it pops up out info-window when the marker-pin is clicked!
@@ -375,8 +374,6 @@ function MostrarDivCargando(data) {
 }
 
 $(document).ready(function () {
-
-    configurar_db();
     /*var d = new Date();
     d.getHours();
     d.getMinutes();
