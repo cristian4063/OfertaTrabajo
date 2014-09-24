@@ -456,4 +456,6 @@ body .ui-tooltip {
     margin: 0;
     padding: 0.3em;
     width: 150px;
+    border: none;
+    background: none;
 }
