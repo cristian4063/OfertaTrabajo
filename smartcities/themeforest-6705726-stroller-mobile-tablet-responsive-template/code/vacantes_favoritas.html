@@ -19,7 +19,26 @@
             width: 30px;
             margin: 0px 0px 0px 47px;
         }
+
+        .submenu-nav-items a {
+            padding-left: 20px !important;
+            padding-top: 10px !important;
+            padding-bottom: 10px !important;
+            border-bottom: solid 1px rgba(0,0,0,0.1) !important;
+        }
+
+        .vinculo_derecha {
+            float: right;
+            padding-right: 1%;
+        }
+
+        .vinculo_izquierda {
+            float: left;
+            padding-left: 1%;
+            display: none;
+        }
     </style>
+
     <script type="text/javascript" src="scripts/jquery.js"></script>
     <script type="text/javascript" src="scripts/jqueryui.js"></script>
     <script type="text/javascript" src="scripts/owl.carousel.min.js"></script>
@@ -31,6 +50,73 @@
     <script type="text/javascript" src="scripts/framework.js"></script>
     <script type="text/javascript" src="scripts/framework.launcher.js"></script>
     <script type="text/javascript" src="scripts/bd.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            if (doesConnectionExist()) {
+                $("#label-internet-connection").text("Online");
+                $("#div-internet-connection").css("background-color", "#80d580");
+            } else {
+                $("#label-internet-connection").text("Offline");
+                $("#div-internet-connection").css("background-color", "#ec8787");
+            }
+        });
+
+        function agregarCliente() {
+            location.href = "registro_cliente.html"
+        }
+
+        function abrirPaginaFacebook() {
+
+            window.open("https://www.facebook.com/share.php?u=https://www.mintransporte.gov.co/noticias.php/", "_blank", "closebuttoncaption=Regresar");
+        }
+
+        function abrirPaginaTwitter() {
+
+            window.open("https://twitter.com/home?status=He visto esta noticia en la app Viaja Seguro, la cuál puede interesarte " + " " + "https://www.mintransporte.gov.co/noticias.php/", "_blank", "closebuttoncaption=Regresar");
+        }
+
+        function consultarUsuario() {
+            var db = window.openDatabase("bd_reportes", "1.0", "Reporte Vial", 200000);
+            db.transaction(consultar_sesionUsuario, errorConsultar_usuario, function () {
+                console.log("Consultó el usuario")
+            });
+        }
+
+        function consultar_sesionUsuario(tx) {
+            tx.executeSql("SELECT * FROM usuarios", [], validar_sesion_usuario, function (error) {
+                console.log("Error consultado el usuario: " + error)
+            });
+        }
+
+        function validar_sesion_usuario(tx, results) {
+            var len = results.rows.length;
+            if (len > 0) {
+                var n = 0;
+                for (var i = 0; i < len; i++) {
+                    if (results.rows.item(i).usuario == usuario && results.rows.item(i).password == pass) {
+                        localStorage.setItem("nombreUsuario", $("#contactNameField").val());
+                        document.location.href = "lista_ofertas_empleador.html";
+                        n = 1;
+                    }
+                }
+                if (n == 0) {
+                    alert("Los datos son incorrectos.");
+                    location.reload();
+                }
+            }
+            else {
+                alert("Los datos son incorrectos.");
+                location.reload();
+            }
+        }
+
+        function errorConsultar_usuario(err) {
+            console.log(err);
+            alert("Error consultando listado marcadores" + err);
+        }
+
+    </script>
 </head>
 <body>
     <div id="preloader">
@@ -219,147 +305,6 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="container">
-                    <div class="toggle-2">
-                        <a href="#" onclick="guardarNoticia(1)" class="deploy-toggle-2">
-                            Comienza traslado de Avianca al nuevo aeropuerto El Dorado
-                        </a>
-                        <div class="toggle-content">
-                            <p style="text-align:justify;">
-                                <label>
-                                    Fecha Publicación: 01/06/2014</label><br />
-                                A partir de mañana 8 de junio, Avianca estará atendiendo desde el terminal T1 en
-                                el Aeropuerto El Dorado a los viajeros que vuelan entre Bogotá y Barranquilla, Bucaramanga,
-                                Cali, Cartagena, Medellín, Pasto, Pereira y San Andrés.
-                            </p>
-                            <div class="toggle-content">
-                                <p><strong>Datos del Empleador:</strong></p>
-                                <div class="one-half-responsive ">
-                                    <div class="submenu-navigation">
-                                        <div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Tel. 3116099950</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" onclick="consultarProductos('GRANOS PROCESADOS')" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Correo: arturogomez@gmail.com </li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Cliente consumidor de grandes cantidades de naranja</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li>
-                                                    <img src="images/misc/facebook.png" class="star" onclick="abrirPaginaFacebook()">
-                                                    <img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter()"> 
-                                                </li>
-                                            </ul>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="toggle-2">
-                        <a href="#" onclick="guardarNoticia(2)" class="deploy-toggle-2">
-                            Comienza traslado de Avianca al nuevo aeropuerto El Dorado
-                        </a>
-                        <div class="toggle-content">
-                            <p style="text-align:justify;">
-                                <label>
-                                    Fecha Publicación: 01/06/2014</label><br />
-                                A partir de mañana 8 de junio, Avianca estará atendiendo desde el terminal T1 en
-                                el Aeropuerto El Dorado a los viajeros que vuelan entre Bogotá y Barranquilla, Bucaramanga,
-                                Cali, Cartagena, Medellín, Pasto, Pereira y San Andrés.
-                            </p>
-                            <div class="toggle-content">
-                                <p><strong>Datos del Empleador:</strong></p>
-                                <div class="one-half-responsive ">
-                                    <div class="submenu-navigation">
-                                        <div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Tel. 3116099950</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" onclick="consultarProductos('GRANOS PROCESADOS')" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Correo: arturogomez@gmail.com </li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Cliente consumidor de grandes cantidades de naranja</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li>
-                                                    <img src="images/misc/facebook.png" class="star" onclick="abrirPaginaFacebook()">
-                                                    <img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter()"> 
-                                                </li>
-                                            </ul>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="toggle-2">
-                        <a href="#" onclick="guardarNoticia(3)" class="deploy-toggle-2">
-                            Comienza traslado de Avianca al nuevo aeropuerto El Dorado
-                        </a>
-                        <div class="toggle-content">
-                            <p style="text-align:justify;">
-                                <label>
-                                    Fecha Publicación: 01/06/2014</label><br />
-                                A partir de mañana 8 de junio, Avianca estará atendiendo desde el terminal T1 en
-                                el Aeropuerto El Dorado a los viajeros que vuelan entre Bogotá y Barranquilla, Bucaramanga,
-                                Cali, Cartagena, Medellín, Pasto, Pereira y San Andrés.
-                            </p>
-                            <div class="toggle-content">
-                                <p><strong>Datos del Empleador:</strong></p>
-                                <div class="one-half-responsive ">
-                                    <div class="submenu-navigation">
-                                        <div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Tel. 3116099950</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" onclick="consultarProductos('GRANOS PROCESADOS')" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Correo: arturogomez@gmail.com </li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Cliente consumidor de grandes cantidades de naranja</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li>
-                                                    <img src="images/misc/facebook.png" class="star" onclick="abrirPaginaFacebook()">
-                                                    <img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter()"> 
-                                                </li>
-                                            </ul>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
                 <div class="decoration">
                 </div>
                 <div class="container">
@@ -379,44 +324,9 @@
             </div>
         </div>
     </div>
-    </div>
-    <style>
-        .submenu-nav-items a
-        {
-            padding-left: 20px !important;
-            padding-top: 10px !important;
-            padding-bottom: 10px !important;
-            border-bottom: solid 1px rgba(0,0,0,0.1) !important;
-        }
-        
-        .vinculo_derecha
-        {
-            float: right;
-            padding-right: 1%;
-        }
-        
-        .vinculo_izquierda
-        {
-            float: left;
-            padding-left: 1%;
-            display: none;
-        }
-    </style>
-    <script>
-        function agregarCliente() {
-            location.href = "registro_cliente.html"
-        }
-
-        function abrirPaginaFacebook() {
-
-            window.open("https://www.facebook.com/share.php?u=https://www.mintransporte.gov.co/noticias.php/", "_blank", "closebuttoncaption=Regresar");
-        }
-
-        function abrirPaginaTwitter() {
-
-            window.open("https://twitter.com/home?status=He visto esta noticia en la app Viaja Seguro, la cuál puede interesarte " + " " + "https://www.mintransporte.gov.co/noticias.php/", "_blank", "closebuttoncaption=Regresar");
-        }
-
-    </script>
+    <div class="cuadro-internet-connection">
+        <div id="div-internet-connection" class="circulo-internet-connection"></div>
+        <label style="padding-left: 12px;" id="label-internet-connection">Online</label>
+    </div>    
 </body>
 </html> 
