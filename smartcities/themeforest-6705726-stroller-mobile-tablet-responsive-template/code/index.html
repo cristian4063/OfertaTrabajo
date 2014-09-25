@@ -194,9 +194,9 @@
 
         $(document).ready(function () {
             configurar_db();
-            //if (!doesConnectionExist()) {
-            //    location.href = "vacantes_favoritas.html";
-            //}
+            if (!doesConnectionExist()) {
+                location.href = "vacantes_favoritas.html";
+            }
             if (doesConnectionExist()) {
                 $("#label-internet-connection").text("Online");
                 $("#div-internet-connection").css("background-color", "#80d580");
