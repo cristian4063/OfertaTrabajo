@@ -887,22 +887,60 @@ background-color: rgba(0,0,0,0.7);
 }
 
 .CargandoModalBackground
-        {
-            overflow: hidden;
-            background-color: transparent;
-            filter: alpha(opacity=80);
-            opacity: 0.8;
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            text-align: center;
-            vertical-align: middle;
-            padding-top: 15%;
-            padding-bottom: 36%;
-            padding-left: 47%;
-            padding-right: 51%;
-            display: none;
-            z-index: 1;
-        }
+{
+    overflow: hidden;
+    background-color: transparent;
+    filter: alpha(opacity=80);
+    opacity: 0.8;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 15%;
+    padding-bottom: 36%;
+    padding-left: 47%;
+    padding-right: 51%;
+    display: none;
+    z-index: 1;
+}
 
 
+.cuadro-internet-connection {
+    position: fixed;
+    overflow: auto;
+    bottom: 0px;
+    z-index: 800;
+    left: 20px;
+    padding: 7px 10px 7px 10px;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    -ms-border-radius: 4px 4px 0 0;
+    -o-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+    -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+    background: #f6f6f6;
+    color: #888888;
+}
+
+.circulo-internet-connection {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #80d580;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 1px;
+    left: 8px;
+    margin: auto;
+    height: 9px;
+    width: 9px;
+}
