@@ -49,7 +49,7 @@
     }
 
     .toggle-1, .toggle-2, .toggle-3 {
-        border: 1px solid;
+        border: 1px solid #cacaca;
         background-color: transparent !important;
     }
 </style>
@@ -67,16 +67,6 @@
 <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
 <script type="text/javascript" src="scripts/bd.js"></script>
-<script type="text/javascript">
-    function crearMapa() {
-        setTimeout(function() {
-            InitializeReg();
-        }, 500);
-    }
-</script>
-
-<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>-->
-
 </head>
 <body>
 
@@ -191,7 +181,7 @@
             <div>
                 <div class="container no-bottom">
                     <div class="contact-form no-bottom"> 
-                        <form action="php/contact.php" method="post" class="contactForm" id="contactForm">
+                        <form method="post" class="contactForm" id="contactForm">
                             <fieldset>
                                 <div class="formValidationError" id="contactMessageTextareaError">
                                     <div class="static-notification-red tap-dismiss-notification">
@@ -303,8 +293,7 @@
                                 </div>
 
                                 <div class="formSubmitButtonErrorsWrap">
-                                    <input type="submit" class="buttonWrap button button-dark contactSubmitButton" id="contactSubmitButton" value="PUBLICAR VACANTE" data-formId="contactForm" onclick="guardar() "/>
-                                    <!--<input type="button" class="buttonWrap button button-dark contactSubmitButton" id="btnRegresar" value="VOLVER" onclick="regresar() "/>-->
+                                    <input type="submit" class="buttonWrap button button-dark contactSubmitButton" id="contactSubmitButton" value="PUBLICAR VACANTE" data-formId="contactForm" onclick="guardar()"/>
                                 </div>
                             </fieldset>
                         </form>
@@ -326,7 +315,7 @@
                 <h4>Datos de la vacante</h4>
                 <div class="container no-bottom">
                     <div class="contact-form no-bottom">
-                        <form action="php/contact.php" method="post" class="contactForm" id="contactForm">
+                        <form method="post" class="contactForm" id="contactForm">
                             <fieldset>
                                 <div class="formTextareaWrap">
                                     <label class="field-title contactMessageTextarea letter" for="contactMessageTextarea">Título:</label>

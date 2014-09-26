@@ -3,6 +3,9 @@ var listaId = "";
 var listData = [];
 var datos = [];
 
+var map;
+var markersArray = [];
+
 function configurar_db() {
 
     function execute(tx) {
@@ -317,7 +320,7 @@ function Initialize(data) {
         mapTypeId: google.maps.MapTypeId.G_NORMAL_MAP
     };
 
-    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
  
     // Using the JQuery "each" selector to iterate through the JSON list and drop marker pins
     $.each(data, function (i, item) {
@@ -335,7 +338,7 @@ function Initialize(data) {
 
         // put in some information about each json object - in this case, the opening hours.
         var infowindow = new google.maps.InfoWindow({
-            content: "<div class='infoDiv'><h2>" + item.Nombre + "</h2><div><input type='submit' class='buttonWrap button button-dark contactSubmitButton' onclick='prueba(" + item.ID + ")' value='Ver detalles' /></div></div>"
+            content: "<div class='infoDiv'><h2>" + item.Nombre + "</h2><div><input type='submit' class='buttonWrap button button-dark contactSubmitButton' onclick='cargarVacante(" + item.ID + ")' value='Ver detalles' /></div></div>"
         });
 
         // finally hook up an "OnClick" listener to the map so it pops up out info-window when the marker-pin is clicked!
@@ -346,22 +349,36 @@ function Initialize(data) {
     })
 }
 
-function InitializeReg() {
+function InitializeReg(lat, lon) {
     // Google has tweaked their interface somewhat - this tells the api to use that new UI
     google.maps.visualRefresh = true;
-    var Liverpool = new google.maps.LatLng(53.408841, -2.981397);
+    var cityCenter = new google.maps.LatLng(lat, lon);
 
     // These are options that set initial zoom level, where the map is centered globally to start, and the type of map to show
     var mapOptions = {
         zoom: 14,
-        center: Liverpool,
+        center: cityCenter,
         mapTypeId: google.maps.MapTypeId.G_NORMAL_MAP
     };
 
     // This makes the div with id "map_canvas" a google map
-    var map = new google.maps.Map(document.getElementById("map_canvas2"), mapOptions);
+    map = new google.maps.Map(document.getElementById("map_canvas2"), mapOptions);
 
-    var myLatlng = new google.maps.LatLng(53.40091, -2.994464);
+    google.maps.event.addListener(map, "click", function(event)
+    {
+        // place a marker
+        placeMarker(event.latLng);
+
+        // display the lat/lng in your form's lat/lng fields
+
+        //document.getElementById("latFld").value = event.latLng.lat();
+        //document.getElementById("lngFld").value = event.latLng.lng();
+
+        localStorage.setItem("latitud", event.latLng.lat());
+        localStorage.setItem("longitud", event.latLng.lng());
+    });
+
+    /*var myLatlng = new google.maps.LatLng(53.40091, -2.994464);
 
     var marker = new google.maps.Marker({
         position: myLatlng,
@@ -399,16 +416,41 @@ function InitializeReg() {
             infowindow.open(map, marker);
         });
 
-    })
+    })*/
 }
 
-function cargarVacante(vacanteID, nom_mun) {
+function placeMarker(location) {
+            // first remove all markers if there are any
+    deleteOverlays();
 
-    alert(vacanteID);
+    var marker = new google.maps.Marker({
+        position: location, 
+        map: map
+    });
+
+    marker.setIcon('images/marker.png');
+
+    // add marker in markers array
+    markersArray.push(marker);
+
+    //map.setCenter(location);
+}
+
+// Deletes all markers in the array by removing references to them
+function deleteOverlays() {
+    if (markersArray) {
+        for (i in markersArray) {
+            markersArray[i].setMap(null);
+        }
+    markersArray.length = 0;
+    }
+}
+
+function cargarVacante(vacanteID) {
     
     var texto = "";
-    var ofertas = $("#ofertas");
-    ofertas.empty();
+    var detalle = $("#detalle");
+    detalle.empty();
 
     $.ajax({
         url: 'http://apiempleo.apphb.com/api/Vacante/obtenerVacante/' + vacanteID,
@@ -418,7 +460,7 @@ function cargarVacante(vacanteID, nom_mun) {
 
             alert(data['ID']);
             var rutaEstrella = "images/estrella_vacia.png";
-            var metodoFavorito ='agregarFavoritos('+data['ID']+',\''+data['Titulo']+'\',\''+data['Empleador']+'\',\''+nom_mun+'\',\''+val['Num_vacantes']+'\',\''+val['Cargo']+'\',\''+val['Sector']+'\',\''+val['Profesion']+'\',\''+nom_sal+'\',\''+nom_exp+'\',\''+nom_niv+'\',\''+val['Descripcion']+'\')';
+            var metodoFavorito ='agregarFavoritos('+data['ID']+',\''+data['Titulo']+'\',\''+data['Empleador']+'\',\''+data['Municipio']+'\',\''+data['Num_vacantes']+'\',\''+data['Cargo']+'\',\''+data['Sector']+'\',\''+data['Profesion']+'\',\''+data['SalarioID']+'\',\''+data['ExperienciaID']+'\',\''+data['Nivel_estudiosID']+'\',\''+data['Descripcion']+'\')';
             var textoFavorita ="Agregar a favoritas";
             if (localStorage.getItem('vacantesGuardadas')){
                 if(vacantesGuardadas.indexOf("id"+data['ID'])==-1){
@@ -431,6 +473,26 @@ function cargarVacante(vacanteID, nom_mun) {
                 }
             }
             texto += '<div class="container">' +
+                        '<div class="toggle-2">' +
+                            '<a href="#" class="deploy-toggle-2 toggle-2">' +
+                                data['Titulo'] + '<label style="font-weight: bolder; font-size: 15px; color: black;">Vence en '+data['DiasVence']+' días</label>' +
+                            '</a>' +
+                        '</div>' + 
+                        '<div class="toggle-content">' +
+                            '<p style="text-align:justify;">' +
+                                '<label>' +
+                                    'Fecha Publicación: '+data['Fecha_publicacion']+'</label>' +
+                                    'Fecha Vencimiento: '+data['Fecha_vencimiento']+'</label><br /><br />' +
+                                data['Descripcion'] +
+                            '</p>' +
+                            '<div class="toggle-content">' +
+                                '<p><strong>Datos del Empleador:</strong></p>' +
+                                '<div class="one-half-responsive ">' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+            /*texto += '<div class="container">' +
                     '<div class="toggle-2">' +
                         '<a href="#" class="deploy-toggle-2 toggle-2">' +
                             data['Titulo'] + '<label style="font-weight: bolder; font-size: 15px; color: black;">Vence en '+data['DiasVence']+' días</label>' +
@@ -454,7 +516,7 @@ function cargarVacante(vacanteID, nom_mun) {
                                     '</a>' +
                                     '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
                                         '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                            '<li class="right-list">Ciudad: '+nom_mun+' </li>' +
+                                            '<li class="right-list">Ciudad: '+data['Municipio']+' </li>' +
                                         '</ul>' +
                                     '</a>' +
                                     '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
@@ -479,17 +541,17 @@ function cargarVacante(vacanteID, nom_mun) {
                                     '</a>' +
                                     '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
                                         '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                            '<li class="right-list">Salario: '+nom_sal+' </li>' +
+                                            '<li class="right-list">Salario: '+data['SalarioID']+' </li>' +
                                         '</ul>' +
                                     '</a>' +
                                     '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
                                         '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                            '<li class="right-list">Experiencia: '+nom_exp+' </li>' +
+                                            '<li class="right-list">Experiencia: '+data['ExperienciaID']+' </li>' +
                                         '</ul>' +
                                     '</a>' +
                                     '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
                                         '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                            '<li class="right-list">Nivel: '+nom_niv+' </li>' +
+                                            '<li class="right-list">Nivel: '+data['Nivel_estudiosID']+' </li>' +
                                         '</ul>' +
                                     '</a>' +
                                     '<a href="#" style="text-align:center !important; border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
@@ -520,20 +582,22 @@ function cargarVacante(vacanteID, nom_mun) {
                     '</div>' +
                 '</div>' +
             '</div>' +
-            '</div>';
+            '</div>';*/
 
-            $("#ofertas").html(texto);
+            $("#detalle").html(texto);
+
+            $('.deploy-toggle-2').click(function(){
+                $(this).parent().find('.toggle-content').toggle(100);
+                $(this).toggleClass('toggle-2-active');
+                return false;
+            });
+
+            $("#map_canvas").hide();
         },
         error: function (xhr, textStatus, errorThrown) {
             alert(errorThrown);
         }
     });
-}
-
-function prueba(ident)
-{
-    alert(ident);
-    //alert(muni);
 }
 
 function cerrar()
@@ -542,14 +606,28 @@ function cerrar()
     document.location.href = "inicio-sesion.html";
 }
 
-//Ocultar Div cargando...
-function OcultarDivCargando(data) {
-    $('#loading').css("display", "none");
+$("#selectMuni").change(function () {
+    crearMapa();
+});
+
+function crearMapa() {
+    setTimeout(function() {
+        geoCiudad($("#selectMuni option:selected").html());
+    }, 500);
 }
 
-//Mostrar Div cargando...
-function MostrarDivCargando(data) {
-    $('#loading').css("display", "block");
+function geoCiudad(cityName) {
+    var geocoder =  new google.maps.Geocoder();
+    geocoder.geocode( { 'address': ''+ cityName +', co'}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            var lat = results[0].geometry.location.lat();
+            var lon = results[0].geometry.location.lng();
+            InitializeReg(lat, lon);
+            //alert("location : " + results[0].geometry.location.lat() + " " +results[0].geometry.location.lng()); 
+        } else {
+            alert("Something got wrong " + status);
+        }
+    });
 }
 
 function abrirAlert(contenido){
@@ -576,7 +654,16 @@ function abrirAlert(contenido){
             }
         }
     });
+}
 
+//Ocultar Div cargando...
+function OcultarDivCargando(data) {
+    $('#loading').css("display", "none");
+}
+
+//Mostrar Div cargando...
+function MostrarDivCargando(data) {
+    $('#loading').css("display", "block");
 }
 
 $(document).ready(function () {
