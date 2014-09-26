@@ -6,7 +6,7 @@ var datos = [];
 function configurar_db() {
 
     function execute(tx) {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS vacantes (id, titulo, descripcion, vacantes, cargo, nombre_salario, sector, experiencia, nivel, profesion, municipio, empleador)');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS vacantes (id, titulo, nombre_tipo, descripcion, vacantes, cargo, nombre_salario, sector, nombre_experiencia, nombre_nivel, profesion, nombre_departamento, nombre_municipio, fecha_publicacion, fecha_vencimiento, empleador)');
     }
 
     function error(error) {
