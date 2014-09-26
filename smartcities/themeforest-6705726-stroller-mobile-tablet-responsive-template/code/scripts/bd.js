@@ -108,7 +108,7 @@ function cargarOfertas(palabra)
         success: function (data, textStatus, xhr) {
             var cantidad = data.length;
             if(cantidad==0){
-                alert("No existen vacantes con los filtros seleccionados, intente seleccionando valores diferentes.")
+                abrirAlert("No existen vacantes con los filtros seleccionados, intente seleccionando valores diferentes.")
             }
             $.each(data, function (i, val) {
                 //alert(val['Titulo']);
@@ -287,11 +287,13 @@ function cargarVacantesMapa(palabra) {
                 $.each(data, function (i, val) {
                     listData[i] = { "ID": "" + val['ID'] + "", "Nombre": "" + val['Titulo'] + "", "GeoLat": "" + val['Latitud'] + "", "GeoLong": "" + val['Longitud'] + "", "Municipio": "" + nom_mun + "", "Salario": "" + nom_sal + "", "Experiencia": "" + nom_exp + "", "Nivel": "" + nom_niv + "" };
                 });
-                Initialize(listData);
+                setTimeout(function() {
+                    Initialize(listData);
+                }, 500);
                 $("#map_canvas").show();
             }
             else {
-                alert("No existen vacantes con los filtros seleccionados, intente seleccionando valores diferentes.");
+                abrirAlert("No existen vacantes con los filtros seleccionados, intente seleccionando valores diferentes.");
             }
             OcultarDivCargando();
         },
@@ -305,7 +307,7 @@ function cargarVacantesMapa(palabra) {
 function Initialize(data) {
     // Google has tweaked their interface somewhat - this tells the api to use that new UI
     google.maps.visualRefresh = true;
-    //var Liverpool = new google.maps.LatLng(53.408841, -2.981397);
+
     var city = new google.maps.LatLng(data[0].GeoLat, data[0].GeoLong);
 
     // These are options that set initial zoom level, where the map is centered globally to start, and the type of map to show
@@ -315,25 +317,7 @@ function Initialize(data) {
         mapTypeId: google.maps.MapTypeId.G_NORMAL_MAP
     };
 
-    // This makes the div with id "map_canvas" a google map
     var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-
-    /*var myLatlng = new google.maps.LatLng(53.40091, -2.994464);
-
-    var marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-        title: 'Tate Gallery'
-    });
-
-    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')*/
-
-    /*var data = [
-              { "Id": 1, "PlaceName": "Liverpool Museum", "OpeningHours": "9-5, M-F", "GeoLong": "53.410146", "GeoLat": "-2.979919" },
-              { "Id": 2, "PlaceName": "Merseyside Maritime Museum ", "OpeningHours": "9-1,2-5, M-F", "GeoLong": "53.401217", "GeoLat": "-2.993052" },
-              { "Id": 3, "PlaceName": "Walker Art Gallery", "OpeningHours": "9-7, M-F", "GeoLong": "53.409839", "GeoLat": "-2.979447" },
-              { "Id": 4, "PlaceName": "National Conservation Centre", "OpeningHours": "10-6, M-F", "GeoLong": "53.407511", "GeoLat": "-2.984683" }
-    ];*/
  
     // Using the JQuery "each" selector to iterate through the JSON list and drop marker pins
     $.each(data, function (i, item) {
@@ -343,8 +327,8 @@ function Initialize(data) {
             'title': item.PlaceName
         });
 
-        alert(item.Municipio);
-        alert(item.Salario);
+        //alert(item.Municipio);
+        //alert(item.Salario);
 
         // Make the marker-pin blue!
         marker.setIcon('images/marker.png');
@@ -352,6 +336,62 @@ function Initialize(data) {
         // put in some information about each json object - in this case, the opening hours.
         var infowindow = new google.maps.InfoWindow({
             content: "<div class='infoDiv'><h2>" + item.Nombre + "</h2><div><input type='submit' class='buttonWrap button button-dark contactSubmitButton' onclick='prueba(" + item.ID + ")' value='Ver detalles' /></div></div>"
+        });
+
+        // finally hook up an "OnClick" listener to the map so it pops up out info-window when the marker-pin is clicked!
+        google.maps.event.addListener(marker, 'click', function () {
+            infowindow.open(map, marker);
+        });
+
+    })
+}
+
+function InitializeReg() {
+    // Google has tweaked their interface somewhat - this tells the api to use that new UI
+    google.maps.visualRefresh = true;
+    var Liverpool = new google.maps.LatLng(53.408841, -2.981397);
+
+    // These are options that set initial zoom level, where the map is centered globally to start, and the type of map to show
+    var mapOptions = {
+        zoom: 14,
+        center: Liverpool,
+        mapTypeId: google.maps.MapTypeId.G_NORMAL_MAP
+    };
+
+    // This makes the div with id "map_canvas" a google map
+    var map = new google.maps.Map(document.getElementById("map_canvas2"), mapOptions);
+
+    var myLatlng = new google.maps.LatLng(53.40091, -2.994464);
+
+    var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map,
+        title: 'Tate Gallery'
+    });
+
+    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+
+    var data = [
+              { "Id": 1, "PlaceName": "Liverpool Museum", "OpeningHours": "9-5, M-F", "GeoLong": "53.410146", "GeoLat": "-2.979919" },
+              { "Id": 2, "PlaceName": "Merseyside Maritime Museum ", "OpeningHours": "9-1,2-5, M-F", "GeoLong": "53.401217", "GeoLat": "-2.993052" },
+              { "Id": 3, "PlaceName": "Walker Art Gallery", "OpeningHours": "9-7, M-F", "GeoLong": "53.409839", "GeoLat": "-2.979447" },
+              { "Id": 4, "PlaceName": "National Conservation Centre", "OpeningHours": "10-6, M-F", "GeoLong": "53.407511", "GeoLat": "-2.984683" }
+    ];
+ 
+    // Using the JQuery "each" selector to iterate through the JSON list and drop marker pins
+    $.each(data, function (i, item) {
+        var marker = new google.maps.Marker({
+            'position': new google.maps.LatLng(item.GeoLat, item.GeoLong),
+            'map': map,
+            'title': item.PlaceName
+        });
+
+        // Make the marker-pin blue!
+        marker.setIcon('images/marker.png');
+
+        // put in some information about each json object - in this case, the opening hours.
+        var infowindow = new google.maps.InfoWindow({
+            content: "<div class='infoDiv'><h2>" + item.Nombre + "</h2><div><input type='submit' class='buttonWrap button button-dark contactSubmitButton' onclick='prueba(" + item.Id + ")' value='Ver detalles' /></div></div>"
         });
 
         // finally hook up an "OnClick" listener to the map so it pops up out info-window when the marker-pin is clicked!
@@ -512,13 +552,34 @@ function MostrarDivCargando(data) {
     $('#loading').css("display", "block");
 }
 
-$(document).ready(function () {
-    /*var d = new Date();
-    d.getHours();
-    d.getMinutes();
-    d.getSeconds();
+function abrirAlert(contenido){
 
-    alert(d.getMinutes());*/ 
+    var windowWidth = $(window).width();
+    var windowHeight = $(window).height();
+    var ancho=windowWidth-(windowWidth/10);
+    $('#content-alert').html('<p>'+contenido+'</p>');
+    $("#div-confirm").dialog({
+        modal: true,
+        draggable: false,
+        resizable: false,
+        title: 'Advertencia',
+        minWidth:ancho,
+        my: "center",
+        at: "center",
+        of: window,
+        show: 'blind',
+        hide: 'blind',
+        dialogClass: 'prueba',
+        buttons: {
+            "Aceptar": function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+}
+
+$(document).ready(function () {
 
     if(localStorage.getItem("nombreUsuario") !== "")
     {
@@ -533,16 +594,6 @@ $(document).ready(function () {
     }
 
     $("#map_canvas").hide();
-
-    /*if (localStorage.getItem("nombreUsuario") != null) {
-        localStorage.setItem("nombreUsuario", localStorage.getItem("nombreUsuario"));
-        $("#opc_Registrar").show();
-        $("#opc_VerMias").show();
-    }
-    else{
-        $("#opc_Registrar").hide();
-        $("#opc_VerMias").hide();
-    }*/
 
 });
 
