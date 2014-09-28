@@ -154,27 +154,7 @@
         {
             padding-left: 10px !important;
         }
-
-        .submenu-nav-items a
-        {
-            padding-left: 20px !important;
-            padding-top: 10px !important;
-            padding-bottom: 10px !important;
-            border-bottom: solid 1px rgba(0,0,0,0.1) !important;
-        }
         
-        .vinculo_derecha
-        {
-            float: right;
-            padding-right: 1%;
-        }
-        
-        .vinculo_izquierda
-        {
-            float: left;
-            padding-left: 1%;
-            display: none;
-        }
     </style>
 
     <script type="text/javascript" src="scripts/jquery.js"></script>
@@ -354,14 +334,14 @@
                 },
                 error: function (x, y, z) {
                     OcultarDivCargando();
-                    alert("Ha ocurrido un problema, inténtelo nuevamente.");
+                    abrirAlert("Ha ocurrido un problema, inténtelo nuevamente.");
                 },
                 timeout: 60000
             });
         }
 
         function cargarMunicipios() {
-            MostrarDivCargando();
+            //MostrarDivCargando();
             $('#selectMunicipios').empty();
             var texto = "";
             var url = "http://www.dane.gov.co/Divipola/ControladorDivipola?tipoConsulta=municpio&idDepa=" + $("#selectDepartamentos").val();
@@ -388,7 +368,7 @@
                 },
                 error: function (x, y, z) {
                     OcultarDivCargando();
-                    alert("Ha ocurrido un problema, inténtelo nuevamente.")
+                    abrirAlert("Ha ocurrido un problema, inténtelo nuevamente.")
                 },
                 timeout: 60000
             });
@@ -597,8 +577,7 @@
                             Departamento: <span>(requerido)</span>
                         </label>
                         <div class="ui-widget espacio_span_abajo styled-select" style="margin-right: 50px; background: none; background-color: #F4F4F4;">
-                            <select class="form-control" name="selectDepartamentos" id="selectDepartamentos"
-                                    style="max-width: 200px;"></select>
+                            <select class="form-control" name="selectDepartamentos" id="selectDepartamentos" style="max-width: 200px;"></select>
                         </div>
                     </div>
                     <div class="formTextareaWrap">
@@ -623,8 +602,6 @@
                 <div id="map_canvas" style="height: 400px;">
                 </div>
                 <div id="detalle">
-                </div>
-                <div class="decoration">
                 </div>
                 <div id="ofertas">
                 </div>
