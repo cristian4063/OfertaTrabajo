@@ -19,6 +19,24 @@
             width: 30px;
             margin: 0px 0px 0px 47px;
         }
+
+        .CargandoModalBackground {
+            overflow: hidden;
+            background-color: #0D0D0D;
+            filter: alpha(opacity=90);
+            opacity: 0.9;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            text-align: center;
+            vertical-align: middle;
+            width: 100%;
+            height: 100%;
+            display: none;
+            z-index: 9999;
+            color: white;
+            text-align: left;
+        }
     </style>
     <script type="text/javascript" src="scripts/jquery.js"></script>
     <script type="text/javascript" src="scripts/jqueryui.js"></script>
@@ -31,6 +49,11 @@
     <script type="text/javascript" src="scripts/framework.js"></script>
     <script type="text/javascript" src="scripts/framework.launcher.js"></script>
     <script type="text/javascript" src="scripts/bd.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            cargarVacantesEmpleador();
+        });
+    </script>
     
 </head>
 <body>
@@ -136,7 +159,13 @@
                         <a href="#" class="close-big-notification">X</a>
                     </div>
                 </div>
-                <div class="container">
+                <div class="container no-bottom">
+                    <div id="ofertas"></div>
+                </div>
+                <div id="loading" class="CargandoModalBackground" style="padding-top: 150px;">
+                    <img src="images/bx_loader.gif" alt="loding" />
+                </div>
+                <!--<div class="container">
                     <div class="toggle-2">
                         <a href="#" onclick="guardarNoticia(2)" class="deploy-toggle-2">
                             Ingenieros en construcción y obras civiles <label style="font-weight: bolder; font-size: 12px; color: black;">Vence en 2 días</label>
@@ -216,147 +245,6 @@
                                                 <li>
                                                     <img src="images/misc/facebook.png" class="star" onclick="abrirPaginaFacebook()">
                                                     <img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter()">
-                                                </li>
-                                            </ul>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--<div class="container">
-                    <div class="toggle-2">
-                        <a href="#" onclick="guardarNoticia(1)" class="deploy-toggle-2">
-                            Comienza traslado de Avianca al nuevo aeropuerto El Dorado
-                        </a>
-                        <div class="toggle-content">
-                            <p style="text-align:justify;">
-                                <label>
-                                    Fecha Publicación: 01/06/2014</label><br />
-                                A partir de mañana 8 de junio, Avianca estará atendiendo desde el terminal T1 en
-                                el Aeropuerto El Dorado a los viajeros que vuelan entre Bogotá y Barranquilla, Bucaramanga,
-                                Cali, Cartagena, Medellín, Pasto, Pereira y San Andrés.
-                            </p>
-                            <div class="toggle-content">
-                                <p><strong>Datos del Empleador:</strong></p>
-                                <div class="one-half-responsive ">
-                                    <div class="submenu-navigation">
-                                        <div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Tel. 3116099950</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" onclick="consultarProductos('GRANOS PROCESADOS')" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Correo: arturogomez@gmail.com </li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Cliente consumidor de grandes cantidades de naranja</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li>
-                                                    <img src="images/misc/facebook.png" class="star" onclick="abrirPaginaFacebook()">
-                                                    <img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter()"> 
-                                                </li>
-                                            </ul>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="toggle-2">
-                        <a href="#" onclick="guardarNoticia(2)" class="deploy-toggle-2">
-                            Comienza traslado de Avianca al nuevo aeropuerto El Dorado
-                        </a>
-                        <div class="toggle-content">
-                            <p style="text-align:justify;">
-                                <label>
-                                    Fecha Publicación: 01/06/2014</label><br />
-                                A partir de mañana 8 de junio, Avianca estará atendiendo desde el terminal T1 en
-                                el Aeropuerto El Dorado a los viajeros que vuelan entre Bogotá y Barranquilla, Bucaramanga,
-                                Cali, Cartagena, Medellín, Pasto, Pereira y San Andrés.
-                            </p>
-                            <div class="toggle-content">
-                                <p><strong>Datos del Empleador:</strong></p>
-                                <div class="one-half-responsive ">
-                                    <div class="submenu-navigation">
-                                        <div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Tel. 3116099950</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" onclick="consultarProductos('GRANOS PROCESADOS')" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Correo: arturogomez@gmail.com </li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Cliente consumidor de grandes cantidades de naranja</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li>
-                                                    <img src="images/misc/facebook.png" class="star" onclick="abrirPaginaFacebook()">
-                                                    <img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter()"> 
-                                                </li>
-                                            </ul>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="toggle-2">
-                        <a href="#" onclick="guardarNoticia(3)" class="deploy-toggle-2">
-                            Comienza traslado de Avianca al nuevo aeropuerto El Dorado
-                        </a>
-                        <div class="toggle-content">
-                            <p style="text-align:justify;">
-                                <label>
-                                    Fecha Publicación: 01/06/2014</label><br />
-                                A partir de mañana 8 de junio, Avianca estará atendiendo desde el terminal T1 en
-                                el Aeropuerto El Dorado a los viajeros que vuelan entre Bogotá y Barranquilla, Bucaramanga,
-                                Cali, Cartagena, Medellín, Pasto, Pereira y San Andrés.
-                            </p>
-                            <div class="toggle-content">
-                                <p><strong>Datos del Empleador:</strong></p>
-                                <div class="one-half-responsive ">
-                                    <div class="submenu-navigation">
-                                        <div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Tel. 3116099950</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" onclick="consultarProductos('GRANOS PROCESADOS')" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Correo: arturogomez@gmail.com </li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li class="right-list">Cliente consumidor de grandes cantidades de naranja</li>
-                                            </ul>
-                                        </a>
-                                        <a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">
-                                            <ul style="margin-bottom:0px;" class="icon-list">
-                                                <li>
-                                                    <img src="images/misc/facebook.png" class="star" onclick="abrirPaginaFacebook()">
-                                                    <img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter()"> 
                                                 </li>
                                             </ul>
                                         </a>

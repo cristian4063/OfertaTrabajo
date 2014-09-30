@@ -529,41 +529,11 @@
             <div>
                 <div class="container no-bottom">
                     <div class="contact-form no-bottom"> 
-                        <form method="post" class="contactForm" id="contactForm">
+                        <form method="post" class="contactForm" id="contactForm" action="">
                             <fieldset>
                                 <div class="formValidationError" id="txtTituloError">
                                     <div class="static-notification-red">
                                         <p class="center-text uppercase">El título es requerido!</p>
-                                    </div>
-                                </div>
-                                <div class="formValidationError" id="txtDescripcionError">
-                                    <div class="static-notification-red">
-                                        <p class="center-text uppercase">La descripción es requerido!</p>
-                                    </div>
-                                </div>  
-                                <div class="formValidationError" id="txtCargoError">
-                                    <div class="static-notification-red">
-                                        <p class="center-text uppercase">El cargo es requerido!</p>
-                                    </div>
-                                </div>           
-                                <div class="formValidationError" id="txtCorreoError">
-                                    <div class="static-notification-red tap-dismiss-notification">
-                                        <p class="center-text uppercase">El correo electrónico es requerido!</p>
-                                    </div>
-                                </div> 
-                                <div class="formValidationError" id="txtCorreoError2">
-                                    <div class="static-notification-red tap-dismiss-notification">
-                                        <p class="center-text uppercase">Ingrese una dirección de correo válida!</p>
-                                    </div>
-                                </div>
-                                <div class="formValidationError" id="txtTelefonoError">
-                                    <div class="static-notification-red">
-                                        <p class="center-text uppercase">El teléfono es requerido!</p>
-                                    </div>
-                                </div>
-                                <div class="formValidationError" id="txtfechaVencimientoError">
-                                    <div class="static-notification-red">
-                                        <p class="center-text uppercase">La fecha es requerida!</p>
                                     </div>
                                 </div>
                                 <div class="formFieldWrap">
@@ -580,6 +550,11 @@
                                         <option value='4'>Contrato de aprendizaje</option>
                                     </select>
                                 </div>
+                                <div class="formValidationError" id="txtDescripcionError">
+                                    <div class="static-notification-red">
+                                        <p class="center-text uppercase">La descripción es requerida!</p>
+                                    </div>
+                                </div>
                                 <div class="formTextareaWrap">
                                     <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Descripción (*): <span>(requerido)</span></label>
                                     <textarea name="txtDescripcion" class="contactTextarea requiredField" id="txtDescripcion"></textarea>
@@ -594,6 +569,11 @@
                                         <option value='4'>4</option>
                                         <option value='5'>5</option>
                                     </select>
+                                </div>
+                                <div class="formValidationError" id="txtCargoError">
+                                    <div class="static-notification-red">
+                                        <p class="center-text uppercase">El cargo es requerido!</p>
+                                    </div>
                                 </div>
                                 <div class="formFieldWrap">
                                     <label class="field-title contactNameField" for="contactNameField">Cargo (*): <span>(requerido)</span></label>
@@ -650,23 +630,40 @@
                                 </div>
                                 <div class="formFieldWrap">
                                     <label class="field-title contactNameField" for="contactNameField">Dirección de referencia: <span>(requerido)</span></label>
-                                    <input type="text" name="txtCargo" value="" class="contactField" id="txtDireccion" />
+                                    <input type="text" name="txtDireccion" value="" class="contactField" id="txtDireccion" />
+                                </div>
+                                <div class="formValidationError" id="txtCorreoError">
+                                    <div class="static-notification-red">
+                                        <p class="center-text uppercase">El correo electrónico es requerido!</p>
+                                    </div>
+                                </div> 
+                                <div class="formValidationError" id="txtCorreoError2">
+                                    <div class="static-notification-red">
+                                        <p class="center-text uppercase">Ingrese una dirección de correo válida!</p>
+                                    </div>
                                 </div>
                                 <div class="formFieldWrap">
                                     <label class="field-title contactNameField" for="contactNameField">Correo electrónico de contacto (*): <span>(requerido)</span></label>
-                                    <input type="text" name="txtCargo" value="" class="contactField requiredField requiredEmailField" id="txtCorreo" />
+                                    <input type="text" name="txtCorreo" value="" class="contactField requiredField requiredEmailField" id="txtCorreo" />
+                                </div>
+                                <div class="formValidationError" id="txtTelefonoError">
+                                    <div class="static-notification-red">
+                                        <p class="center-text uppercase">El teléfono es requerido!</p>
+                                    </div>
                                 </div>
                                 <div class="formFieldWrap">
                                     <label class="field-title contactNameField" for="contactNameField">Teléfono de contacto (*): <span>(requerido)</span></label>
-                                    <input type="text" name="txtCargo" value="" class="contactField requiredField" id="txtTelefono" />
+                                    <input type="text" name="txtTelefono" value="" class="contactField requiredField" id="txtTelefono" />
+                                </div>
+                                <div class="formValidationError" id="txtfechaVencimientoError">
+                                    <div class="static-notification-red">
+                                        <p class="center-text uppercase">La fecha es requerida!</p>
+                                    </div>
                                 </div>
                                 <div class="formFieldWrap">
                                     <label class="field-title contactNameField" for="contactNameField">Fecha de vencimiento (*): <span>(requerido)</span></label>
-                                    <div style="border:solid 1px #cacaca; margin-bottom:10px;">
-                                        <input style="width:100%; height:40px;" type="date" lass="contactField requiredField" name="txtfechaVencimiento" id="txtfechaVencimiento" />
-                                    </div>
+                                    <input type="text" name="txtfechaVencimiento" value="" type="date" class="contactField requiredField" id="txtfechaVencimiento" />
                                 </div>
-
                                 <div class="container">
                                     <div class="toggle-1">
                                         <a href="#" class="deploy-toggle-1" onclick="crearMapa()">Ubique su vacante en el mapa (opcional)</a>
@@ -676,7 +673,7 @@
                                     </div>
                                 </div>
                                 <div class="formSubmitButtonErrorsWrap">
-                                    <input type="submit" class="buttonWrap button button-dark contactSubmitButton" id="contactSubmitButton" value="PUBLICAR VACANTE" data-formId="contactForm"/>
+                                    <input type="submit" class="buttonWrap button button-dark contactSubmitButton" id="contactSubmitButton" value="PUBLICAR VACANTE" data-formId="contactForm" onclick="guardar()"/>
                                 </div>
                             </fieldset>
                         </form>
@@ -688,11 +685,12 @@
                         <p>La vacante ha sido guardada exitosamente!</p>
                     </div>
                 </div>
-                <div id="loading" class="CargandoModalBackground" style="padding-top: 150px;">
-                    <img src="images/bx_loader.gif" alt="loding" />
-                </div>
             </div>
             <div class="decoration"></div>
+        </div>
+
+        <div id="loading" class="CargandoModalBackground" style="padding-top: 150px;">
+            <img src="images/bx_loader.gif" alt="loding" />
         </div>
 
         <div class="content" id="detalleVacante" style="display:none;">
@@ -701,11 +699,16 @@
                 <h4>Datos de la vacante</h4>
                 <div class="container no-bottom">
                     <div class="contact-form no-bottom">
-                        <form method="post" class="contactForm" id="contactForm">
+                        <form class="contactForm">
                             <fieldset>
                                 <div class="formTextareaWrap">
                                     <label class="field-title contactMessageTextarea letter" for="contactMessageTextarea">Título:</label>
                                     <label class="letter" id="detalleTitulo"></label>
+                                </div>
+                                <br />
+                                <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea letter" for="contactMessageTextarea">Tipo oportunidad:</label>
+                                    <label class="letter" id="detalleTipo"></label>
                                 </div>
                                 <br />
                                 <div class="formTextareaWrap">
@@ -734,7 +737,7 @@
                                 </div>
                                 <br />
                                 <div class="formSubmitButtonErrorsWrap">
-                                    <input type="submit" class="buttonWrap button button-dark contactSubmitButton" id="contactSubmitButton" value="CONTINUAR" data-formId="contactForm" onclick="confirmar() "/>
+                                    <input type="button" class="buttonWrap button button-dark contactSubmitButton" id="contactSubmitButton" value="CONTINUAR" data-formId="contactForm" onclick="agregarVacante() "/>
                                     </br>
                                     <input type="button" class="buttonWrap button button-dark contactSubmitButton" id="btnRegresar" value="REGRESAR" onclick="regresar() "/>
                                 </div>
@@ -852,36 +855,60 @@
         function guardar()
         {
             var titulo = $("#txtTitulo").val();
-            $("#detalleTitulo").text(titulo);
-
+            var tipo = $("#selectTipo").val();
+            var tipoTexto = $("#selectTipo option:selected").html();
             var descripcion = $("#txtDescripcion").val();
-            $("#detalleDesc").text(descripcion);
-
+            var numVacantes = $("#selectVacantes").val();
             var cargo = $("#txtCargo").val();
-            $("#detalleCargo").text(cargo);
+            var salario = $("#selectSalario").val();
+            var sector = $("#select_sector").val();
+            var experiencia = $("#selectExperiencia").val();
+            var nivel = $("#select_nivel").val();
+            var profesion = $("#txtProfesion").val();
+            var salarioTexto = $("#selectSalario option:selected").html();
+            var departamento = $("#selectDepartamentos").val();
+            var departamentoTexto = $("#selectDepartamentos option:selected").html();
+            var municipio = $("#selectMunicipios").val();
+            var municipioTexto = $("#selectMunicipios option:selected").html();
+            var correo = $("#txtCorreo").val();
+            var telefono = $("#txtTelefono").val();
+            var fecha = $("#txtfechaVencimiento").val();
 
-            var salario = $("#selectSalario option:selected").html();
-            $("#detalleSalario").text(salario);
+            if(titulo && tipo && descripcion && cargo && departamento != null && municipio != null && correo && telefono && fecha) {
 
-            var departamento = $("#selectDepto option:selected").html();
-            $("#detalleDepto").text(departamento);
+                localStorage.setItem('titulo', titulo);
+                localStorage.setItem('tipo', tipo);
+                localStorage.setItem('descripcion', descripcion);
+                localStorage.setItem('numVacantes', numVacantes);
+                localStorage.setItem('cargo', cargo);
+                localStorage.setItem('salario', salario);
+                localStorage.setItem('sector', sector);
+                localStorage.setItem('experiencia', experiencia);
+                localStorage.setItem('nivel', nivel);
+                localStorage.setItem('profesion', profesion);
+                localStorage.setItem('departamento', departamento);
+                localStorage.setItem('municipio', municipio);
+                localStorage.setItem('correo', correo);
+                localStorage.setItem('telefono', telefono);
+                localStorage.setItem('fecha', fecha);
 
-            var municipio = $("#selectMuni option:selected").html();
-            $("#detalleMuni").text(municipio);
+                $("#detalleTitulo").text(titulo);
+                $("#detalleTipo").text(tipoTexto);
+                $("#detalleDesc").text(descripcion);
+                $("#detalleCargo").text(cargo);
+                $("#detalleSalario").text(salarioTexto);
+                $("#detalleDepto").text(departamentoTexto);
+                $("#detalleMuni").text(municipioTexto);
 
-            $("#formularioVacante").css("display", "none");
-            $("#detalleVacante").css("display", "block");
+                $("#formularioVacante").css("display", "none");
+                $("#detalleVacante").css("display", "block");
+            }
         }
 
         function regresar()
         {
             $("#detalleVacante").css("display", "none");
             $("#formularioVacante").css("display", "block");
-        }
-
-        function confirmar()
-        {
-            abrirConfirm("la vacante ha sido registrada exitosamente!!");
         }
 
     </script>

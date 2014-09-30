@@ -584,6 +584,168 @@ function cargarVacante(vacanteID) {
     });
 }
 
+function cargarVacantesEmpleador() {
+
+    var texto = "";
+    var ofertas = $("#ofertas");
+    ofertas.empty();
+
+    MostrarDivCargando();
+
+    var empleador = localStorage.getItem("nombreUsuario");
+    //var empleador = "empleador1";
+    $.ajax({
+        url: 'http://apiempleo.apphb.com/api/Vacante/obtenerVacantesXEmpleador?empleador=' + empleador,
+        type: 'POST',
+        dataType: 'json',
+        success: function (data, textStatus, xhr) {
+            $.each(data, function (i, val) {
+                texto += '<div class="container">' +
+                        '<div class="toggle-2">' +
+                            '<a href="#" class="deploy-toggle-2 toggle-2">' +
+                                val['Titulo'] + '<label style="font-weight: bolder; font-size: 15px; color: black;">Vence en '+val['DiasVence']+' días</label>' +
+                                '</a>' +
+                            '<div class="toggle-content">' +
+                                '<p style="text-align:justify;">' +
+                                    '<label>' +
+                                        'Fecha Publicación: '+val['Fecha_publicacion']+'</label>' +
+                                        'Fecha Vencimiento: '+val['Fecha_vencimiento']+'</label><br /><br />' +
+                                        val['Descripcion'] +
+                                '</p>' +
+                                '<div class="toggle-content">' +
+                                    '<p><strong>Datos del Empleador:</strong></p>' +
+                                    '<div class="one-half-responsive ">' +
+                                        '<div class="submenu-navigation">' +
+                                            '<div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>' +
+                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                    '<li class="right-list">Empleador: '+val['Empleador']+' </li>' +
+                                                '</ul>' +
+                                            '</a>' +
+                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                    '<li class="right-list">Ciudad: '+val['Municipio']+' </li>' +
+                                                '</ul>' +
+                                            '</a>' +
+                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                    '<li class="right-list">Número de vacantes: '+val['Num_vacantes']+' </li>' +
+                                                '</ul>' +
+                                            '</a>' +
+                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                    '<li class="right-list">Cargo: '+val['Cargo']+' </li>' +
+                                                '</ul>' +
+                                            '</a>' +
+                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                    '<li class="right-list">Sector: '+val['Sector']+' </li>' +
+                                                '</ul>' +
+                                            '</a>' +
+                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                    '<li class="right-list">Profesión: '+val['Profesion']+' </li>' +
+                                                '</ul>' +
+                                            '</a>' +
+                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                    '<li class="right-list">Salario: '+val['SalarioID']+' </li>' +
+                                                '</ul>' +
+                                            '</a>' +
+                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                    '<li class="right-list">Experiencia: '+val['ExperienciaID']+' </li>' +
+                                                '</ul>' +
+                                            '</a>' +
+                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                    '<li class="right-list">Nivel: '+val['Nivel_estudiosID']+' </li>' +
+                                                '</ul>' +
+                                            '</a>' +
+                                            '<a href="#" style="text-align:center !important; border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            'Comparta esta oportunidad de trabajo'+
+                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                    '<li style="padding-left:0px !important;">' +
+                                                        '<img src="images/misc/facebook.png" style="margin: 0px !important;" class="star" onclick="abrirPaginaFacebook(\''+val['Titulo']+'\', '+val['ID']+')">' +
+                                                        '<img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter(\''+val['Titulo']+'\', '+val['ID']+')">' + 
+                                                    '</li>' +
+                                                '</ul>' +
+                                            '</a>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="one-half-responsive ">' +
+                                        '<div style="padding-left: 20px; width: 50%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red">Inactivar</a></div>' +
+                                    '</div>'+
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+                //alert(val['Titulo']);
+            });
+            $("#ofertas").html(texto);
+
+            $('.deploy-toggle-2').click(function(){
+                $(this).parent().find('.toggle-content').toggle(100);
+                $(this).toggleClass('toggle-2-active');
+                return false;
+            });
+
+            OcultarDivCargando();
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            abrirAlert("Ha ocurrido un problema, inténtelo nuevamente.");
+            OcultarDivCargando();
+        }
+    });
+}
+
+function agregarVacante() {
+
+    MostrarDivCargando();
+
+    /*localStorage.getItem('correo');
+    localStorage.getItem('telefono');
+    localStorage.getItem('fecha');*/
+
+    var vacante = new Object();
+    vacante.ID = null;
+    vacante.Titulo = localStorage.getItem('titulo');
+    vacante.TipoID = localStorage.getItem('tipo');
+    vacante.Descripcion = localStorage.getItem('descripcion');
+    vacante.Num_vacantes = localStorage.getItem('numVacantes');
+    vacante.Cargo = localStorage.getItem('cargo');
+    vacante.SalarioID = localStorage.getItem('salario');
+    vacante.Sector = localStorage.getItem('sector');
+    vacante.ExperienciaID = localStorage.getItem('experiencia');
+    vacante.Nivel_estudiosID = localStorage.getItem('nivel');
+    vacante.Profesion = localStorage.getItem('profesion');
+    vacante.Municipio = localStorage.getItem('municipio');
+    vacante.Departamento = localStorage.getItem('departamento');
+    vacante.Fecha_publicacion = "09/10/2014 0:00:00"; // MM/dd/yyyy HH:mm:ss
+    vacante.Fecha_vencimiento = "09/15/2014 23:59:59"; // MM/dd/yyyy HH:mm:ss
+    vacante.Latitud = "3.4592808";
+    vacante.Longitud = "-76.5306162";
+    vacante.Empleador = localStorage.getItem("nombreUsuario");
+
+    $.ajax({
+        url: 'http://apiempleo.apphb.com/api/Vacante/agregarVacante',
+        type: 'POST',
+        dataType: 'json',
+        contentType: "application/json",
+        data: JSON.stringify(vacante),
+        success: function (data, textStatus, xhr) {
+            //alert(data);
+            abrirConfirm("la vacante ha sido registrada exitosamente!!");
+            OcultarDivCargando();
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            //alert(errorThrown);
+            abrirAlert("Ha ocurrido un problema, inténtelo nuevamente.");
+            OcultarDivCargando();
+        }
+    });
+}
+
 function cerrar()
 {
     localStorage.setItem("nombreUsuario", "");
