@@ -4,7 +4,24 @@ var listData = [];
 var datos = [];
 
 var map;
+var marker;
 var markersArray = [];
+
+$(document).ready(function () {
+
+    if(localStorage.getItem("nombreUsuario") !== "") {
+        $("#header").append('<a onclick="cerrar()" style="float:right;"><img style="width:35px;margin-top:-30px;" src="images/icons/user/exit.png" alt="img"></a>');
+        $("#opc_Sesion").css("display", "none");
+    }
+    else {
+        $("#opc_Sesion").css("display", "block");
+        $("#opc_Registrar").css("display", "none");
+        $("#opc_VerMias").css("display", "none");
+    }
+
+    $("#map_canvas").hide();
+
+});
 
 function configurar_db() {
 
@@ -326,14 +343,11 @@ function Initialize(data) {
  
     // Using the JQuery "each" selector to iterate through the JSON list and drop marker pins
     $.each(data, function (i, item) {
-        var marker = new google.maps.Marker({
+        marker = new google.maps.Marker({
             'position': new google.maps.LatLng(item.GeoLat, item.GeoLong),
             'map': map,
             'title': item.PlaceName
         });
-
-        //alert(item.Municipio);
-        //alert(item.Salario);
 
         // Make the marker-pin blue!
         marker.setIcon('images/marker.png');
@@ -352,93 +366,69 @@ function Initialize(data) {
 }
 
 function InitializeReg(lat, lon) {
-    // Google has tweaked their interface somewhat - this tells the api to use that new UI
+
     google.maps.visualRefresh = true;
     var cityCenter = new google.maps.LatLng(lat, lon);
 
-    // These are options that set initial zoom level, where the map is centered globally to start, and the type of map to show
     var mapOptions = {
         zoom: 14,
         center: cityCenter,
         mapTypeId: google.maps.MapTypeId.G_NORMAL_MAP
     };
 
-    // This makes the div with id "map_canvas" a google map
     map = new google.maps.Map(document.getElementById("map_canvas2"), mapOptions);
 
     google.maps.event.addListener(map, "click", function(event)
     {
-        // place a marker
         placeMarker(event.latLng);
-
-        // display the lat/lng in your form's lat/lng fields
-
-        //document.getElementById("latFld").value = event.latLng.lat();
-        //document.getElementById("lngFld").value = event.latLng.lng();
-
-        localStorage.setItem("latitud", event.latLng.lat());
-        localStorage.setItem("longitud", event.latLng.lng());
     });
+}
 
-    /*var myLatlng = new google.maps.LatLng(53.40091, -2.994464);
+function InitializeEdit(lat, lon) {
+
+    google.maps.visualRefresh = true;
+    var cityCenter = new google.maps.LatLng(lat, lon);
+
+    var mapOptions = {
+        zoom: 14,
+        center: cityCenter,
+        mapTypeId: google.maps.MapTypeId.G_NORMAL_MAP
+    };
+
+    map = new google.maps.Map(document.getElementById("map_canvas2"), mapOptions);
+
+    var myLatlng = new google.maps.LatLng(lat, lon);
 
     var marker = new google.maps.Marker({
         position: myLatlng,
-        map: map,
-        title: 'Tate Gallery'
+        map: map
+    })
+
+    marker.setIcon('images/marker.png');
+    markersArray.push(marker);
+
+    google.maps.event.addListener(map, "click", function(event)
+    {
+        placeMarker(event.latLng);
     });
-
-    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
-
-    var data = [
-              { "Id": 1, "PlaceName": "Liverpool Museum", "OpeningHours": "9-5, M-F", "GeoLong": "53.410146", "GeoLat": "-2.979919" },
-              { "Id": 2, "PlaceName": "Merseyside Maritime Museum ", "OpeningHours": "9-1,2-5, M-F", "GeoLong": "53.401217", "GeoLat": "-2.993052" },
-              { "Id": 3, "PlaceName": "Walker Art Gallery", "OpeningHours": "9-7, M-F", "GeoLong": "53.409839", "GeoLat": "-2.979447" },
-              { "Id": 4, "PlaceName": "National Conservation Centre", "OpeningHours": "10-6, M-F", "GeoLong": "53.407511", "GeoLat": "-2.984683" }
-    ];
- 
-    // Using the JQuery "each" selector to iterate through the JSON list and drop marker pins
-    $.each(data, function (i, item) {
-        var marker = new google.maps.Marker({
-            'position': new google.maps.LatLng(item.GeoLat, item.GeoLong),
-            'map': map,
-            'title': item.PlaceName
-        });
-
-        // Make the marker-pin blue!
-        marker.setIcon('images/marker.png');
-
-        // put in some information about each json object - in this case, the opening hours.
-        var infowindow = new google.maps.InfoWindow({
-            content: "<div class='infoDiv'><h2>" + item.Nombre + "</h2><div><input type='submit' class='buttonWrap button button-dark contactSubmitButton' onclick='prueba(" + item.Id + ")' value='Ver detalles' /></div></div>"
-        });
-
-        // finally hook up an "OnClick" listener to the map so it pops up out info-window when the marker-pin is clicked!
-        google.maps.event.addListener(marker, 'click', function () {
-            infowindow.open(map, marker);
-        });
-
-    })*/
 }
 
 function placeMarker(location) {
-            // first remove all markers if there are any
+
     deleteOverlays();
 
-    var marker = new google.maps.Marker({
+    marker = new google.maps.Marker({
         position: location, 
         map: map
     });
 
+    localStorage.setItem('latitud', location.lat());
+    localStorage.setItem('longitud', location.lng());
+
     marker.setIcon('images/marker.png');
-
-    // add marker in markers array
     markersArray.push(marker);
-
-    //map.setCenter(location);
 }
 
-// Deletes all markers in the array by removing references to them
 function deleteOverlays() {
     if (markersArray) {
         for (i in markersArray) {
@@ -593,7 +583,7 @@ function cargarVacantesEmpleador() {
     MostrarDivCargando();
 
     var empleador = localStorage.getItem("nombreUsuario");
-    //var empleador = "empleador1";
+
     $.ajax({
         url: 'http://apiempleo.apphb.com/api/Vacante/obtenerVacantesXEmpleador?empleador=' + empleador,
         type: 'POST',
@@ -673,14 +663,14 @@ function cargarVacantesEmpleador() {
                                             '</a>' +
                                         '</div>' +
                                     '</div>' +
-                                    '<div class="one-half-responsive ">' +
-                                        '<div style="padding-left: 20px; width: 50%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red">Inactivar</a></div>' +
+                                    '<div class="one-half-responsive">' +
+                                        '<div style="text-align: center; width: 50%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red" onclick="cargarDatosVacante('+val['ID']+')">Editar</a></div>' +
+                                        '<div style="text-align: center; width: 50%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red">Inactivar</a></div>' +
                                     '</div>'+
                                 '</div>' +
                             '</div>' +
                         '</div>' +
                     '</div>';
-                //alert(val['Titulo']);
             });
             $("#ofertas").html(texto);
 
@@ -704,8 +694,7 @@ function agregarVacante() {
     MostrarDivCargando();
 
     /*localStorage.getItem('correo');
-    localStorage.getItem('telefono');
-    localStorage.getItem('fecha');*/
+    localStorage.getItem('telefono');*/
 
     var vacante = new Object();
     vacante.ID = null;
@@ -721,10 +710,18 @@ function agregarVacante() {
     vacante.Profesion = localStorage.getItem('profesion');
     vacante.Municipio = localStorage.getItem('municipio');
     vacante.Departamento = localStorage.getItem('departamento');
-    vacante.Fecha_publicacion = "09/10/2014 0:00:00"; // MM/dd/yyyy HH:mm:ss
-    vacante.Fecha_vencimiento = "09/15/2014 23:59:59"; // MM/dd/yyyy HH:mm:ss
-    vacante.Latitud = "3.4592808";
-    vacante.Longitud = "-76.5306162";
+    vacante.Fecha_publicacion = getCurrentDate(); // MM/dd/yyyy HH:mm:ss
+    vacante.Fecha_vencimiento = localStorage.getItem('fecha'); // MM/dd/yyyy HH:mm:ss
+
+    if(localStorage.getItem('latitud') != 0 && localStorage.getItem('longitud') != 0) {
+        vacante.Latitud = localStorage.getItem('latitud');
+        vacante.Longitud = localStorage.getItem('longitud');
+    }
+    else {
+        vacante.Latitud = "0";
+        vacante.Longitud = "0";
+    }
+
     vacante.Empleador = localStorage.getItem("nombreUsuario");
 
     $.ajax({
@@ -736,6 +733,114 @@ function agregarVacante() {
         success: function (data, textStatus, xhr) {
             //alert(data);
             abrirConfirm("la vacante ha sido registrada exitosamente!!");
+            OcultarDivCargando();
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            //alert(errorThrown);
+            abrirAlert("Ha ocurrido un problema, inténtelo nuevamente.");
+            OcultarDivCargando();
+        }
+    });
+}
+
+function cargarDatosVacante(vacanteID) {
+    $.ajax({
+        url: 'http://apiempleo.apphb.com/api/Vacante/obtenerVacante/' + vacanteID,
+        type: 'POST',
+        dataType: 'json',
+        success: function (data, textStatus, xhr) {
+
+            localStorage.setItem('id', data['ID']);
+            localStorage.setItem('titulo', data['Titulo']);
+            localStorage.setItem('tipo', data['TipoID']);
+            localStorage.setItem('descripcion', data['Descripcion']);
+            localStorage.setItem('numVacantes', data['Num_vacantes']);
+            localStorage.setItem('cargo', data['Cargo']);
+            localStorage.setItem('salario', data['SalarioID']);
+            localStorage.setItem('sector', data['Sector']);
+            localStorage.setItem('experiencia', data['ExperienciaID']);
+            localStorage.setItem('nivel', data['Nivel_estudiosID']);
+            localStorage.setItem('profesion', data['Profesion']);
+            localStorage.setItem('departamento', data['Departamento']);
+            localStorage.setItem('municipio', data['Municipio']);
+            //localStorage.setItem('correo', correo);
+            //localStorage.setItem('telefono', telefono);
+            localStorage.setItem('fecha', data['Fecha_vencimiento']);
+            localStorage.setItem('latitud', data['Latitud']);
+            localStorage.setItem('longitud', data['Longitud']);
+
+            document.location.href = "EditarOferta.html";
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            alert(errorThrown);
+        }
+    });
+}
+
+function modificarVacante() {
+
+    MostrarDivCargando();
+
+    /*localStorage.getItem('correo');
+    localStorage.getItem('telefono');*/
+
+    var vacante = new Object();
+    vacante.ID = localStorage.getItem('id');
+    vacante.Titulo = localStorage.getItem('titulo');
+    vacante.TipoID = localStorage.getItem('tipo');
+    vacante.Descripcion = localStorage.getItem('descripcion');
+    vacante.Num_vacantes = localStorage.getItem('numVacantes');
+    vacante.Cargo = localStorage.getItem('cargo');
+    vacante.SalarioID = localStorage.getItem('salario');
+    vacante.Sector = localStorage.getItem('sector');
+    vacante.ExperienciaID = localStorage.getItem('experiencia');
+    vacante.Nivel_estudiosID = localStorage.getItem('nivel');
+    vacante.Profesion = localStorage.getItem('profesion');
+    vacante.Municipio = localStorage.getItem('municipio');
+    vacante.Departamento = localStorage.getItem('departamento');
+    vacante.Fecha_publicacion = getCurrentDate(); // MM/dd/yyyy HH:mm:ss
+    vacante.Fecha_vencimiento = localStorage.getItem('fecha'); // MM/dd/yyyy HH:mm:ss
+
+    if(localStorage.getItem('latitud') != 0 && localStorage.getItem('longitud') != 0) {
+        vacante.Latitud = localStorage.getItem('latitud');
+        vacante.Longitud = localStorage.getItem('longitud');
+    }
+    else {
+        vacante.Latitud = "0";
+        vacante.Longitud = "0";
+    }
+
+    vacante.Empleador = localStorage.getItem("nombreUsuario");
+
+    /*var vacante = new Object();
+    vacante.ID = 12;
+    vacante.Titulo = "Titulo de Prueba Mod";
+    vacante.TipoID = 1;
+    vacante.Descripcion = "Descripcion de Prueba Mod";
+    vacante.Num_vacantes = 2;
+    vacante.Cargo = "Cargo de Prueba";
+    vacante.SalarioID = 2;
+    vacante.Sector = "Sector de Prueba";
+    vacante.ExperienciaID = 3;
+    vacante.Nivel_estudiosID = 5;
+    vacante.Profesion = "Profesion de Prueba";
+    vacante.Municipio = 17001;
+    vacante.Departamento = 17;
+    vacante.Fecha_publicacion = "09/10/2014 0:00:10";
+    vacante.Fecha_vencimiento = "09/15/2014 23:30:00";
+    vacante.Latitud = "3.4592808";
+    vacante.Longitud = "-76.5306162";
+    vacante.Empleador = "prueba";*/
+
+    $.ajax({
+        url: 'http://apiempleo.apphb.com/api/Vacante/modificarVacante',
+        type: 'POST',
+        dataType: 'json',
+        contentType: "application/json",
+        data: JSON.stringify(vacante),
+        success: function (data, textStatus, xhr) {
+            //alert(data);
+            abrirConfirm("la vacante ha sido modificada exitosamente!!");
             OcultarDivCargando();
         },
         error: function (xhr, textStatus, errorThrown) {
@@ -769,7 +874,6 @@ function geoCiudad(cityName) {
             var lat = results[0].geometry.location.lat();
             var lon = results[0].geometry.location.lng();
             InitializeReg(lat, lon);
-            //alert("location : " + results[0].geometry.location.lat() + " " +results[0].geometry.location.lng()); 
         } else {
             alert("Something got wrong " + status);
         }
@@ -835,6 +939,10 @@ function volverMapa() {
     $("#map_canvas").show();
 }
 
+function regresarListado() {
+    document.location.href="lista_ofertas_empleador.html";
+}
+
 //Ocultar Div cargando...
 function OcultarDivCargando(data) {
     $('#loading').css("display", "none");
@@ -845,22 +953,44 @@ function MostrarDivCargando(data) {
     $('#loading').css("display", "block");
 }
 
-$(document).ready(function () {
+function getCurrentDate() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
 
-    if(localStorage.getItem("nombreUsuario") !== "")
-    {
-        $("#header").append('<a onclick="cerrar()" style="float:right;"><img style="width:35px;margin-top:-30px;" src="images/icons/user/exit.png" alt="img"></a>');
-        $("#opc_Sesion").css("display", "none");
-    }
-    else
-    {
-        $("#opc_Sesion").css("display", "block");
-        $("#opc_Registrar").css("display", "none");
-        $("#opc_VerMias").css("display", "none");
-    }
+    var hour = today.getHours();
+    var minutes = today.getMinutes();
+    var seconds = today.getSeconds();
 
-    $("#map_canvas").hide();
+    if(dd<10) {
+        dd='0'+dd
+    } 
 
-});
+    if(mm<10) {
+        mm='0'+mm
+    } 
 
+    today = mm+'/'+dd+'/'+yyyy+' '+hour+':'+minutes+':'+seconds;
 
+    return today;
+}
+
+function getEndDate(fecha) {
+    var today = new Date(fecha);
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if(dd<10) {
+        dd='0'+dd
+    } 
+
+    if(mm<10) {
+        mm='0'+mm
+    } 
+
+    today = mm+'/'+dd+'/'+yyyy;
+
+    return today;
+}

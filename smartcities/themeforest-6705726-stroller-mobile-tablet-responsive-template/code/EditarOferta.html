@@ -52,37 +52,35 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        if (!doesConnectionExist()) {
-            location.href = "vacantes_favoritas.html";
-        }
-        /*if (doesConnectionExist()) {
-            $("#label-internet-connection").text("Online");
-            $("#div-internet-connection").css("background-color", "#80d580");
-        } else {
-            $("#label-internet-connection").text("Offline");
-            $("#div-internet-connection").css("background-color", "#ec8787");
-        }
-        if (localStorage.getItem('Nivel')) {
-            $("#selectNivel").val(localStorage.getItem('selectNivel'));
-        }
-        if (localStorage.getItem('Oportunidad')) {
-            $("#selectTipoOportunidad").val(localStorage.getItem('Oportunidad'));
-        }
-        if (localStorage.getItem('Salario')) {
-            $("#selectSalario").val(localStorage.getItem('Salario'));
-        }
-        if (localStorage.getItem('Experiencia')) {
-            $("#selectExperiencia").val(localStorage.getItem('Experiencia'));
-        }*/
         $("#txtfechaVencimiento").datepicker({  minDate: new Date() });
-
-        localStorage.setItem('latitud', 0);
-        localStorage.setItem('longitud', 0);
 
         cargar_sectores();
         cargar_niveles();
         cargarDeptos();
+
+        $("#txtId").val(localStorage.getItem('id'));
+        $("#txtTitulo").val(localStorage.getItem('titulo'));
+        $("#selectTipo").val(localStorage.getItem('tipo'));
+        $("#txtDescripcion").val(localStorage.getItem('descripcion'));
+        $("#selectVacantes").val(localStorage.getItem('numVacantes'));
+        $("#txtCargo").val(localStorage.getItem('cargo'));
+        $("#selectSalario").val(localStorage.getItem('salario'));
+        $("#select_sector").val(localStorage.getItem('sector'));
+        $("#selectExperiencia").val(localStorage.getItem('experiencia'));
+        $("#select_nivel").val(localStorage.getItem('nivel'));
+        $("#txtProfesion").val(localStorage.getItem('profesion'));
+        $("#selectDepartamentos").val(localStorage.getItem('departamento'));
+        $("#selectMunicipios").val(localStorage.getItem('municipio'));
+        $("#txtfechaVencimiento").val(getEndDate(localStorage.getItem('fecha')));
+
+        if(localStorage.getItem('latitud') != 0 && localStorage.getItem('longitud') != 0) {
+            setTimeout(function() {
+                InitializeEdit(localStorage.getItem('latitud'), localStorage.getItem('longitud'));
+                $("#divMap").css("display", "block");
+            }, 500);
+        }
     });
+
 </script>
 
 </head>
@@ -185,7 +183,7 @@
             </div>
             <div class="container no-bottom" style="text-align: center;">
                 <h3>
-                    PUBLICAR NUEVA VACANTE
+                    EDITAR VACANTE
                 </h3>
             </div>
             <div class="decoration">
@@ -193,7 +191,7 @@
             <div class="container no-bottom">
                 <div class="big-notification blue-notification">
                     <h4>
-                        En esta sección, podrá especificar las características de la vacante y del trabajador que requiere, y publicarla de manera inmediata y gratuita
+                        En esta sección, podrá editar las características de la vacante que ha regitrado con anterioridad
                     </h4>
                     <a href="#" class="close-big-notification">X</a>
                 </div>
@@ -209,6 +207,7 @@
                                     </div>
                                 </div>
                                 <div class="formFieldWrap">
+                                    <input type="hidden" name="txtId" id="txtId" />
                                     <label class="field-title contactNameField" for="contactNameField">Título (*): <span>(requerido)</span></label>
                                     <input type="text" name="txtTitulo" value="" class="contactField requiredField" id="txtTitulo"/>
                                 </div>
@@ -338,14 +337,16 @@
                                 </div>
                                 <div class="container">
                                     <div class="toggle-1">
-                                        <a href="#" class="deploy-toggle-1" onclick="crearMapa()">Ubique su vacante en el mapa (opcional)</a>
-                                        <div class="toggle-content">
+                                        <a href="#" class="deploy-toggle-1 toggle-1-active" onclick="crearMapa()">Ubique su vacante en el mapa (opcional)</a>
+                                        <div id="divMap" class="toggle-content">
                                             <div id="map_canvas2" style="height: 400px;"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="formSubmitButtonErrorsWrap">
-                                    <input type="submit" class="buttonWrap button button-dark contactSubmitButton" id="contactSubmitButton" value="PUBLICAR VACANTE" data-formId="contactForm" onclick="guardar()"/>
+                                    <input type="submit" class="buttonWrap button button-dark contactSubmitButton" id="contactSubmitButton" value="EDITAR VACANTE" data-formId="contactForm" onclick="editar()"/>
+                                    <br />
+                                    <input type="submit" class="buttonWrap button button-dark contactSubmitButton" id="contactSubmitButton" value="REGRESAR" data-formId="contactForm" onclick="regresarListado()"/>
                                 </div>
                             </fieldset>
                         </form>
@@ -409,7 +410,7 @@
                                 </div>
                                 <br />
                                 <div class="formSubmitButtonErrorsWrap">
-                                    <input type="button" class="buttonWrap button button-dark contactSubmitButton" id="contactSubmitButton" value="CONTINUAR" data-formId="contactForm" onclick="agregarVacante() "/>
+                                    <input type="button" class="buttonWrap button button-dark contactSubmitButton" id="contactSubmitButton" value="CONTINUAR" data-formId="contactForm" onclick="modificarVacante() "/>
                                     </br>
                                     <input type="button" class="buttonWrap button button-dark contactSubmitButton" id="btnRegresar" value="REGRESAR" onclick="regresar() "/>
                                 </div>
