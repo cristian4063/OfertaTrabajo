@@ -44,7 +44,7 @@
     overflow: hidden;
     background: url(../images/flecha_abajo.png) no-repeat right #F4F4F4;
     padding: 3px;
-    margin: 5px;
+    margin: 0px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -149,6 +149,11 @@ ui-widget-header {
     /*color: #FFFFFF !important;*/  
 }
 .ui-dialog .ui-dialog-buttonpane button{
-    background:#27ae60 !important;
+    background:#58595B !important;
     border: 1px solid #27ae60 !important;
+    color: white;
+}
+
+.ui-icon-closethick {
+    background-image: none;
 }

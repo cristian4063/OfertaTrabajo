@@ -1408,7 +1408,7 @@ table tr:hover td{
 	text-transform:uppercase;
 	background-image:url(../images/lists/plus_48.png);
 	background-repeat:no-repeat;
-	background-size:14px 14px;
+	background-size:25px 25px;
 	background-position:15px 18px;
 }
 
@@ -1662,7 +1662,7 @@ table tr:hover td{
 }
 
 .contactField{
-	min-width:100%;	
+	min-width:96%;	
 	display:block;
 	box-sizing:border-box;
 }

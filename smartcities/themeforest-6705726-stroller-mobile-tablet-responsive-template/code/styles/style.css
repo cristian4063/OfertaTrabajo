@@ -35,7 +35,7 @@ body {
 }
 
 .page-sidebar{
-    background-color: #555559;
+    background-color: #F4F4F4;
 	background-repeat:repeat;
 	background-size:75px 75px;
 	width:274px;
@@ -275,7 +275,7 @@ body {
 	width:8px;
 	height:8px;
 	border-radius:8px;
-	background-color:rgba(255,255,255,0.8);
+	background-color:#666;
 	right:47px;
 	margin-top:23px;
 }
@@ -315,7 +315,7 @@ body {
 	background-position:20px 15px;
 	background-size:25px 25px;
 	background-repeat:no-repeat;
-	color:#FFFFFF;
+	color:#000000;
 	font-weight: bold;
 	font-size:12px;
 	padding-left:60px;
@@ -651,6 +651,7 @@ body {
 	margin-left:auto;
 	margin-right:auto;
 	margin-bottom:10px;
+    display: -webkit-box;
 }
 
 .footer-socials a{
@@ -663,7 +664,7 @@ body {
 	background-image:url(../images/misc/facebook.png);
 	background-repeat:no-repeat;
 	background-size:25px 26px;
-	height:25px;
+	height:26px;
 	width:25px;
 }
 
