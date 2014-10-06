@@ -261,6 +261,9 @@ function cargarVacantesMapa(palabra) {
     var ofertas = $("#ofertas");
     ofertas.empty();
 
+    var detalle = $("#detalle");
+    detalle.empty();
+
     MostrarDivCargando();
 
     var vectorConectores = ["a", "ante", "bajo", "con", "contra", "de", "desde", "en", "entre","hacia","hasta","para","por","según","segun","sin", "sobre","tras", " ", "  ", "   ", ""];
@@ -664,8 +667,9 @@ function cargarVacantesEmpleador() {
                                         '</div>' +
                                     '</div>' +
                                     '<div class="one-half-responsive">' +
-                                        '<div style="text-align: center; width: 50%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red" onclick="cargarDatosVacante('+val['ID']+')">Editar</a></div>' +
-                                        '<div style="text-align: center; width: 50%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red">Inactivar</a></div>' +
+                                        '<div style="text-align: center; width: 33%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red" onclick="cargarDatosVacante('+val['ID']+')">Editar</a></div>' +
+                                        '<div style="text-align: center; width: 33%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red" onclick="inactivarVacante('+val['ID']+')">Inactivar</a></div>' +
+                                        '<div style="text-align: center; width: 33%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red" onclick="confirmarEliminacion('+val['ID']+')">Eliminar</a></div>' +
                                     '</div>'+
                                 '</div>' +
                             '</div>' +
@@ -847,6 +851,70 @@ function modificarVacante() {
             //alert(errorThrown);
             abrirAlert("Ha ocurrido un problema, inténtelo nuevamente.");
             OcultarDivCargando();
+        }
+    });
+}
+
+function inactivarVacante(vacanteID) {
+    var empleador = localStorage.getItem("nombreUsuario");
+    $.ajax({
+        url: 'http://apiempleo.apphb.com/api/Vacante/inactivarVacante/?ID=' + vacanteID + '&empleador=' + empleador,
+        type: 'POST',
+        dataType: 'json',
+        success: function (data, textStatus, xhr) {
+            //alert(data);
+            abrirConfirm("La vacante ha sido inactivada exitosamente");
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            //alert(errorThrown);
+            abrirAlert("Ha ocurrido un problema, inténtelo nuevamente.");
+        }
+    });
+}
+
+function confirmarEliminacion(vacanteID) {
+
+    var windowWidth = $(window).width();
+    var windowHeight = $(window).height();
+    var ancho=windowWidth-(windowWidth/10);
+    $('#content-alert').html('<p>Esta seguro que desea eliminar la vacante ?</p>');
+    $("#div-confirm").dialog({
+        modal: true,
+        draggable: false,
+        resizable: false,
+        title: 'Advertencia',
+        minWidth:ancho,
+        my: "center",
+        at: "center",
+        of: window,
+        show: 'blind',
+        hide: 'blind',
+        dialogClass: 'prueba',
+        buttons: {
+            "Aceptar": function() {
+                $(this).dialog("close");
+                //eliminarVacante(vacanteID);
+            },
+            "Cancelar": function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+}
+
+function eliminarVacante(vacanteID) {
+    var empleador = localStorage.getItem("nombreUsuario");
+    $.ajax({
+        url: 'http://apiempleo.apphb.com/api/Vacante/eliminarVacante/?ID=' + vacanteID + '&empleador=' + empleador,
+        type: 'POST',
+        dataType: 'json',
+        success: function (data, textStatus, xhr) {
+            //alert(data);
+            abrirConfirm("La vacante ha sido eliminada exitosamente");
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            //alert(errorThrown);
+            abrirAlert("Ha ocurrido un problema, inténtelo nuevamente.");
         }
     });
 }
