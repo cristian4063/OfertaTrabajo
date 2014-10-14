@@ -19,6 +19,27 @@
             width: 30px;
             margin: 0px 0px 0px 47px;
         }
+
+        .submenu-nav-items a
+        {
+            padding-left: 20px !important;
+            padding-top: 10px !important;
+            padding-bottom: 10px !important;
+            border-bottom: solid 1px rgba(0,0,0,0.1) !important;
+        }
+        
+        .vinculo_derecha
+        {
+            float: right;
+            padding-right: 1%;
+        }
+        
+        .vinculo_izquierda
+        {
+            float: left;
+            padding-left: 1%;
+            display: none;
+        }
     </style>
     <script type="text/javascript" src="scripts/jquery.js"></script>
     <script type="text/javascript" src="scripts/jqueryui.js"></script>
@@ -31,6 +52,49 @@
     <script type="text/javascript" src="scripts/framework.js"></script>
     <script type="text/javascript" src="scripts/framework.launcher.js"></script>
     <script type="text/javascript" src="scripts/bd.js"></script>
+    <script type="text/javascript">
+        function mostrarMapa() {
+            document.location.href = "OfertasMapa.html"
+        }
+
+        function enviar(formul) {
+            var nomb = formul.contactNameField.value;
+            cargarOfertas();
+        }
+
+        function cambiarEstrella(id_estrella) {
+            $("#estrella" + id_estrella).attr("src", "images/estrella_llena.png")
+        }
+
+        function agregarCliente() {
+            location.href = "registro_cliente.html"
+        }
+
+        function abrirPaginaFacebook() {
+
+            window.open("https://www.facebook.com/share.php?u=https://www.mintransporte.gov.co/noticias.php/", "_blank", "closebuttoncaption=Regresar");
+        }
+
+        function abrirPaginaTwitter() {
+
+            window.open("https://twitter.com/home?status=He visto esta noticia en la app Viaja Seguro, la cuál puede interesarte " + " " + "https://www.mintransporte.gov.co/noticias.php/", "_blank", "closebuttoncaption=Regresar");
+        }
+
+        $(document).ready(function () {
+            if (!doesConnectionExist()) {
+                location.href = "vacantes_favoritas.html";
+            }
+            if (doesConnectionExist()) {
+                $("#label-internet-connection").text("Online");
+                $("#div-internet-connection").css("background-color", "#80d580");
+            } else {
+                $("#label-internet-connection").text("Offline");
+                $("#div-internet-connection").css("background-color", "#ec8787");
+            }
+        });
+
+    </script>
+
 </head>
 <body>
     <div id="preloader">
@@ -62,20 +126,6 @@
                 <div class="navigation-item">
                     <a href="index.html" class="nav-item home-icon">Oportunidades de empleo<em class="selected-item"></em></a>
                 </div>
-                <!--<div class="sidebar-decoration">
-            </div>
-            <div class="navigation-item">
-                <a href="lista_ofertas.html" class="nav-item home-diagnostic">
-                    Listado de vacantes<em class="selected-item"></em>
-                </a>
-            </div>
-            <div class="sidebar-decoration">
-            </div>
-            <div class="navigation-item">
-                <a href="ConsultarOfertasMapa.html" class="nav-item home-locales">
-                    Vacantes en el mapa<em class="unselected-item"></em>
-                </a>
-            </div>-->
                 <div class="sidebar-decoration">
                 </div>
                 <div class="navigation-item">
@@ -355,78 +405,22 @@
                 </div>
                 <div class="container">
                     <div class="footer-socials" style="width:100%;">
-                        <div style="float:left;width:50%;">
-                            <a href="#" class="facebook-footer" style="float:right;"></a>
+                        <div style="float:left;width:50%; padding-right: 3%;">
+                            <a href="https://www.facebook.com/SPEColombia?fref=ts" target="_blank" class="facebook-footer" style="float:right;"></a>
                         </div>
-                        <div style="float:left;width:50%;">
-                            <a href="#" class="twitter-footer" style="float:left;"></a>
+                        <div style="float:left;width:50%; padding-left: 3%;">
+                            <a href="https://twitter.com/ServiciodEmpleo" target="_blank" class="twitter-footer" style="float:left;"></a>
                             <a href="#" class="goup-footer" style="float:right;"></a>
                         </div>
                     </div>
-                    <p class="copyright uppercase center-text no-bottom">
-                        SERVICIO DE EMPLEO 2014<br>
-                        Todos los derechos reservados</p>
+                    <p class="copyright uppercase center-text no-bottom">SERVICIO DE EMPLEO MÓVIL 2014<br> Todos los derechos reservados</p>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-    <style>
-        .submenu-nav-items a
-        {
-            padding-left: 20px !important;
-            padding-top: 10px !important;
-            padding-bottom: 10px !important;
-            border-bottom: solid 1px rgba(0,0,0,0.1) !important;
-        }
-        
-        .vinculo_derecha
-        {
-            float: right;
-            padding-right: 1%;
-        }
-        
-        .vinculo_izquierda
-        {
-            float: left;
-            padding-left: 1%;
-            display: none;
-        }
-    </style>
-    <script>
-
-
-        function mostrarMapa() {
-            document.location.href="OfertasMapa.html"
-        }
-
-        function enviar(formul) {
-            var nomb = formul.contactNameField.value;
-            cargarOfertas();
-        }
-
-        function cambiarEstrella(id_estrella) {
-            $("#estrella" + id_estrella).attr("src", "images/estrella_llena.png")
-        }
-
-        function agregarCliente() {
-            location.href = "registro_cliente.html"
-        }
-
-        function abrirPaginaFacebook() {
-
-            window.open("https://www.facebook.com/share.php?u=https://www.mintransporte.gov.co/noticias.php/", "_blank", "closebuttoncaption=Regresar");
-        }
-
-        function abrirPaginaTwitter() {
-
-            window.open("https://twitter.com/home?status=He visto esta noticia en la app Viaja Seguro, la cuál puede interesarte " + " " + "https://www.mintransporte.gov.co/noticias.php/", "_blank", "closebuttoncaption=Regresar");
-        }
-
-        $(document).ready(function () {
-            //alert(localStorage.getItem("id_oferta_mapa"));
-        });
-
-    </script>
+    <div class="cuadro-internet-connection">
+        <div id="div-internet-connection" class="circulo-internet-connection"></div>
+        <label style="padding-left: 12px;" id="label-internet-connection">Online</label>
+    </div> 
 </body>
 </html> 

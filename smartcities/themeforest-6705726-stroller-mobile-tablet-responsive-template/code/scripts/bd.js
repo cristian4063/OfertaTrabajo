@@ -24,10 +24,13 @@ $(document).ready(function () {
 });
 
 function configurar_db() {
-
     function execute(tx) {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS vacantes (id, titulo, nombre_tipo, descripcion, vacantes, cargo, nombre_salario, sector, nombre_experiencia, nombre_nivel, profesion, nombre_departamento, nombre_municipio, fecha_publicacion, fecha_vencimiento, empleador)');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS vacantes (id, titulo, nombre_tipo, descripcion, vacantes, cargo, nombre_salario, sector, nombre_experiencia, nombre_nivel, profesion, nombre_departamento, nombre_municipio, fecha_publicacion, fecha_vencimiento, dias_vence, empleador, telefono, indicativo, celular, direccion, email, fecha_actualizacion)');
     }
+
+    //function execute2(tx) {
+    //    tx.executeSql('DROP TABLE vacantes');
+    //}
 
     function error(error) {
         console.log("Error al configurar base de datos", error)
@@ -50,18 +53,30 @@ function guardarVacante() {
 function GuardarVacanteBD(tx) {
     var id = localStorage.getItem("id_guardar");
     var titulo = localStorage.getItem("titulo_guardar");
-    var empleador = localStorage.getItem("empleador_guardar");
-    var municipio = localStorage.getItem("municipio_guardar"); 
+    var nombre_tipo = localStorage.getItem("tipo_guardar");
+    var descripcion = localStorage.getItem("descripcion_guardar");
     var vacantes = localStorage.getItem("vacantes_guardar");
     var cargo = localStorage.getItem("cargo_guardar");
-    var sector = localStorage.getItem("sector_guardar");
-    var profesion = localStorage.getItem("profesion_guardar");
     var salario = localStorage.getItem("salario_guardar");
+    var sector = localStorage.getItem("sector_guardar");
     var experiencia = localStorage.getItem("experiencia_guardar");
     var nivel = localStorage.getItem("nivel_guardar");
-    var descripcion = localStorage.getItem("descripcion_guardar");
+    var profesion = localStorage.getItem("profesion_guardar");
+    var departamento = localStorage.getItem("departamento_guardar");
+    var municipio = localStorage.getItem("municipio_guardar");
+    var fecha_publicacion = localStorage.getItem("fechaPublicacion_guardar");
+    var fecha_vencimiento = localStorage.getItem("fechaVencimiento_guardar");
+    var dias_vence = localStorage.getItem("diasVence_guardar");
+    var empleador = localStorage.getItem("empleador_guardar");
+    var telefono = localStorage.getItem("telefono_guardar");
+    var indicativo = localStorage.getItem("indicativo_guardar");
+    var celular = localStorage.getItem("celular_guardar");
+    var direccion = localStorage.getItem("direccion_guardar");
+    var email = localStorage.getItem("email_guardar");
+    var fecha_actualizacion = localStorage.getItem("fecha_actualizacion");
     
-    tx.executeSql('INSERT INTO vacantes (id, titulo, descripcion, vacantes, cargo, nombre_salario, sector, experiencia, nivel, profesion, municipio, empleador) VALUES ("' + id+ '", "' + titulo+ '", "' + descripcion+ '", "' + vacantes+ '", "' + cargo+ '", "' + salario+ '", "' + sector+ '", "' + experiencia+ '", "' + nivel+ '", "' + profesion+ '", "' + municipio+ '", "' + empleador+ '")');
+    tx.executeSql('INSERT INTO vacantes (id, titulo, nombre_tipo, descripcion, vacantes, cargo, nombre_salario, sector, nombre_experiencia, nombre_nivel, profesion, nombre_departamento, nombre_municipio, fecha_publicacion, fecha_vencimiento, dias_vence, empleador, telefono, indicativo, celular, direccion, email, fecha_actualizacion) ' +
+        'VALUES ("' + id + '", "' + titulo + '" , "' + nombre_tipo + '", "' + descripcion + '", "' + vacantes + '", "' + cargo + '", "' + salario + '", "' + sector + '", "' + experiencia + '", "' + nivel + '", "' + profesion + '", "' + departamento + '", "' + municipio + '", "' + fecha_publicacion + '", "' + fecha_vencimiento + '", "' + dias_vence + '", "' + empleador + '", "' + telefono + '", "' + indicativo + '", "' + celular + '", "' + direccion + '", "' + email + '", "' + fecha_actualizacion + '")');
 }
 
 // Transaction error callback
@@ -71,10 +86,13 @@ function errorOperacion(err) {
 }
 
 function operacionEfectuada() {
-    alert("La vacante ha sido almacenada como favorita.");
     $("#estrella" + localStorage.getItem("id_guardar")).attr("src", "images/estrella_llena.png")
-    localStorage.setItem("vacantesGuardadas", localStorage.getItem("vacantesGuardadas")+",id"+ localStorage.getItem("id_guardar"));
+    if (localStorage.getItem('vacantesGuardadas'))
+        localStorage.setItem("vacantesGuardadas", localStorage.getItem("vacantesGuardadas") + "id" + localStorage.getItem("id_guardar") + ",");
+    else
+        localStorage.setItem("vacantesGuardadas", "id" + localStorage.getItem("id_guardar") + ",");
     console.log("Operación Exitosa!");
+    alert("La vacante ha sido almacenada como favorita");
 }
 
 function cargarOfertas(palabra)
@@ -114,7 +132,8 @@ function cargarOfertas(palabra)
     var ofertas = $("#ofertas");
     ofertas.empty();
 
-    var nom_mun = localStorage.getItem('NombreMunicipio'); 
+    var nom_dpto = localStorage.getItem('NombreDepartamento');
+    var nom_mun = localStorage.getItem('NombreMunicipio');
     var nom_sal = localStorage.getItem('NombreSalario'); 
     var nom_exp = localStorage.getItem('NombreExperiencia'); 
     var nom_niv = localStorage.getItem('NombreNivel'); 
@@ -137,10 +156,10 @@ function cargarOfertas(palabra)
             $.each(data, function (i, val) {
                 //alert(val['Titulo']);
                 var rutaEstrella = "images/estrella_vacia.png";
-                var metodoFavorito ='agregarFavoritos('+val['ID']+',\''+val['Titulo']+'\',\''+val['Empleador']+'\',\''+nom_mun+'\',\''+val['Num_vacantes']+'\',\''+val['Cargo']+'\',\''+val['Sector']+'\',\''+val['Profesion']+'\',\''+nom_sal+'\',\''+nom_exp+'\',\''+nom_niv+'\',\''+val['Descripcion']+'\')';
+                var metodoFavorito = 'agregarFavoritos(' + val['ID'] + ',\'' + val['Titulo'] + '\',\'' + val['Tipo'] + '\',\'' + val['Descripcion'] + '\',\'' + val['Num_vacantes'] + '\',\'' + val['Cargo'] + '\',\'' + nom_sal + '\',\'' + val['Sector'] + '\',\'' + nom_exp + '\',\'' + nom_niv + '\',\'' + val['Profesion'] + '\',\'' + nom_dpto + '\',\'' + nom_mun + '\',\'' + val['Fecha_publicacion'] + '\',\'' + val['Fecha_vencimiento'] + '\',\'' + val['DiasVence'] + '\',\'' + val['Empleador'] + '\',\'' + val['Telefono'] + '\',\'' + val['Indicativo'] + '\',\'' + val['Celular'] + '\',\'' + val['Direccion'] + '\',\'' + val['Email'] + '\',\'' + val['Ultima_Actualizacion'] + '\')';
                 var textoFavorita ="Agregar a favoritas";
                 if (localStorage.getItem('vacantesGuardadas')){
-                    if(vacantesGuardadas.indexOf("id"+val['ID'])==-1){
+                    if(vacantesGuardadas.indexOf("id"+val['ID']+",")==-1){
                         rutaEstrella="images/estrella_vacia.png";
                     }
                     else{
@@ -153,8 +172,12 @@ function cargarOfertas(palabra)
                 texto += '<div class="container">' +
                         '<div class="toggle-2">' +
                             '<a href="#" class="deploy-toggle-2 toggle-2">' +
-                                val['Titulo'] + '<label style="font-weight: bolder; font-size: 15px; color: black;">Vence en '+val['DiasVence']+' días</label>' +
-                            '</a>' +
+                                val['Titulo'] + '<label style="font-weight: bolder; font-size: 15px; color: black;">';
+                if (val['DiasVence'] == 1)
+                    texto += 'Vence HOY</label>';
+                else
+                    texto += 'Vence en '+val['DiasVence']+' días</label>';
+                texto +=    '</a>' +
                         '<div class="toggle-content">' +
                             '<p style="text-align:justify;">' +
                                 val['Descripcion'] +
@@ -173,6 +196,8 @@ function cargarOfertas(palabra)
                                     'Nivel de Estudios: <b>' + nom_niv + '</b></label>' +
                                 '<label>' +
                                     'Profesión: <b>' + val['Profesion'] + '</b></label>' +
+                                '<label>' +
+                                    'Departamento: <b>' + nom_dpto + '</b></label>' +
                                 '<label>' +
                                     'Municipio: <b>' + nom_mun + '</b></label>' +
                                 '<label>' +

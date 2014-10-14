@@ -45,6 +45,7 @@ function enviar(opcion) {
             localStorage.setItem('Oportunidad', $("#selectTipoOportunidad").val());
             localStorage.setItem('Salario', $("#selectSalario").val());
             localStorage.setItem('Experiencia', $("#selectExperiencia").val());
+            localStorage.setItem('NombreDepartamento', $("#selectDepartamentos option:selected").html());
             localStorage.setItem('NombreMunicipio', $("#selectMunicipios option:selected").html());
             localStorage.setItem('NombreNivel', $("#selectNivel option:selected").html());
             localStorage.setItem('NombreExperiencia', $("#selectExperiencia option:selected").html());
@@ -69,20 +70,31 @@ function Denunciar(id) {
     alert("Denuncia: " + id)
 }*/
 
-function agregarFavoritos(id, titulo, empleador, municipio, vacantes, cargo, sector, profesion, salario, experiencia, nivel, descripcion) {
+function agregarFavoritos(id, titulo, tipo, descripcion, vacantes, cargo, salario, sector, experiencia, nivel, profesion, departamento, municipio, fechaPublicacion, fechaVencimiento, diasVence, empleador, telefono, indicativo, celular, direccion, email, fecha_actualizacion) {
     //$("#estrella" + id).attr("src", "images/estrella_llena.png");
     localStorage.setItem("id_guardar",id);
-    localStorage.setItem("titulo_guardar",titulo);
-    localStorage.setItem("empleador_guardar",empleador);
-    localStorage.setItem("municipio_guardar",municipio); 
+    localStorage.setItem("titulo_guardar", titulo);
+    localStorage.setItem("tipo_guardar", tipo);
+    localStorage.setItem("descripcion_guardar", descripcion);
     localStorage.setItem("vacantes_guardar",vacantes);
-    localStorage.setItem("cargo_guardar",cargo);
-    localStorage.setItem("sector_guardar",sector);
+    localStorage.setItem("cargo_guardar", cargo);
+    localStorage.setItem("salario_guardar", salario);
+    localStorage.setItem("sector_guardar", sector);
+    localStorage.setItem("experiencia_guardar", experiencia);
+    localStorage.setItem("nivel_guardar", nivel);
     localStorage.setItem("profesion_guardar",profesion);
-    localStorage.setItem("salario_guardar",salario);
-    localStorage.setItem("experiencia_guardar",experiencia);
-    localStorage.setItem("nivel_guardar",nivel);
-    localStorage.setItem("descripcion_guardar",descripcion);
+    localStorage.setItem("departamento_guardar", departamento);
+    localStorage.setItem("municipio_guardar", municipio);
+    localStorage.setItem("fechaPublicacion_guardar", fechaPublicacion);
+    localStorage.setItem("fechaVencimiento_guardar", fechaVencimiento);
+    localStorage.setItem("diasVence_guardar", diasVence);
+    localStorage.setItem("empleador_guardar", empleador);
+    localStorage.setItem("telefono_guardar", telefono);
+    localStorage.setItem("indicativo_guardar", indicativo);
+    localStorage.setItem("celular_guardar", celular);
+    localStorage.setItem("direccion_guardar", direccion);
+    localStorage.setItem("email_guardar", email);
+    localStorage.setItem("fecha_actualizacion", fecha_actualizacion);
     guardarVacante();
 }
 
@@ -128,11 +140,11 @@ function yaAgregado(){
 }
 
 function abrirPaginaFacebook(nombre, id) {
-    window.open("https://www.facebook.com/share.php?u=https://www.mintransporte.gov.co/noticias.php/", "_blank", "closebuttoncaption=Regresar");
+    window.open("https://www.facebook.com/share.php?u=http://empleomovil.apphb.com/Vacantes/Details/" + id, "_blank", "closebuttoncaption=Regresar");
 }
 
 function abrirPaginaTwitter(nombre, id) {
-    window.open("https://twitter.com/home?status=Oportunidad de trabajo: " + "Nombre vacante" + "https://www.mintransporte.gov.co/noticias.php/", "_blank", "closebuttoncaption=Regresar");
+    window.open("https://twitter.com/home?status=Oportunidad de trabajo: " + nombre + " http://empleomovil.apphb.com/Vacantes/Details/" + id, "_blank", "closebuttoncaption=Regresar");
 }
 
 function cargarDeptos() {
@@ -189,7 +201,7 @@ function cargarMunicipios() {
                 $('#selectMunicipios').append('<option value=' + CODIGO_DPTO_MPIO + '>' + NOMBRE_MUNICIPIO + '</option>');
             });
             if (localStorage.getItem('Municipio')) {
-                $("#selectMunicipios").val(localStorage.getItem('Departamento'));
+                $("#selectMunicipios").val(localStorage.getItem('Municipio'));
             }
             else {
                 localStorage.setItem('Municipio', $("#selectMunicipios").val());

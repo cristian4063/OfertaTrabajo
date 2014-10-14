@@ -45,6 +45,19 @@
         var usuario;
         var pass;
 
+        $(document).ready(function () {
+            if (!doesConnectionExist()) {
+                location.href = "vacantes_favoritas.html";
+            }
+            if (doesConnectionExist()) {
+                $("#label-internet-connection").text("Online");
+                $("#div-internet-connection").css("background-color", "#80d580");
+            } else {
+                $("#label-internet-connection").text("Offline");
+                $("#div-internet-connection").css("background-color", "#ec8787");
+            }
+        });
+
         function consultarUsuario() {
             if ($('#contactNameField').val() != "" && $('#contactEmailField').val() != "") {
                 MostrarDivCargando();
@@ -71,6 +84,7 @@
                         if (data["status"] == "1") {
                             localStorage.setItem("nombreUsuario", usuario);
                             OcultarDivCargando();
+                            abrirAlert("Ingreso exitoso!");
                             document.location.href = "lista_ofertas_empleador.html";
                         }
                         else {
@@ -229,18 +243,22 @@
                 </div>
                 <div class="container">
                     <div class="footer-socials" style="width:100%;">
-                        <div style="float:left;width:50%;">
-                            <a href="#" class="facebook-footer" style="float:right;"></a>
+                        <div style="float:left;width:50%; padding-right: 3%;">
+                            <a href="https://www.facebook.com/SPEColombia?fref=ts" target="_blank" class="facebook-footer" style="float:right;"></a>
                         </div>
-                        <div style="float:left;width:50%;">
-                            <a href="#" class="twitter-footer" style="float:left;"></a>
+                        <div style="float:left;width:50%; padding-left: 3%;">
+                            <a href="https://twitter.com/ServiciodEmpleo" target="_blank" class="twitter-footer" style="float:left;"></a>
                             <a href="#" class="goup-footer" style="float:right;"></a>
                         </div>
                     </div>
-                   <p class="copyright uppercase center-text no-bottom">SERVICIO DE EMPLEO MÓVIL 2014<br> Todos los derechos reservados</p>      
+                    <p class="copyright uppercase center-text no-bottom">SERVICIO DE EMPLEO MÓVIL 2014<br> Todos los derechos reservados</p>      
                 </div>
             </div>
         </div>
     </div>
+    <div class="cuadro-internet-connection">
+        <div id="div-internet-connection" class="circulo-internet-connection"></div>
+        <label style="padding-left: 12px;" id="label-internet-connection">Online</label>
+    </div> 
 </body>
 </html>
