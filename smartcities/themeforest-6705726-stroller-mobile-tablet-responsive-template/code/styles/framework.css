@@ -656,10 +656,6 @@ a{
 	margin-bottom:10px;
 }
 
-.icon-list li b {
-    font-size: medium;
-}
-
 .address-list{
 	background-image:url(../images/lists/address_48.png);
 }
@@ -1377,11 +1373,6 @@ table tr:hover td{
 	margin-bottom:0px;
 	padding-top:10px;
 	padding:15px;
-    color: black;
-}
-
-.toggle-content p label b {
-    font-size: medium;
 }
 
 .toggle-1, .toggle-2, .toggle-3{
