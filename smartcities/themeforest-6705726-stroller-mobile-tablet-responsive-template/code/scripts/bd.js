@@ -336,7 +336,7 @@ function cargarVacantesMapa(palabra) {
                 $("#map_canvas").show();
             }
             else {
-                abrirAlert("No existen vacantes con los filtros seleccionados, intente seleccionando valores diferentes.");
+                abrirAlertMap("No existe información geo-referenciada suficiente.");
             }
             OcultarDivCargando();
         },
@@ -726,7 +726,7 @@ function agregarVacante() {
     vacante.Num_vacantes = localStorage.getItem('numVacantes');
     vacante.Cargo = localStorage.getItem('cargo');
     vacante.SalarioID = localStorage.getItem('salario');
-    vacante.Sector = localStorage.getItem('sector');
+    //vacante.Sector = localStorage.getItem('sector');
     vacante.ExperienciaID = localStorage.getItem('experiencia');
     vacante.Nivel_estudiosID = localStorage.getItem('nivel');
     vacante.Profesion = localStorage.getItem('profesion');
@@ -987,6 +987,33 @@ function abrirAlert(contenido){
         buttons: {
             "Aceptar": function() {
                 $(this).dialog("close");
+            }
+        }
+    });
+}
+
+function abrirAlertMap(contenido){
+
+    var windowWidth = $(window).width();
+    var windowHeight = $(window).height();
+    var ancho=windowWidth-(windowWidth/10);
+    $('#content-alert').html('<p>'+contenido+'</p>');
+    $("#div-confirm").dialog({
+        modal: true,
+        draggable: false,
+        resizable: false,
+        title: 'Advertencia',
+        minWidth:ancho,
+        my: "center",
+        at: "center",
+        of: window,
+        show: 'blind',
+        hide: 'blind',
+        dialogClass: 'prueba',
+        buttons: {
+            "Aceptar": function() {
+                $(this).dialog("close");
+                cargarOfertas("");
             }
         }
     });

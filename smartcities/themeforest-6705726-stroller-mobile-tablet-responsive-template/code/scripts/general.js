@@ -280,7 +280,7 @@ function guardar()
     var numVacantes = $("#selectVacantes").val();
     var cargo = $("#txtCargo").val();
     var salario = $("#selectSalario").val();
-    var sector = $("#select_sector").val();
+    //var sector = $("#select_sector").val();
     var experiencia = $("#selectExperiencia").val();
     var nivel = $("#select_nivel").val();
     var profesion = $("#txtProfesion").val();
@@ -301,7 +301,7 @@ function guardar()
         localStorage.setItem('numVacantes', numVacantes);
         localStorage.setItem('cargo', cargo);
         localStorage.setItem('salario', salario);
-        localStorage.setItem('sector', sector);
+        //localStorage.setItem('sector', sector);
         localStorage.setItem('experiencia', experiencia);
         localStorage.setItem('nivel', nivel);
         localStorage.setItem('profesion', profesion);
@@ -334,7 +334,7 @@ function editar()
     var numVacantes = $("#selectVacantes").val();
     var cargo = $("#txtCargo").val();
     var salario = $("#selectSalario").val();
-    var sector = $("#select_sector").val();
+    //var sector = $("#select_sector").val();
     var experiencia = $("#selectExperiencia").val();
     var nivel = $("#select_nivel").val();
     var profesion = $("#txtProfesion").val();
@@ -356,7 +356,7 @@ function editar()
         localStorage.setItem('numVacantes', numVacantes);
         localStorage.setItem('cargo', cargo);
         localStorage.setItem('salario', salario);
-        localStorage.setItem('sector', sector);
+        //localStorage.setItem('sector', sector);
         localStorage.setItem('experiencia', experiencia);
         localStorage.setItem('nivel', nivel);
         localStorage.setItem('profesion', profesion);

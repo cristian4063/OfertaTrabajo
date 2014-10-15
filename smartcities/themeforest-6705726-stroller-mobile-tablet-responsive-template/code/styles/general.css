@@ -39,7 +39,7 @@
 }
 
 .styled-select {
-    width: 95%;
+    /*width: 95%;*/
     height: 34px;
     overflow: hidden;
     background: url(../images/flecha_abajo.png) no-repeat right #F4F4F4;

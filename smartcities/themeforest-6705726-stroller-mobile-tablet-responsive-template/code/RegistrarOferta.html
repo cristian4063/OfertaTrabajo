@@ -198,6 +198,7 @@
                 <div class="decoration">
                 </div>
                 <div class="container no-bottom">
+<<<<<<< Updated upstream
                     <div class="big-notification blue-notification">
                         <h4>
                             En esta sección, podrá especificar las características de la vacante y del trabajador que requiere, y publicarla de manera inmediata y gratuita
@@ -232,6 +233,149 @@
                                     <div class="formValidationError" id="txtDescripcionError">
                                         <div class="static-notification-red">
                                             <p class="center-text uppercase">La descripción es requerida!</p>
+=======
+                    <div class="contact-form no-bottom"> 
+                        <form method="post" class="contactForm" id="contactForm" action="">
+                            <fieldset>
+                                <div class="formValidationError" id="txtTituloError">
+                                    <div class="static-notification-red">
+                                        <p class="center-text uppercase">El título es requerido!</p>
+                                    </div>
+                                </div>
+                                <div class="formFieldWrap">
+                                    <label class="field-title contactNameField" for="contactNameField">Título (*): <span>(requerido)</span></label>
+                                    <input type="text" name="txtTitulo" value="" class="contactField requiredField" id="txtTitulo"/>
+                                </div>
+                                <div class="formFieldWrap">
+                                    <label class="field-title contactNameField" for="contactNameField">Tipo oportunidad:</label>
+                                    <select class="contactField styled-select" name="selectTipo" id="selectTipo">
+                                        <!--<option value="" disabled selected>Cantidad</option>-->
+                                        <option value='1'>Empleo</option>
+                                        <option value='2'>Pasantía</option>
+                                        <option value='3'>Práctica laboral</option>
+                                        <option value='4'>Contrato de aprendizaje</option>
+                                    </select>
+                                </div>
+                                <div class="formValidationError" id="txtDescripcionError">
+                                    <div class="static-notification-red">
+                                        <p class="center-text uppercase">La descripción es requerida!</p>
+                                    </div>
+                                </div>
+                                <div class="formTextareaWrap">
+                                    <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Descripción (*): <span>(requerido)</span></label>
+                                    <textarea name="txtDescripcion" class="contactTextarea requiredField" id="txtDescripcion"></textarea>
+                                </div>
+                                <div class="formFieldWrap">
+                                    <label class="field-title contactNameField" for="contactNameField">Número de trabajadores requeridos: <span>(requerido)</span></label>
+                                    <select class="contactField styled-select" name="selectVacantes" id="selectVacantes">
+                                        <!--<option value="" disabled selected>Cantidad</option>-->
+                                        <option value='1'>1</option>
+                                        <option value='2'>2</option>
+                                        <option value='3'>3</option>
+                                        <option value='4'>4</option>
+                                        <option value='5'>5</option>
+                                    </select>
+                                </div>
+                                <div class="formValidationError" id="txtCargoError">
+                                    <div class="static-notification-red">
+                                        <p class="center-text uppercase">El cargo es requerido!</p>
+                                    </div>
+                                </div>
+                                <div class="formFieldWrap">
+                                    <label class="field-title contactNameField" for="contactNameField">Cargo (*): <span>(requerido)</span></label>
+                                    <input type="text" name="txtCargo" value="" class="contactField requiredField" id="txtCargo" />
+                                </div>
+                                <div class="formFieldWrap">
+                                    <label class="field-title contactNameField" for="contactNameField">Salario:</label>
+                                    <select class="contactField styled-select" name="selectSalario" id="selectSalario">
+                                        <!--<option value="" disabled selected>Cantidad</option>-->
+                                        <option value='1'>Menos de 1 SMMLV</option>
+                                        <option value='2'>Más de 1 SMMLV hasta 2 SMMLV</option>
+                                        <option value='3'>Más de 2 SMMLV hasta 3 SMMLV</option>
+                                        <option value='4'>Más de 3 SMMLV hasta 5 SMMLV</option>
+                                        <option value='5'>Más de 5 SMMLV hasta 7 SMMLV</option>
+                                        <option value='6'>Más de 7 SMMLV</option>
+                                    </select>
+                                </div>
+                                <!--<div class="formFieldWrap">
+                                    <label class="field-title contactNameField" for="contactNameField">
+                                         Sector empresarial:</label>
+                                        <select class="styled-select" name="select_sector" id="select_sector">
+                                        </select>
+                                </div>-->
+                                <div class="formFieldWrap">
+                                    <label class="field-title contactNameField" for="contactNameField">Experiencia mínima requerida:</label>
+                                    <select class="contactField styled-select" name="selectExperiencia" id="selectExperiencia">
+                                        <!--<option value="" disabled selected>Cantidad</option>-->
+                                        <option value='1'>De 0 a  6 meses</option>
+                                        <option value='2'>De 7 a 12 meses</option>
+                                        <option value='3'>De 13 a 24 meses</option>
+                                        <option value='4'>Más de 24 meses</option>
+                                    </select>
+                                </div>
+                                <div class="formFieldWrap">
+                                    <label class="field-title contactNameField" for="contactNameField">Nivel de estudio mínimo requerido (*): </label>
+                                    <select class="contactField styled-select" name="select_nivel" id="select_nivel">
+                                    </select>
+                                </div>
+                                <div class="formFieldWrap">
+                                    <label class="field-title contactNameField" for="contactNameField">Profesión: </label>
+                                    <input type="text" name="txtProfesion" value="" class="contactField" id="txtProfesion" />
+                                </div>
+                                <div class="formFieldWrap">
+                                    <label class="field-title contactNameField" for="contactNameField">Departamento (*): <span>(requerido)</span></label>
+                                    <div class="ui-widget espacio_span_abajo contactField" style="margin-right: 50px; background: none; background-color: #F4F4F4;">
+                                        <select class="form-control" name="selectDepartamentos" id="selectDepartamentos" style="max-width: 200px;"></select>
+                                    </div>
+                                </div>
+                                <div class="formFieldWrap">
+                                    <label class="field-title contactNameField" for="contactNameField">Municipio (*): <span>(requerido)</span></label>
+                                    <div class="ui-widget espacio_span_abajo contactField" style="margin-right: 50px; background: none; background-color: #F4F4F4;">
+                                        <select class="form-control" name="selectMunicipios" id="selectMunicipios" style="max-width: 200px;"></select>
+                                    </div>
+                                </div>
+                                <div class="formFieldWrap">
+                                    <label class="field-title contactNameField" for="contactNameField">Dirección de referencia: <span>(requerido)</span></label>
+                                    <input type="text" name="txtDireccion" value="" class="contactField" id="txtDireccion" />
+                                </div>
+                                <div class="formValidationError" id="txtCorreoError">
+                                    <div class="static-notification-red">
+                                        <p class="center-text uppercase">El correo electrónico es requerido!</p>
+                                    </div>
+                                </div> 
+                                <div class="formValidationError" id="txtCorreoError2">
+                                    <div class="static-notification-red">
+                                        <p class="center-text uppercase">Ingrese una dirección de correo válida!</p>
+                                    </div>
+                                </div>
+                                <div class="formFieldWrap">
+                                    <label class="field-title contactNameField" for="contactNameField">Correo electrónico de contacto (*): <span>(requerido)</span></label>
+                                    <input type="text" name="txtCorreo" value="" class="contactField requiredField requiredEmailField" id="txtCorreo" />
+                                </div>
+                                <div class="formValidationError" id="txtTelefonoError">
+                                    <div class="static-notification-red">
+                                        <p class="center-text uppercase">El teléfono es requerido!</p>
+                                    </div>
+                                </div>
+                                <div class="formFieldWrap">
+                                    <label class="field-title contactNameField" for="contactNameField">Teléfono de contacto (*): <span>(requerido)</span></label>
+                                    <input type="text" name="txtTelefono" value="" class="contactField requiredField" id="txtTelefono" />
+                                </div>
+                                <div class="formValidationError" id="txtfechaVencimientoError">
+                                    <div class="static-notification-red">
+                                        <p class="center-text uppercase">La fecha es requerida!</p>
+                                    </div>
+                                </div>
+                                <div class="formFieldWrap">
+                                    <label class="field-title contactNameField" for="contactNameField">Fecha de vencimiento (*): <span>(requerido)</span></label>
+                                    <input type="text" name="txtfechaVencimiento" value="" type="date" class="contactField requiredField" id="txtfechaVencimiento" />
+                                </div>
+                                <div class="container">
+                                    <div class="toggle-1">
+                                        <a href="#" class="deploy-toggle-1" onclick="crearMapa()">Ubique su vacante en el mapa (opcional)</a>
+                                        <div class="toggle-content">
+                                            <div id="map_canvas2" style="height: 400px;"></div>
+>>>>>>> Stashed changes
                                         </div>
                                     </div>
                                     <div class="formTextareaWrap">
