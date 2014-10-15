@@ -814,7 +814,7 @@ function modificarVacante() {
     vacante.Num_vacantes = localStorage.getItem('numVacantes');
     vacante.Cargo = localStorage.getItem('cargo');
     vacante.SalarioID = localStorage.getItem('salario');
-    vacante.Sector = localStorage.getItem('sector');
+    //vacante.Sector = localStorage.getItem('sector');
     vacante.ExperienciaID = localStorage.getItem('experiencia');
     vacante.Nivel_estudiosID = localStorage.getItem('nivel');
     vacante.Profesion = localStorage.getItem('profesion');
