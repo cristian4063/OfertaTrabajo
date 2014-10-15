@@ -47,6 +47,13 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            if (localStorage.getItem('MostrarAlertaPrimera')) {
+        //$("#mostrarAlertaPrimera").val(localStorage.getItem('Experiencia'));
+            }
+            else{
+                abrirAlert('El Servicio de Empleo Móvil le ofrece a los empleadores una solución para publicar vacantes de manera rápida y gratuita cuando no requieren de los servicios de intermediación de un centro de empleo, y a los buscadores un canal para consultarlas de manera inmediata');
+                localStorage.setItem('MostrarAlertaPrimera','1');
+            }
             configurar_db();
             if (!doesConnectionExist()) {
                 location.href = "vacantes_favoritas.html";
@@ -231,6 +238,7 @@
                             Experiencia laboral: <span>(requerido)</span>
                         </label>
                         <select class="styled-select" name="selectExperiencia" id="selectExperiencia">
+                            <option value="0">Ninguna</option>
                             <option value="1">De 0 a 6 meses</option>
                             <option value="2">De 7 a 12 meses</option>
                             <option value="3">De 13 a 24 meses</option>
