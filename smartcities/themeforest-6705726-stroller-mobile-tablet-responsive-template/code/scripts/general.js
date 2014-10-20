@@ -104,12 +104,29 @@ function Denunciar(id) {
     //alert("Denuncia: "+id)
 }
 
-function GuardarDenuncia(id){
-    //alert("Guardar: "+id+" Motivo: "+$("#selectMotivoDenuncia"+id).val());
+function GuardarDenuncia(id, titulo, tipo, descripcion, vacantes, cargo, salario, sector, experiencia, nivel, profesion, departamento, municipio, fechaPublicacion, fechaVencimiento, diasVence, empleador, telefono, indicativo, celular, direccion, email, fecha_actualizacion) {
     var denuncia = new Object();
     denuncia.Fecha = null;
-    denuncia.Tipo = $("#selectMotivoDenuncia"+id+" option:selected").html();
+    denuncia.Tipo = $("#selectMotivoDenuncia" + id + " option:selected").html();
     denuncia.vacanteID = id;
+    denuncia.Email = email;
+    denuncia.TituloEmail = "La vacante '" + titulo + "' publicada a través del Servicio de Empleo Móvil ha sido denunciada";
+    denuncia.TextoEmail = "Señor/a " + empleador + "<br/><br/>" +
+          "La vacante '" + titulo + "' ha sido denunciada por varios usuarios de la app. Por precaución la vacante ha sido automáticamente despublicada.<br/><br/>" +
+          "RESUMEN DE LA VACANTE:<br/><br/>" +
+          "Título de la vacante: " + titulo + "<br/>" +
+          "Tipo de oportunidad”: " + tipo + "<br/>" +
+          "Descripción de la vacante: " + descripcion + "<br/>" +
+          "Cargo: " + cargo + "<br/>" +
+          "Salario ofrecido: " + salario + "<br/>" +
+          "Experiencia mínima requerida: " + experiencia + "<br/>" +
+          "Nivel de estudio mínimo requerido: " + nivel + "<br/>" +
+          "Profesión: " + profesion + "<br/>" +
+          "Ubicación: " + departamento + "/" + municipio + "<br/>" +
+          "Dirección de referencia: " + direccion + "<br/>" +
+          "Correo Electrónico de Contacto: " + email + "<br/>" +
+          "Teléfono de Contacto: " + telefono + "<br/><br/>" +
+          "Servicio de Empleo Móvil - Este es un correo electrónico automático, por favor no lo responda";
 
     $.ajax({
         url: 'http://apiempleo.apphb.com/api/Vacante/agregarDenuncia',
@@ -148,7 +165,8 @@ function abrirPaginaFacebook(nombre, id) {
 }
 
 function abrirPaginaTwitter(nombre, id) {
-    window.open("https://twitter.com/home?status=Oportunidad de trabajo: " + nombre + " http://empleomovil.apphb.com/Vacantes/Details/" + id, "_blank", "closebuttoncaption=Regresar");
+    var url = 'http://empleomovil.apphb.com/Vacantes/Details/' + id;
+    window.open("https://twitter.com/intent/tweet?url=" + url + "&text=Oportunidad de empleo: " + nombre, "_blank", "closebuttoncaption=Regresar");
 }
 
 function cargarDeptos() {

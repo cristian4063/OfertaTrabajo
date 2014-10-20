@@ -157,7 +157,8 @@ function cargarOfertas(palabra)
                 //alert(val['Titulo']);
                 var rutaEstrella = "images/estrella_vacia.png";
                 var metodoFavorito = 'agregarFavoritos(' + val['ID'] + ',\'' + val['Titulo'] + '\',\'' + val['Tipo'] + '\',\'' + val['Descripcion'] + '\',\'' + val['Num_vacantes'] + '\',\'' + val['Cargo'] + '\',\'' + nom_sal + '\',\'' + val['Sector'] + '\',\'' + nom_exp + '\',\'' + nom_niv + '\',\'' + val['Profesion'] + '\',\'' + nom_dpto + '\',\'' + nom_mun + '\',\'' + val['Fecha_publicacion'] + '\',\'' + val['Fecha_vencimiento'] + '\',\'' + val['DiasVence'] + '\',\'' + val['Empleador'] + '\',\'' + val['Telefono'] + '\',\'' + val['Indicativo'] + '\',\'' + val['Celular'] + '\',\'' + val['Direccion'] + '\',\'' + val['Email'] + '\',\'' + val['Ultima_Actualizacion'] + '\')';
-                var textoFavorita ="Agregar a favoritas";
+                var metodoDenuncia = 'GuardarDenuncia(' + val['ID'] + ',\'' + val['Titulo'] + '\',\'' + val['Tipo'] + '\',\'' + val['Descripcion'] + '\',\'' + val['Num_vacantes'] + '\',\'' + val['Cargo'] + '\',\'' + nom_sal + '\',\'' + val['Sector'] + '\',\'' + nom_exp + '\',\'' + nom_niv + '\',\'' + val['Profesion'] + '\',\'' + nom_dpto + '\',\'' + nom_mun + '\',\'' + val['Fecha_publicacion'] + '\',\'' + val['Fecha_vencimiento'] + '\',\'' + val['DiasVence'] + '\',\'' + val['Empleador'] + '\',\'' + val['Telefono'] + '\',\'' + val['Indicativo'] + '\',\'' + val['Celular'] + '\',\'' + val['Direccion'] + '\',\'' + val['Email'] + '\',\'' + val['Ultima_Actualizacion'] + '\')';
+                var textoFavorita = "Agregar a favoritas";
                 if (localStorage.getItem('vacantesGuardadas')){
                     if(vacantesGuardadas.indexOf("id"+val['ID']+",")==-1){
                         rutaEstrella="images/estrella_vacia.png";
@@ -249,7 +250,7 @@ function cargarOfertas(palabra)
                                         '<option value="3">Información de contacto errónea </option>'+
                                         '<option value="4">Sospecha de Trata de personas</option>'+
                                     '</select>'+
-                                    '<br /> <a name="#" onclick="GuardarDenuncia('+val['ID']+')" class="button-icon icon-setting button-red">Confirmar denuncia</a>&nbsp;<a name="#" onclick="CancelarDenuncia('+val['ID']+')" class="button-icon icon-setting button-red">Cancelar</a>'+
+                                    '<br /> <a name="#" onclick=\"' + metodoDenuncia + '\" class="button-icon icon-setting button-red">Confirmar denuncia</a>&nbsp;<a name="#" onclick="CancelarDenuncia(' + val['ID'] + ')" class="button-icon icon-setting button-red">Cancelar</a>' +
                                     '</div>' +
                                 '</div>' +
                             '</div>' +
