@@ -54,7 +54,7 @@
     color: #888;
     border: none;
     outline: none;
-    display: inline-block;
+    /*display: inline-block;*/
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -138,10 +138,10 @@ li
     padding: 10px;
 }
 
-ui-widget-header {
-    border: 1px solid #27ae60 !important;
-    background-color: #27ae60 !important;
-    background: #27ae60 !important;
+.ui-widget-header {
+    border: 1px solid #58595b !important;
+    background-color: #58595b !important;
+    background: #58595b !important;
 }
 
 
@@ -150,10 +150,10 @@ ui-widget-header {
 }
 .ui-dialog .ui-dialog-buttonpane button{
     background:#58595B !important;
-    border: 1px solid #27ae60 !important;
+    border: 1px solid #58595b !important;
     color: white;
 }
 
 .ui-icon-closethick {
-    background-image: none;
+    background-image: none !important;
 }

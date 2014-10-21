@@ -32,11 +32,11 @@ $(function () {
 function enviar(opcion) {
     //alert($('input.ui-autocomplete-input:eq(0)').val());
     if ($("#selectDepartamentos").val() == null || $('input.ui-autocomplete-input:eq(0)').val() == "") {
-        alert("Debe seleccionar un departamento.")
+        abrirAlert("Debe seleccionar un departamento.")
     }
     else {
         if ($("#selectMunicipios").val() == null || $('input.ui-autocomplete-input:eq(1)').val() == "") {
-            alert("Debe seleccionar un municipio.")
+            abrirAlert("Debe seleccionar un municipio.")
         }
         else {
             localStorage.setItem('Departamento', $("#selectDepartamentos").val());
@@ -153,7 +153,7 @@ function CancelarDenuncia(id){
 }
 
 function yaAgregado(){
-    alert("La vacante ya ha sido agregada como favorita.");
+    abrirAlert("La vacante ya ha sido agregada como favorita.");
 }
 
 function abrirPaginaFacebook(nombre, id) {

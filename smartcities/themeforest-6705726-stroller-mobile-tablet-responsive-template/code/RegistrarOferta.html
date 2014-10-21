@@ -62,34 +62,38 @@
                 $("#label-internet-connection").text("Offline");
                 $("#div-internet-connection").css("background-color", "#ec8787");
             }
-            /*if (doesConnectionExist()) {
-                $("#label-internet-connection").text("Online");
-                $("#div-internet-connection").css("background-color", "#80d580");
-            } else {
-                $("#label-internet-connection").text("Offline");
-                $("#div-internet-connection").css("background-color", "#ec8787");
-            }
-            if (localStorage.getItem('Nivel')) {
-                $("#selectNivel").val(localStorage.getItem('selectNivel'));
-            }
-            if (localStorage.getItem('Oportunidad')) {
-                $("#selectTipoOportunidad").val(localStorage.getItem('Oportunidad'));
-            }
-            if (localStorage.getItem('Salario')) {
-                $("#selectSalario").val(localStorage.getItem('Salario'));
-            }
-            if (localStorage.getItem('Experiencia')) {
-                $("#selectExperiencia").val(localStorage.getItem('Experiencia'));
-            }*/
-            $("#txtfechaVencimiento").datepicker({ minDate: new Date() });
 
             localStorage.setItem('latitud', 0);
             localStorage.setItem('longitud', 0);
 
-            cargar_sectores();
+            //cargar_sectores();
             cargar_niveles();
             cargarDeptos();
         });
+
+        $(function() {
+            $( "#txtfechaPublicacion" ).datepicker({
+                minDate: new Date(),
+                onClose: function( selectedDate ) {
+                    $( "#txtfechaVencimiento" ).datepicker( "option", "disabled", false );
+                    $( "#txtfechaVencimiento" ).datepicker( "option", "minDate", selectedDate );
+                    $( "#txtfechaVencimiento" ).datepicker( "option", "maxDate", AddRestrictedDays(15) );
+                }
+            });
+            $( "#txtfechaVencimiento" ).datepicker({
+                disabled: true,
+                onClose: function( selectedDate ) {
+                    $( "#txtfechaPublicacion" ).datepicker( "option", "maxDate", selectedDate );
+                }
+            });
+        });
+
+        function AddRestrictedDays(arg) {
+            var d = $('#txtfechaPublicacion').datepicker('getDate');
+            var d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + arg);
+            return d;
+        }
+
     </script>
 
 </head>
@@ -222,7 +226,6 @@
                                     <div class="formFieldWrap">
                                         <label class="field-title contactNameField" for="contactNameField">Tipo oportunidad:</label>
                                         <select class="contactField styled-select" name="selectTipo" id="selectTipo">
-                                            <!--<option value="" disabled selected>Cantidad</option>-->
                                             <option value='1'>Empleo</option>
                                             <option value='2'>Pasantía</option>
                                             <option value='3'>Práctica laboral</option>
@@ -241,7 +244,6 @@
                                     <div class="formFieldWrap">
                                         <label class="field-title contactNameField" for="contactNameField">Número de trabajadores requeridos: <span>(requerido)</span></label>
                                         <select class="contactField styled-select" name="selectVacantes" id="selectVacantes">
-                                            <!--<option value="" disabled selected>Cantidad</option>-->
                                             <option value='1'>1</option>
                                             <option value='2'>2</option>
                                             <option value='3'>3</option>
@@ -261,13 +263,14 @@
                                     <div class="formFieldWrap">
                                         <label class="field-title contactNameField" for="contactNameField">Salario:</label>
                                         <select class="contactField styled-select" name="selectSalario" id="selectSalario">
-                                            <!--<option value="" disabled selected>Cantidad</option>-->
-                                            <option value='1'>Menos de 1 SMMLV</option>
+                                            <option value='0'>Menos de 1 SMMLV</option>
+                                            <option value='1'>1 SMMLV</option>
                                             <option value='2'>Más de 1 SMMLV hasta 2 SMMLV</option>
                                             <option value='3'>Más de 2 SMMLV hasta 3 SMMLV</option>
                                             <option value='4'>Más de 3 SMMLV hasta 5 SMMLV</option>
                                             <option value='5'>Más de 5 SMMLV hasta 7 SMMLV</option>
                                             <option value='6'>Más de 7 SMMLV</option>
+                                            <option value='7'>A Convenir</option>
                                         </select>
                                     </div>
                                     <!--<div class="formFieldWrap">
@@ -279,7 +282,7 @@
                                     <div class="formFieldWrap">
                                         <label class="field-title contactNameField" for="contactNameField">Experiencia mínima requerida:</label>
                                         <select class="contactField styled-select" name="selectExperiencia" id="selectExperiencia">
-                                            <!--<option value="" disabled selected>Cantidad</option>-->
+                                            <option value='0'>Ninguna</option>
                                             <option value='1'>De 0 a  6 meses</option>
                                             <option value='2'>De 7 a 12 meses</option>
                                             <option value='3'>De 13 a 24 meses</option>
@@ -296,13 +299,13 @@
                                     </div>
                                     <div class="formFieldWrap">
                                         <label class="field-title contactNameField" for="contactNameField">Departamento (*): <span>(requerido)</span></label>
-                                        <div class="ui-widget espacio_span_abajo contactField" style="margin-right: 50px; background: none; background-color: #F4F4F4;">
+                                        <div class="ui-widget espacio_span_abajo contactField styled-select" style="margin-right: 50px; background: none; background-color: #F4F4F4;">
                                             <select class="form-control" name="selectDepartamentos" id="selectDepartamentos" style="max-width: 200px;"></select>
                                         </div>
                                     </div>
                                     <div class="formFieldWrap">
                                         <label class="field-title contactNameField" for="contactNameField">Municipio (*): <span>(requerido)</span></label>
-                                        <div class="ui-widget espacio_span_abajo contactField" style="margin-right: 50px; background: none; background-color: #F4F4F4;">
+                                        <div class="ui-widget espacio_span_abajo contactField styled-select" style="margin-right: 50px; background: none; background-color: #F4F4F4;">
                                             <select class="form-control" name="selectMunicipios" id="selectMunicipios" style="max-width: 200px;"></select>
                                         </div>
                                     </div>
@@ -335,7 +338,16 @@
                                     </div>
                                     <div class="formValidationError" id="txtfechaVencimientoError">
                                         <div class="static-notification-red">
-                                            <p class="center-text uppercase">La fecha es requerida!</p>
+                                            <p class="center-text uppercase">La fecha de publicación es requerida!</p>
+                                        </div>
+                                    </div>
+                                    <div class="formFieldWrap">
+                                        <label class="field-title contactNameField" for="contactNameField">Fecha de publicación (*): <span>(requerido)</span></label>
+                                        <input type="text" name="txtfechaPublicacion" value="" type="date" class="contactField requiredField" id="txtfechaPublicacion" />
+                                    </div>
+                                    <div class="formValidationError" id="txtfechaVencimientoError">
+                                        <div class="static-notification-red">
+                                            <p class="center-text uppercase">La fecha de vencimiento es requerida!</p>
                                         </div>
                                     </div>
                                     <div class="formFieldWrap">
