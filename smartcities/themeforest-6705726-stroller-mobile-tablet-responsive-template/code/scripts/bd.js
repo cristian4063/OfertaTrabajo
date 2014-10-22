@@ -25,11 +25,12 @@ $(document).ready(function () {
 
 function configurar_db() {
     function execute(tx) {
+            //tx.executeSql('DROP TABLE vacantes');
         tx.executeSql('CREATE TABLE IF NOT EXISTS vacantes (id, titulo, nombre_tipo, descripcion, vacantes, cargo, nombre_salario, sector, nombre_experiencia, nombre_nivel, profesion, nombre_departamento, nombre_municipio, fecha_publicacion, fecha_vencimiento, dias_vence, empleador, telefono, indicativo, celular, direccion, email, fecha_actualizacion)');
     }
 
     //function execute2(tx) {
-    //    tx.executeSql('DROP TABLE vacantes');
+        //tx.executeSql('DROP TABLE vacantes');
     //}
 
     function error(error) {
@@ -157,8 +158,8 @@ function cargarOfertas(palabra)
             $.each(data, function (i, val) {
                 //alert(val['Titulo']);
                 var rutaEstrella = "images/estrella_vacia.png";
-                var metodoFavorito = 'agregarFavoritos(' + val['ID'] + ',\'' + val['Titulo'] + '\',\'' + val['Tipo'] + '\',\'' + val['Descripcion'] + '\',\'' + val['Num_vacantes'] + '\',\'' + val['Cargo'] + '\',\'' + nom_sal + '\',\'' + val['Sector'] + '\',\'' + nom_exp + '\',\'' + nom_niv + '\',\'' + val['Profesion'] + '\',\'' + nom_dpto + '\',\'' + nom_mun + '\',\'' + val['Fecha_publicacion'] + '\',\'' + val['Fecha_vencimiento'] + '\',\'' + val['DiasVence'] + '\',\'' + val['Empleador'] + '\',\'' + val['Telefono'] + '\',\'' + val['Indicativo'] + '\',\'' + val['Celular'] + '\',\'' + val['Direccion'] + '\',\'' + val['Email'] + '\',\'' + val['Ultima_Actualizacion'] + '\')';
-                var metodoDenuncia = 'GuardarDenuncia(' + val['ID'] + ',\'' + val['Titulo'] + '\',\'' + val['Tipo'] + '\',\'' + val['Descripcion'] + '\',\'' + val['Num_vacantes'] + '\',\'' + val['Cargo'] + '\',\'' + nom_sal + '\',\'' + val['Sector'] + '\',\'' + nom_exp + '\',\'' + nom_niv + '\',\'' + val['Profesion'] + '\',\'' + nom_dpto + '\',\'' + nom_mun + '\',\'' + val['Fecha_publicacion'] + '\',\'' + val['Fecha_vencimiento'] + '\',\'' + val['DiasVence'] + '\',\'' + val['Empleador'] + '\',\'' + val['Telefono'] + '\',\'' + val['Indicativo'] + '\',\'' + val['Celular'] + '\',\'' + val['Direccion'] + '\',\'' + val['Email'] + '\',\'' + val['Ultima_Actualizacion'] + '\')';
+                var metodoFavorito = 'agregarFavoritos(' + val['ID'] + ',\'' + val['Titulo'] + '\',\'' + val['Tipo'] + '\',\'' + val['Descripcion'] + '\',\'' + val['Num_vacantes'] + '\',\'' + val['Cargo'] + '\',\'' + nom_sal + '\',\'' + val['Sector'] + '\',\'' + nom_exp + '\',\'' + val['Nivel_estudios'] + '\',\'' + val['Profesion'] + '\',\'' + nom_dpto + '\',\'' + nom_mun + '\',\'' + val['Fecha_publicacion'] + '\',\'' + val['Fecha_vencimiento'] + '\',\'' + val['DiasVence'] + '\',\'' + val['Empleador'] + '\',\'' + val['Telefono'] + '\',\'' + val['Indicativo'] + '\',\'' + val['Celular'] + '\',\'' + val['Direccion'] + '\',\'' + val['Email'] + '\',\'' + val['Ultima_Actualizacion'] + '\')';
+                var metodoDenuncia = 'GuardarDenuncia(' + val['ID'] + ',\'' + val['Titulo'] + '\',\'' + val['Tipo'] + '\',\'' + val['Descripcion'] + '\',\'' + val['Num_vacantes'] + '\',\'' + val['Cargo'] + '\',\'' + nom_sal + '\',\'' + val['Sector'] + '\',\'' + nom_exp + '\',\'' + val['Nivel_estudios'] + '\',\'' + val['Profesion'] + '\',\'' + nom_dpto + '\',\'' + nom_mun + '\',\'' + val['Fecha_publicacion'] + '\',\'' + val['Fecha_vencimiento'] + '\',\'' + val['DiasVence'] + '\',\'' + val['Empleador'] + '\',\'' + val['Telefono'] + '\',\'' + val['Indicativo'] + '\',\'' + val['Celular'] + '\',\'' + val['Direccion'] + '\',\'' + val['Email'] + '\',\'' + val['Ultima_Actualizacion'] + '\')';
                 var textoFavorita = "Agregar a favoritas";
                 if (localStorage.getItem('vacantesGuardadas')){
                     if(vacantesGuardadas.indexOf("id"+val['ID']+",")==-1){
@@ -195,7 +196,7 @@ function cargarOfertas(palabra)
                                 '<label>' +
                                     'Experiencia: <b>' + nom_exp + '</b></label>' +
                                 '<label>' +
-                                    'Nivel de Estudios: <b>' + nom_niv + '</b></label>' +
+                                    'Nivel de Estudios: <b>' + val['Nivel_estudios'] + '</b></label>' +
                                 '<label>' +
                                     'Profesión: <b>' + val['Profesion'] + '</b></label>' +
                                 '<label>' +
@@ -230,7 +231,7 @@ function cargarOfertas(palabra)
                                                 '<li class="right-list">E-mail: <b>' + val['Email'] + '</b></li>' +
                                             '</ul>' +
                                         '</a>' +
-                                        '<a name="#" style="text-align:center !important; border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                        '<a name="#" style="float:left; border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
                                         'Comparta esta oportunidad de trabajo'+
                                             '<ul style="margin-bottom:0px;" class="icon-list">' +
                                                 '<li style="padding-left:0px !important;">' +
@@ -239,13 +240,14 @@ function cargarOfertas(palabra)
                                                 '</li>' +
                                             '</ul>' +
                                         '</a>' +
+                                        '<div onclick=\"'+metodoFavorito+'\" style="text-align:center; width: 50%; float: left; padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;"><a>'+textoFavorita+'</a><img id="estrella'+val['ID']+'" class="star" style="margin: 0px !important; width: 43px; height: 50px;" src="'+rutaEstrella+'" style="width: 20px;" /></div>' +
                                     '</div>' +
                                 '</div>' +
                                 '<div class="one-half-responsive" style="text-align:center !important;">' +
-                                     '<div onclick=\"'+metodoFavorito+'\" style="width: 50%; float: left;"><img id="estrella'+val['ID']+'" class="star" style="margin: 0px !important; width:auto !important;" src="'+rutaEstrella+'" style="width: 20px;" /><label>'+textoFavorita+'</label></div>' +
-                                     '<div id="btnDen'+val['ID']+'" style="padding-left: 20px; width: 50%; float: left;margin-top: 5px; display:block;"><a name="#" onclick="Denunciar('+val['ID']+')" class="button-icon icon-setting button-red">Denunciar</a></div>' +
-                                     '<div id="comboDen'+val['ID']+'" style="padding-left: 20px; width: 50%; float: left;margin-top: 5px; display:none;">Motivo de la denuncia: <br />'+ 
-                                     '<select class="styled-select" name="selectMotivoDenuncia'+val['ID']+'" id="selectMotivoDenuncia'+val['ID']+'">'+
+                                     //'<div onclick=\"'+metodoFavorito+'\" style="width: 50%; float: left;"><img id="estrella'+val['ID']+'" class="star" style="margin: 0px !important; width:auto !important;" src="'+rutaEstrella+'" style="width: 20px;" /><label>'+textoFavorita+'</label></div>' +
+                                     '<div id="btnDen'+val['ID']+'" style="padding-left: 20px; width: 80%; float: left;margin-top: 5px; display:block;"><a name="#" onclick="Denunciar('+val['ID']+')" class="button-icon icon-setting button-red">Denunciar</a></div>' +
+                                     '<div id="comboDen'+val['ID']+'" style="padding-left: 20px; width: 80%; float: left;margin-top: 5px; display:none;">Motivo de la denuncia: <br />'+ 
+                                     '<select class="styled-select" style="width:100% !important;" name="selectMotivoDenuncia'+val['ID']+'" id="selectMotivoDenuncia'+val['ID']+'">'+
                                         '<option value="1">Vacante sospechosa / engañosa</option>'+
                                         '<option value="2">Lenguaje no adecuado</option>'+
                                         '<option value="3">Información de contacto errónea </option>'+
@@ -267,6 +269,15 @@ function cargarOfertas(palabra)
                 $(this).toggleClass('toggle-2-active');
                 return false;
             });
+            if(cantidad!=0){
+                if(cantidad==1){
+                    abrirAlert('Se ha encontrado '+cantidad+' oportunidad.');
+                }
+                else{
+                    abrirAlert('Se han encontrado '+cantidad+' oportunidades.');
+                }
+                
+            }
             OcultarDivCargando();
         },
         error: function (xhr, textStatus, errorThrown) {
