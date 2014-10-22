@@ -174,8 +174,8 @@ function cargarOfertas(palabra)
                 n = val['Fecha_vencimiento'].indexOf('T');
                 texto += '<div class="container">' +
                         '<div class="toggle-2">' +
-                            '<a href="#" class="deploy-toggle-2 toggle-2">' +
-                                val['Titulo'] + '<label style="font-weight: bolder; font-size: 15px; color: black;">';
+                            '<a href="#" class="deploy-toggle-2 toggle-2" style="font-weight: normal; font-size: 15px; color: black;">' +
+                                val['Titulo'] + '<label style="font-weight: bolder; font-size: 13px; color: black;">';
                 if (val['DiasVence'] == 1)
                     texto += 'Vence HOY</label>';
                 else
@@ -183,8 +183,9 @@ function cargarOfertas(palabra)
                 texto +=    '</a>' +
                         '<div class="toggle-content">' +
                             '<p style="text-align:justify;">' +
-                                val['Descripcion'] +
-
+                                '<label style="padding-bottom:10px;">' +
+                                    val['Descripcion'] +
+                                '</label>' +
                                 '<label>' +
                                     'Número de vacantes: <b>' + val['Num_vacantes'] + '</b></label>' +
                                 '<label>' +
@@ -504,8 +505,8 @@ function cargarVacante(vacanteID) {
             n = data['Fecha_vencimiento'].indexOf('T');
             texto += '<div class="container">' +
                     '<div class="toggle-2">' +
-                        '<a href="#" class="deploy-toggle-2 toggle-2-active">' +
-                            data['Titulo'] + '<label style="font-weight: bolder; font-size: 15px; color: black;">';
+                        '<a href="#" class="deploy-toggle-2 toggle-2-active" style="font-weight: normal; font-size: 15px; color: black;">' +
+                            data['Titulo'] + '<label style="font-weight: bolder; font-size: 13px; color: black;">';
             if (data['DiasVence'] == 1)
                 texto += 'Vence HOY</label>';
             else
@@ -513,8 +514,9 @@ function cargarVacante(vacanteID) {
             texto +=    '</a>' +
                     '<div class="toggle-content" style="overflow: hidden; display: block;">' +
                         '<p style="text-align:justify;">' +
-                            data['Descripcion'] +
-
+                            '<label style="padding-bottom:10px;">' +
+                                data['Descripcion'] +
+                            '</label>' +
                             '<label>' +
                                 'Número de vacantes: <b>' + data['Num_vacantes'] + '</b></label>' +
                             '<label>' +
@@ -717,9 +719,9 @@ function cargarVacantesEmpleador() {
                                         '</div>' +
                                     '</div>' +
                                     '<div class="one-half-responsive">' +
-                                        '<div style="text-align: center; width: 30%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red" onclick="cargarDatosVacante('+val['ID']+')">Editar</a></div>' +
-                                        '<div style="text-align: center; width: 40%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red" onclick=\"' + estadoHtml + '\">'+ textoEstado +'</a></div>' +
-                                        '<div style="text-align: center; width: 30%; float: left;margin-top: 5px;"><a href="#" class="button-icon icon-setting button-red" onclick="confirmarEliminacion('+val['ID']+')">Eliminar</a></div>' +
+                                        '<div style="text-align: center; width: 30%; float: left;margin-top: 5px;"><a class="button-icon icon-setting button-red" onclick="cargarDatosVacante('+val['ID']+')">Editar</a></div>' +
+                                        '<div style="text-align: center; width: 40%; float: left;margin-top: 5px;"><a class="button-icon icon-setting button-red" onclick=\"' + estadoHtml + '\">'+ textoEstado +'</a></div>' +
+                                        '<div style="text-align: center; width: 30%; float: left;margin-top: 5px;"><a class="button-icon icon-setting button-red" onclick="confirmarEliminacion('+val['ID']+')">Eliminar</a></div>' +
                                     '</div>'+
                                 '</div>' +
                             '</div>' +
@@ -761,10 +763,13 @@ function agregarVacante() {
     vacante.Profesion = localStorage.getItem('profesion');
     vacante.Municipio = localStorage.getItem('municipio');
     vacante.Departamento = localStorage.getItem('departamento');
-    vacante.Fecha_publicacion = getCurrentDate(); // MM/dd/yyyy HH:mm:ss
-    vacante.Fecha_vencimiento = localStorage.getItem('fecha'); // MM/dd/yyyy HH:mm:ss
+    vacante.Fecha_publicacion = localStorage.getItem('fechaPublicacion');
+    vacante.Fecha_vencimiento = localStorage.getItem('fechaVencimiento');
+    vacante.Direccion = localStorage.getItem('direccion');
     vacante.Email = localStorage.getItem('correo');
+    vacante.Indicativo = localStorage.getItem('indicativo');
     vacante.Telefono = localStorage.getItem('telefono');
+    vacante.Celular = localStorage.getItem('celular');
 
     if(localStorage.getItem('latitud') != 0 && localStorage.getItem('longitud') != 0) {
         vacante.Latitud = localStorage.getItem('latitud');
@@ -784,12 +789,10 @@ function agregarVacante() {
         contentType: "application/json",
         data: JSON.stringify(vacante),
         success: function (data, textStatus, xhr) {
-            //alert(data);
             abrirConfirm("la vacante ha sido registrada exitosamente!!");
             OcultarDivCargando();
         },
         error: function (xhr, textStatus, errorThrown) {
-            //alert(errorThrown);
             abrirAlert("Ha ocurrido un problema, inténtelo nuevamente.");
             OcultarDivCargando();
         }
@@ -816,9 +819,13 @@ function cargarDatosVacante(vacanteID) {
             localStorage.setItem('profesion', data['Profesion']);
             localStorage.setItem('departamento', data['Departamento']);
             localStorage.setItem('municipio', data['Municipio']);
-            localStorage.setItem('fecha', data['Fecha_vencimiento']);
+            localStorage.setItem('fechaPublicacion', data['Fecha_publicacion']);
+            localStorage.setItem('fechaVencimiento', data['Fecha_vencimiento']);
+            localStorage.setItem('direccion', data['Direccion']);
             localStorage.setItem('correo', data['Email']);
+            localStorage.setItem('indicativo', data['Indicativo']);
             localStorage.setItem('telefono', data['Telefono']);
+            localStorage.setItem('celular', data['Celular']);
             localStorage.setItem('latitud', data['Latitud']);
             localStorage.setItem('longitud', data['Longitud']);
 
@@ -834,9 +841,6 @@ function modificarVacante() {
 
     MostrarDivCargando();
 
-    /*localStorage.getItem('correo');
-    localStorage.getItem('telefono');*/
-
     var vacante = new Object();
     vacante.ID = localStorage.getItem('id');
     vacante.Titulo = localStorage.getItem('titulo');
@@ -846,16 +850,18 @@ function modificarVacante() {
     vacante.Cargo = localStorage.getItem('cargo');
     vacante.SalarioID = localStorage.getItem('salario');
     //vacante.Sector = localStorage.getItem('sector');
-    vacante.Sector = 1;
     vacante.ExperienciaID = localStorage.getItem('experiencia');
     vacante.Nivel_estudiosID = localStorage.getItem('nivel');
     vacante.Profesion = localStorage.getItem('profesion');
     vacante.Municipio = localStorage.getItem('municipio');
     vacante.Departamento = localStorage.getItem('departamento');
-    vacante.Fecha_publicacion = getCurrentDate(); // MM/dd/yyyy HH:mm:ss
-    vacante.Fecha_vencimiento = localStorage.getItem('fecha'); // MM/dd/yyyy HH:mm:ss
+    vacante.Fecha_publicacion = localStorage.getItem('fechaPublicacion');
+    vacante.Fecha_vencimiento = localStorage.getItem('fechaVencimiento');
+    vacante.Direccion = localStorage.getItem('direccion');
     vacante.Email = localStorage.getItem('correo');
+    vacante.Indicativo = localStorage.getItem('indicativo');
     vacante.Telefono = localStorage.getItem('telefono');
+    vacante.Celular = localStorage.getItem('celular');
 
     if(localStorage.getItem('latitud') != 0 && localStorage.getItem('longitud') != 0) {
         vacante.Latitud = localStorage.getItem('latitud');
@@ -868,26 +874,6 @@ function modificarVacante() {
 
     vacante.Empleador = localStorage.getItem("nombreUsuario");
 
-    /*var vacante = new Object();
-    vacante.ID = 12;
-    vacante.Titulo = "Titulo de Prueba Mod";
-    vacante.TipoID = 1;
-    vacante.Descripcion = "Descripcion de Prueba Mod";
-    vacante.Num_vacantes = 2;
-    vacante.Cargo = "Cargo de Prueba";
-    vacante.SalarioID = 2;
-    vacante.Sector = "Sector de Prueba";
-    vacante.ExperienciaID = 3;
-    vacante.Nivel_estudiosID = 5;
-    vacante.Profesion = "Profesion de Prueba";
-    vacante.Municipio = 17001;
-    vacante.Departamento = 17;
-    vacante.Fecha_publicacion = "09/10/2014 0:00:10";
-    vacante.Fecha_vencimiento = "09/15/2014 23:30:00";
-    vacante.Latitud = "3.4592808";
-    vacante.Longitud = "-76.5306162";
-    vacante.Empleador = "prueba";*/
-
     $.ajax({
         url: 'http://apiempleo.apphb.com/api/Vacante/modificarVacante',
         type: 'POST',
@@ -895,12 +881,10 @@ function modificarVacante() {
         contentType: "application/json",
         data: JSON.stringify(vacante),
         success: function (data, textStatus, xhr) {
-            //alert(data);
             abrirConfirm("la vacante ha sido modificada exitosamente!!");
             OcultarDivCargando();
         },
         error: function (xhr, textStatus, errorThrown) {
-            //alert(errorThrown);
             abrirAlert("Ha ocurrido un problema, inténtelo nuevamente.");
             OcultarDivCargando();
         }
@@ -998,6 +982,32 @@ function geoCiudad(cityName) {
     });
 }
 
+function abrirPrimerAlert(contenido){
+
+    var windowWidth = $(window).width();
+    var windowHeight = $(window).height();
+    var ancho=windowWidth-(windowWidth/10);
+    $('#content-alert').html('<p>'+contenido+'</p>');
+    $("#div-confirm").dialog({
+        modal: true,
+        draggable: false,
+        resizable: false,
+        title: 'Bienvenidos al Servicio de Empleo Móvil',
+        minWidth:ancho,
+        my: "center",
+        at: "center",
+        of: window,
+        show: 'blind',
+        hide: 'blind',
+        dialogClass: 'prueba',
+        buttons: {
+            "Aceptar": function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+}
+
 function abrirAlert(contenido){
 
     var windowWidth = $(window).width();
@@ -1085,6 +1095,14 @@ function volverMapa() {
 }
 
 function regresarListado() {
+    document.location.href="lista_ofertas_empleador.html";
+}
+
+function crearVacante() {
+    document.location.href="RegistrarOferta.html";
+}
+
+function gestionarVacantes() {
     document.location.href="lista_ofertas_empleador.html";
 }
 

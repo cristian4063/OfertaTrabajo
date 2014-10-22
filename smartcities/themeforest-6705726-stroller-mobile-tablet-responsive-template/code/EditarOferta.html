@@ -81,7 +81,13 @@
             $("#txtProfesion").val(localStorage.getItem('profesion'));
             $("#selectDepartamentos").val(localStorage.getItem('departamento'));
             $("#selectMunicipios").val(localStorage.getItem('municipio'));
-            $("#txtfechaVencimiento").val(getEndDate(localStorage.getItem('fecha')));
+            $("#txtfechaPublicacion").val(getEndDate(localStorage.getItem('fechaPublicacion')));
+            $("#txtfechaVencimiento").val(getEndDate(localStorage.getItem('fechaVencimiento')));
+            $("#txtDireccion").val(localStorage.getItem('direccion'));
+            $("#txtCorreo").val(localStorage.getItem('correo'));
+            $("#selectIndicativo").val(localStorage.getItem('indicativo'));
+            $("#txtTelefono").val(localStorage.getItem('telefono'));
+            $("#txtCelular").val(localStorage.getItem('celular'));
 
             if (localStorage.getItem('latitud') != 0 && localStorage.getItem('longitud') != 0) {
                 setTimeout(function () {
@@ -90,6 +96,29 @@
                 }, 500);
             }
         });
+
+        $(function() {
+            $( "#txtfechaPublicacion" ).datepicker({
+                minDate: new Date(),
+                onClose: function( selectedDate ) {
+                    $( "#txtfechaVencimiento" ).datepicker( "option", "disabled", false );
+                    $( "#txtfechaVencimiento" ).datepicker( "option", "minDate", selectedDate );
+                    $( "#txtfechaVencimiento" ).datepicker( "option", "maxDate", AddRestrictedDays(15) );
+                }
+            });
+            $( "#txtfechaVencimiento" ).datepicker({
+                disabled: true,
+                onClose: function( selectedDate ) {
+                    $( "#txtfechaPublicacion" ).datepicker( "option", "maxDate", selectedDate );
+                }
+            });
+        });
+
+        function AddRestrictedDays(arg) {
+            var d = $('#txtfechaPublicacion').datepicker('getDate');
+            var d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + arg);
+            return d;
+        }
 
     </script>
 
@@ -263,13 +292,14 @@
                                     <div class="formFieldWrap">
                                         <label class="field-title contactNameField" for="contactNameField">Salario:</label>
                                         <select class="contactField styled-select" name="selectSalario" id="selectSalario">
-                                            <!--<option value="" disabled selected>Cantidad</option>-->
-                                            <option value='1'>Menos de 1 SMMLV</option>
+                                            <option value='0'>Menos de 1 SMMLV</option>
+                                            <option value='1'>1 SMMLV</option>
                                             <option value='2'>Más de 1 SMMLV hasta 2 SMMLV</option>
                                             <option value='3'>Más de 2 SMMLV hasta 3 SMMLV</option>
                                             <option value='4'>Más de 3 SMMLV hasta 5 SMMLV</option>
                                             <option value='5'>Más de 5 SMMLV hasta 7 SMMLV</option>
                                             <option value='6'>Más de 7 SMMLV</option>
+                                            <option value='7'>A Convenir</option>
                                         </select>
                                     </div>
                                     <!--<div class="formFieldWrap">
@@ -281,7 +311,7 @@
                                     <div class="formFieldWrap">
                                         <label class="field-title contactNameField" for="contactNameField">Experiencia mínima requerida:</label>
                                         <select class="contactField styled-select" name="selectExperiencia" id="selectExperiencia">
-                                            <!--<option value="" disabled selected>Cantidad</option>-->
+                                            <option value='0'>Ninguna</option>
                                             <option value='1'>De 0 a  6 meses</option>
                                             <option value='2'>De 7 a 12 meses</option>
                                             <option value='3'>De 13 a 24 meses</option>
@@ -309,7 +339,7 @@
                                         </div>
                                     </div>
                                     <div class="formFieldWrap">
-                                        <label class="field-title contactNameField" for="contactNameField">Dirección de referencia: <span>(requerido)</span></label>
+                                        <label class="field-title contactNameField" for="contactNameField">Dirección de referencia: </label>
                                         <input type="text" name="txtDireccion" value="" class="contactField" id="txtDireccion" />
                                     </div>
                                     <div class="formValidationError" id="txtCorreoError">
@@ -326,6 +356,18 @@
                                         <label class="field-title contactNameField" for="contactNameField">Correo electrónico de contacto (*): <span>(requerido)</span></label>
                                         <input type="text" name="txtCorreo" value="" class="contactField requiredField requiredEmailField" id="txtCorreo" />
                                     </div>
+                                    <div class="formFieldWrap">
+                                        <label class="field-title contactNameField" for="contactNameField">Indicativo (*): <span>(requerido)</span></label>
+                                        <select class="contactField styled-select" name="selectIndicativo" id="selectIndicativo">
+                                            <option value='1'>1</option>
+                                            <option value='2'>2</option>
+                                            <option value='4'>4</option>
+                                            <option value='5'>5</option>
+                                            <option value='6'>6</option>
+                                            <option value='7'>7</option>
+                                            <option value='8'>8</option>
+                                        </select>
+                                    </div>
                                     <div class="formValidationError" id="txtTelefonoError">
                                         <div class="static-notification-red">
                                             <p class="center-text uppercase">El teléfono es requerido!</p>
@@ -333,11 +375,24 @@
                                     </div>
                                     <div class="formFieldWrap">
                                         <label class="field-title contactNameField" for="contactNameField">Teléfono de contacto (*): <span>(requerido)</span></label>
-                                        <input type="text" name="txtTelefono" value="" class="contactField requiredField" id="txtTelefono" />
+                                        <input type="number" name="txtTelefono" value="" class="contactField requiredField" id="txtTelefono" />
+                                    </div>
+                                    <div class="formFieldWrap">
+                                        <label class="field-title contactNameField" for="contactNameField">Celular: </label>
+                                        <input type="number" name="txtCelular" value="" class="contactField requiredField" id="txtCelular" />
                                     </div>
                                     <div class="formValidationError" id="txtfechaVencimientoError">
                                         <div class="static-notification-red">
-                                            <p class="center-text uppercase">La fecha es requerida!</p>
+                                            <p class="center-text uppercase">La fecha de publicación es requerida!</p>
+                                        </div>
+                                    </div>
+                                    <div class="formFieldWrap">
+                                        <label class="field-title contactNameField" for="contactNameField">Fecha de publicación (*): <span>(requerido)</span></label>
+                                        <input type="text" name="txtfechaPublicacion" value="" type="date" class="contactField requiredField" id="txtfechaPublicacion" />
+                                    </div>
+                                    <div class="formValidationError" id="txtfechaVencimientoError">
+                                        <div class="static-notification-red">
+                                            <p class="center-text uppercase">La fecha de vencimiento es requerida!</p>
                                         </div>
                                     </div>
                                     <div class="formFieldWrap">
@@ -346,7 +401,7 @@
                                     </div>
                                     <div class="container">
                                         <div class="toggle-1">
-                                            <a href="#" class="deploy-toggle-1 toggle-1-active" onclick="crearMapa()">Ubique su vacante en el mapa (opcional)</a>
+                                            <a href="#" class="deploy-toggle-1 toggle-1-active" onclick="crearMapa()">Ubique la vacante en el mapa haciendo click en el lugar aproximado de la oportunidad</a>
                                             <div id="divMap" class="toggle-content">
                                                 <div id="map_canvas2" style="height: 400px;"></div>
                                             </div>
@@ -378,7 +433,7 @@
             <div class="content" id="detalleVacante" style="display:none;">
                 <div class="decoration"></div>
                 <div>
-                    <h4>Datos de la vacante</h4>
+                    <h4>¿ LOS DATOS DE LA VACANTE SON CORRECTOS ?</h4>
                     <div class="container no-bottom">
                         <div class="contact-form no-bottom">
                             <form class="contactForm">

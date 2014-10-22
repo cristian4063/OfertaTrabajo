@@ -311,11 +311,15 @@ function guardar()
     var departamentoTexto = $("#selectDepartamentos option:selected").html();
     var municipio = $("#selectMunicipios").val();
     var municipioTexto = $("#selectMunicipios option:selected").html();
+    var direccion = $("#txtDireccion").val();
     var correo = $("#txtCorreo").val();
+    var indicativo = $("#selectIndicativo").val();
     var telefono = $("#txtTelefono").val();
-    var fecha = $("#txtfechaVencimiento").val();
+    var celular = $("#txtCelular").val();
+    var fechaPublicacion = $("#txtfechaPublicacion").val();
+    var fechaVencimiento = $("#txtfechaVencimiento").val();
 
-    if(titulo && tipo && descripcion && cargo && departamento != null && municipio != null && correo && telefono && fecha) {
+    if(titulo && tipo && descripcion && cargo && departamento != null && municipio != null && correo && telefono && fechaPublicacion && fechaVencimiento) {
 
         localStorage.setItem('titulo', titulo);
         localStorage.setItem('tipo', tipo);
@@ -329,9 +333,13 @@ function guardar()
         localStorage.setItem('profesion', profesion);
         localStorage.setItem('departamento', departamento);
         localStorage.setItem('municipio', municipio);
+        localStorage.setItem('direccion', direccion);
         localStorage.setItem('correo', correo);
+        localStorage.setItem('indicativo', indicativo);
         localStorage.setItem('telefono', telefono);
-        localStorage.setItem('fecha', fecha);
+        localStorage.setItem('celular', celular);
+        localStorage.setItem('fechaPublicacion', fechaPublicacion);
+        localStorage.setItem('fechaVencimiento', fechaVencimiento);
 
         $("#detalleTitulo").text(titulo);
         $("#detalleTipo").text(tipoTexto);
@@ -365,11 +373,15 @@ function editar()
     var departamentoTexto = $("#selectDepartamentos option:selected").html();
     var municipio = $("#selectMunicipios").val();
     var municipioTexto = $("#selectMunicipios option:selected").html();
+    var direccion = $("#txtDireccion").val();
     var correo = $("#txtCorreo").val();
+    var indicativo = $("#selectIndicativo").val();
     var telefono = $("#txtTelefono").val();
-    var fecha = $("#txtfechaVencimiento").val();
+    var celular = $("#txtCelular").val();
+    var fechaPublicacion = $("#txtfechaPublicacion").val();
+    var fechaVencimiento = $("#txtfechaVencimiento").val();
 
-    if(id && titulo && tipo && descripcion && cargo && departamento != null && municipio != null && correo && telefono && fecha) {
+    if(id && titulo && tipo && descripcion && cargo && departamento != null && municipio != null && correo && telefono && fechaPublicacion && fechaVencimiento) {
 
         localStorage.setItem('id', id);
         localStorage.setItem('titulo', titulo);
@@ -384,9 +396,13 @@ function editar()
         localStorage.setItem('profesion', profesion);
         localStorage.setItem('departamento', departamento);
         localStorage.setItem('municipio', municipio);
+        localStorage.setItem('direccion', direccion);
         localStorage.setItem('correo', correo);
+        localStorage.setItem('indicativo', indicativo);
         localStorage.setItem('telefono', telefono);
-        localStorage.setItem('fecha', fecha);
+        localStorage.setItem('celular', celular);
+        localStorage.setItem('fechaPublicacion', fechaPublicacion);
+        localStorage.setItem('fechaVencimiento', fechaVencimiento);
 
         $("#detalleTitulo").text(titulo);
         $("#detalleTipo").text(tipoTexto);

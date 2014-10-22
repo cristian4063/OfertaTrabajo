@@ -209,6 +209,10 @@
                         <a href="#" class="close-big-notification">X</a>
                     </div>
                 </div>
+                <div class="container no-bottom">
+                    <input type="submit" class="buttonWrap button button-dark contactSubmitButton" id="contactSubmitButton" value="GESTIONAR VACANTES"  onclick="gestionarVacantes()" />
+                </div>
+                <br />
                 <div>
                     <div class="container no-bottom">
                         <div class="contact-form no-bottom">
@@ -310,7 +314,7 @@
                                         </div>
                                     </div>
                                     <div class="formFieldWrap">
-                                        <label class="field-title contactNameField" for="contactNameField">Dirección de referencia: <span>(requerido)</span></label>
+                                        <label class="field-title contactNameField" for="contactNameField">Dirección de referencia: </label>
                                         <input type="text" name="txtDireccion" value="" class="contactField" id="txtDireccion" />
                                     </div>
                                     <div class="formValidationError" id="txtCorreoError">
@@ -327,6 +331,18 @@
                                         <label class="field-title contactNameField" for="contactNameField">Correo electrónico de contacto (*): <span>(requerido)</span></label>
                                         <input type="text" name="txtCorreo" value="" class="contactField requiredField requiredEmailField" id="txtCorreo" />
                                     </div>
+                                    <div class="formFieldWrap">
+                                        <label class="field-title contactNameField" for="contactNameField">Indicativo (*): <span>(requerido)</span></label>
+                                        <select class="contactField styled-select" name="selectIndicativo" id="selectIndicativo">
+                                            <option value='1'>1</option>
+                                            <option value='2'>2</option>
+                                            <option value='4'>4</option>
+                                            <option value='5'>5</option>
+                                            <option value='6'>6</option>
+                                            <option value='7'>7</option>
+                                            <option value='8'>8</option>
+                                        </select>
+                                    </div>
                                     <div class="formValidationError" id="txtTelefonoError">
                                         <div class="static-notification-red">
                                             <p class="center-text uppercase">El teléfono es requerido!</p>
@@ -334,7 +350,11 @@
                                     </div>
                                     <div class="formFieldWrap">
                                         <label class="field-title contactNameField" for="contactNameField">Teléfono de contacto (*): <span>(requerido)</span></label>
-                                        <input type="text" name="txtTelefono" value="" class="contactField requiredField" id="txtTelefono" />
+                                        <input type="number" name="txtTelefono" value="" class="contactField requiredField" id="txtTelefono" />
+                                    </div>
+                                    <div class="formFieldWrap">
+                                        <label class="field-title contactNameField" for="contactNameField">Celular: </label>
+                                        <input type="number" name="txtCelular" value="" class="contactField requiredField" id="txtCelular" />
                                     </div>
                                     <div class="formValidationError" id="txtfechaVencimientoError">
                                         <div class="static-notification-red">
@@ -356,7 +376,7 @@
                                     </div>
                                     <div class="container">
                                         <div class="toggle-1">
-                                            <a href="#" class="deploy-toggle-1" onclick="crearMapa()">Ubique su vacante en el mapa (opcional)</a>
+                                            <a href="#" class="deploy-toggle-1" onclick="crearMapa()">Ubique la vacante en el mapa haciendo click en el lugar aproximado de la oportunidad</a>
                                             <div class="toggle-content">
                                                 <div id="map_canvas2" style="height: 400px;"></div>
                                             </div>
@@ -386,7 +406,7 @@
             <div class="content" id="detalleVacante" style="display:none;">
                 <div class="decoration"></div>
                 <div>
-                    <h4>Datos de la vacante</h4>
+                    <h4>¿ LOS DATOS DE LA VACANTE SON CORRECTOS ?</h4>
                     <div class="container no-bottom">
                         <div class="contact-form no-bottom">
                             <form class="contactForm">
