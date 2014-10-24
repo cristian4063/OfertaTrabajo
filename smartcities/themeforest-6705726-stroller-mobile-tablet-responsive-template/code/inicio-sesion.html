@@ -82,6 +82,8 @@
                     data: JSON.stringify(iniciosesion),
                     success: function (data, textStatus, xhr) {
                         if (data["status"] == "1") {
+                            var today = new Date();
+                            localStorage.setItem("tiempo", today);
                             localStorage.setItem("nombreUsuario", usuario);
                             OcultarDivCargando();
                             abrirAlert("Ingreso exitoso!");

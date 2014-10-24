@@ -9,6 +9,14 @@ var markersArray = [];
 
 $(document).ready(function () {
 
+    validarInactividad();
+    validarSesion();
+
+    $("#map_canvas").hide();
+
+});
+
+function validarInactividad(){
     if(localStorage.getItem("nombreUsuario")) {
         $("#header").append('<a onclick="cerrar()" style="float:right;"><img style="width:35px;margin-top:-30px;" src="images/icons/user/exit.png" alt="img"></a>');
         $("#opc_Sesion").css("display", "none");
@@ -18,10 +26,25 @@ $(document).ready(function () {
         $("#opc_Registrar").css("display", "none");
         $("#opc_VerMias").css("display", "none");
     }
+}
 
-    $("#map_canvas").hide();
+function validarSesion(){
 
-});
+    if(localStorage.getItem("tiempo")) {
+        var today = new Date();
+        var after = new Date(localStorage.getItem("tiempo"));
+        var diffMs = (today - after); // milliseconds between now & Christmas
+        var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+
+        if(diffMins >= 3) { //Tiempo de inactividad 15 minutos
+            alert("Su sesión se cerrará por inactividad");
+            cerrar();
+        }
+        else {
+            localStorage.setItem("tiempo", today);
+        }
+    } 
+}
 
 function configurar_db() {
     function execute(tx) {
@@ -956,6 +979,7 @@ function eliminarVacante(vacanteID) {
 function cerrar()
 {
     localStorage.removeItem("nombreUsuario");
+    localStorage.removeItem("tiempo");
     document.location.href = "inicio-sesion.html";
 }
 
@@ -1082,6 +1106,33 @@ function abrirConfirm(contenido){
             "Aceptar": function() {
                 $(this).dialog("close");
                 document.location.href="lista_ofertas_empleador.html";
+            }
+        }
+    });
+
+}
+
+function abrirAlertSesion(contenido){
+    var windowWidth = $(window).width();
+    var windowHeight = $(window).height();
+    var ancho=windowWidth-(windowWidth/10);
+    $('#content-alert').html('<p>'+contenido+'</p>');
+    $("#div-confirm").dialog({
+        modal: true,
+        draggable: false,
+        resizable: false,
+        title: 'Advertencia',
+        minWidth:ancho,
+        my: "center",
+        at: "center",
+        of: window,
+        show: 'blind',
+        hide: 'blind',
+        dialogClass: 'prueba',
+        buttons: {
+            "Aceptar": function() {
+                $(this).dialog("close");
+                cerrar();
             }
         }
     });
