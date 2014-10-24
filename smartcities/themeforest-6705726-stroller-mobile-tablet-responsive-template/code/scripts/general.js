@@ -304,7 +304,9 @@ function guardar()
     var salario = $("#selectSalario").val();
     //var sector = $("#select_sector").val();
     var experiencia = $("#selectExperiencia").val();
+    var experienciaTexto = $("#selectExperiencia option:selected").html();
     var nivel = $("#select_nivel").val();
+    var nivelTexto = $("#select_nivel option:selected").html();
     var profesion = $("#txtProfesion").val();
     var salarioTexto = $("#selectSalario option:selected").html();
     var departamento = $("#selectDepartamentos").val();
@@ -342,12 +344,18 @@ function guardar()
         localStorage.setItem('fechaVencimiento', fechaVencimiento);
 
         $("#detalleTitulo").text(titulo);
-        $("#detalleTipo").text(tipoTexto);
         $("#detalleDesc").text(descripcion);
+        $("#detalleNumVacantes").text(numVacantes);
         $("#detalleCargo").text(cargo);
         $("#detalleSalario").text(salarioTexto);
+        $("#detalleExperiencia").text(experienciaTexto);
+        $("#detalleNivel").text(nivelTexto);
+        $("#detalleProfesion").text(profesion);
         $("#detalleDepto").text(departamentoTexto);
         $("#detalleMuni").text(municipioTexto);
+        $("#detalleDireccion").text(direccion);
+        $("#detalleCorreo").text(correo);
+        $("#detalleTelefono").text(telefono);
 
         $("#formularioVacante").css("display", "none");
         $("#detalleVacante").css("display", "block");
@@ -366,7 +374,9 @@ function editar()
     var salario = $("#selectSalario").val();
     //var sector = $("#select_sector").val();
     var experiencia = $("#selectExperiencia").val();
+    var experienciaTexto = $("#selectExperiencia option:selected").html();
     var nivel = $("#select_nivel").val();
+    var nivelTexto = $("#select_nivel option:selected").html();
     var profesion = $("#txtProfesion").val();
     var salarioTexto = $("#selectSalario option:selected").html();
     var departamento = $("#selectDepartamentos").val();
@@ -405,12 +415,18 @@ function editar()
         localStorage.setItem('fechaVencimiento', fechaVencimiento);
 
         $("#detalleTitulo").text(titulo);
-        $("#detalleTipo").text(tipoTexto);
         $("#detalleDesc").text(descripcion);
+        $("#detalleNumVacantes").text(numVacantes);
         $("#detalleCargo").text(cargo);
         $("#detalleSalario").text(salarioTexto);
+        $("#detalleExperiencia").text(experienciaTexto);
+        $("#detalleNivel").text(nivelTexto);
+        $("#detalleProfesion").text(profesion);
         $("#detalleDepto").text(departamentoTexto);
         $("#detalleMuni").text(municipioTexto);
+        $("#detalleDireccion").text(direccion);
+        $("#detalleCorreo").text(correo);
+        $("#detalleTelefono").text(telefono);
 
         $("#formularioVacante").css("display", "none");
         $("#detalleVacante").css("display", "block");

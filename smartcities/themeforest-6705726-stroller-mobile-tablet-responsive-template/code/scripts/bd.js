@@ -208,7 +208,7 @@ function cargarOfertas(palabra)
                                     'Fecha Vencimiento: <b>' + val['Fecha_vencimiento'].substring(0, n) + '</b></label>' +
                             '</p>' +
                             '<div class="toggle-content">' +
-                                '<p><strong>Datos de contacto del empleador:</strong></p>' +
+                                '<p><strong>DATOS DE CONTACTO DEL EMPLEADOR:</strong></p>' +
                                 '<div class="one-half-responsive ">' +
                                     '<div class="submenu-navigation">' +
                                         '<div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>' +
@@ -539,7 +539,7 @@ function cargarVacante(vacanteID) {
                                 'Fecha Vencimiento: <b>' + data['Fecha_vencimiento'].substring(0, n) + '</b></label>' +
                         '</p>' +
                         '<div class="toggle-content" style="overflow: hidden; display: block;">' +
-                            '<p><strong>Datos de contacto del empleador:</strong></p>' +
+                            '<p><strong>DATOS DE CONTACTO DEL EMPLEADOR:</strong></p>' +
                             '<div class="one-half-responsive ">' +
                                 '<div class="submenu-navigation">' +
                                     '<div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>' +
