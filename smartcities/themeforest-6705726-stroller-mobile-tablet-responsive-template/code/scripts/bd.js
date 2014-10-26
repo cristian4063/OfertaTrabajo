@@ -231,7 +231,7 @@ function cargarOfertas(palabra)
                                     'Fecha Vencimiento: <b>' + val['Fecha_vencimiento'].substring(0, n) + '</b></label>' +
                             '</p>' +
                             '<div class="toggle-content">' +
-                                '<p><strong>DATOS DE CONTACTO DEL EMPLEADOR:</strong></p>' +
+                                '<p><strong style="font-size: medium;">DATOS DE CONTACTO DEL EMPLEADOR:</strong></p>' +
                                 '<div class="one-half-responsive ">' +
                                     '<div class="submenu-navigation">' +
                                         '<div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>' +
@@ -255,13 +255,20 @@ function cargarOfertas(palabra)
                                                 '<li class="right-list">E-mail: <b>' + val['Email'] + '</b></li>' +
                                             '</ul>' +
                                         '</a>' +
-                                        '<a name="#" style="width:100%; float:left; border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
-                                        'Comparta esta oportunidad de trabajo'+
+                                        '<a name="#" style="width:60%; float:left; padding-top: 10px !important; padding-bottom: 10px !important;">' +
+                                            '<label style="padding-left: 10px;">Comparta esta oportunidad de trabajo<label>' +
                                             '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                '<li style="padding-left:30px !important; padding-top:10px;">' +
-                                                    '<img src="images/misc/facebook.png" style="margin: 0px !important;" class="star" onclick="abrirPaginaFacebook(\''+val['Titulo']+'\', '+val['ID']+')"/>' +
-                                                    '<img src="images/misc/twitter.png" class="star" onclick="abrirPaginaTwitter(\'' + val['Titulo'] + '\', ' + val['ID'] + ')"/>' +
-                                                    '<img id="estrella'+val['ID']+'" src="'+rutaEstrella+'" class="star" onclick=\"'+metodoFavorito+'\" style="width: 43px; height: 50px;" />' +
+                                                '<li style="padding-left: 0px;">' +
+                                                    '<div style="width:50%; float:left;"><img src="images/misc/facebook.png" style="margin: 0 auto; width: 30px;" onclick="abrirPaginaFacebook(\'' + val['Titulo'] + '\', ' + val['ID'] + ')"/></div>' +
+                                                    '<div style="width:50%; float:left;"><img src="images/misc/twitter.png" style="margin: 0 auto; width: 30px;" onclick="abrirPaginaTwitter(\'' + val['Titulo'] + '\', ' + val['ID'] + ')"/></div>' +
+                                                '</li>' +
+                                            '</ul>' +
+                                        '</a>' +
+                                        '<a name="#" style="width:40%; float:left; padding-top: 10px !important; padding-bottom: 10px !important; text-align: center;">' +
+                                            '<label style="padding-left: 10px;">Agregar a favoritos</label>' +
+                                            '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                '<li style="padding-left: 0px;">' +
+                                                    '<img id="estrella' + val['ID'] + '" src="' + rutaEstrella + '" onclick=\"' + metodoFavorito + '\" style="margin: 0 auto;" />' +
                                                 '</li>' +
                                             '</ul>' +
                                         '</a>' +
@@ -270,8 +277,8 @@ function cargarOfertas(palabra)
                                 '</div>' +
                                 '<div class="one-half-responsive" style="text-align:center !important;">' +
                                      //'<div onclick=\"'+metodoFavorito+'\" style="width: 50%; float: left;"><img id="estrella'+val['ID']+'" class="star" style="margin: 0px !important; width:auto !important;" src="'+rutaEstrella+'" style="width: 20px;" /><label>'+textoFavorita+'</label></div>' +
-                                     '<div id="btnDen'+val['ID']+'" style="padding-left: 40px; width: 80%; float: left;margin: 10px; display:block;"><a name="#" onclick="Denunciar('+val['ID']+')" class="button-icon icon-setting button-red">Denunciar</a></div>' +
-                                     '<div id="comboDen'+val['ID']+'" style="padding-left: 15px; width: 90%; float: left;margin: 10px; display:none;">Motivo de la denuncia: <br />'+ 
+                                     '<div id="btnDen' + val['ID'] + '" style="width: 100%; float: left; padding-top: 5px; padding-bottom: 5px; display:block; border-top: solid 1px rgba(0,0,0,0.1); border-bottom: solid 1px rgba(0,0,0,0.1);"><a name="#" onclick="Denunciar(' + val['ID'] + ')" class="button-icon icon-setting button-red">Denunciar</a></div>' +
+                                     '<div id="comboDen' + val['ID'] + '" style="width: 96%; float: left;margin-left: 2%; display:none; border-top: solid 1px rgba(0,0,0,0.1); border-bottom: solid 1px rgba(0,0,0,0.1); padding-top: 5px; padding-bottom: 5px;">Motivo de la denuncia: <br />' +
                                      '<select class="styled-select" style="width:100% !important;" name="selectMotivoDenuncia'+val['ID']+'" id="selectMotivoDenuncia'+val['ID']+'">'+
                                         '<option value="1">Vacante sospechosa / engañosa</option>'+
                                         '<option value="2">Lenguaje no adecuado</option>'+
