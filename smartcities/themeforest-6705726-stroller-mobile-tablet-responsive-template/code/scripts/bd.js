@@ -199,8 +199,10 @@ function cargarOfertas(palabra)
                         '<div class="toggle-2">' +
                             '<a href="#" class="deploy-toggle-2 toggle-2" style="font-weight: normal; font-size: 15px; color: black;">' +
                                 val['Titulo'] + '<label style="font-weight: bolder; font-size: 13px; color: black;">';
-                if (val['DiasVence'] == 1)
+                if (val['DiasVence'] == 0)
                     texto += 'Vence HOY</label>';
+                else if (val['DiasVence'] == 1)
+                    texto += 'Vence MAÑANA</label>';
                 else
                     texto += 'Vence en '+val['DiasVence']+' días</label>';
                 texto +=    '</a>' +

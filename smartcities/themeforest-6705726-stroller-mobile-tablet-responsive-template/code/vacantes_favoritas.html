@@ -37,6 +37,10 @@
             padding-left: 1%;
             display: none;
         }
+        
+        .button-red {
+            background-color: #6b6b6b;
+        }
     </style>
 
     <script type="text/javascript" src="scripts/jquery.js"></script>
@@ -51,14 +55,16 @@
     <script type="text/javascript" src="scripts/framework.launcher.js"></script>
     <script type="text/javascript" src="scripts/bd.js"></script>
 
-    <script>
+    <script type="text/javascript">
         $(document).ready(function () {
             if (doesConnectionExist()) {
                 $("#label-internet-connection").text("Online");
                 $("#div-internet-connection").css("background-color", "#80d580");
+                $("#div_actualizar_favoritas").show();
             } else {
                 $("#label-internet-connection").text("Offline");
                 $("#div-internet-connection").css("background-color", "#ec8787");
+                $("#div_actualizar_favoritas").hide();
             }
             consultarVacante();
         });
@@ -104,18 +110,23 @@
                     var rutaEstrella = "images/estrella_llena.png";
                     var textoFavorita ="Quitar de favoritas";
                     n = results.rows.item(i).fecha_vencimiento.indexOf('T');
+
                     texto += '<div class="container" id="vacanteFavorita_' + results.rows.item(i).id + '">' +
-                            '<div class="toggle-2">' +
-                                '<a href="#" class="deploy-toggle-2 toggle-2">' +
-                                    results.rows.item(i).titulo + '<label style="font-weight: bolder; font-size: 15px; color: black;">';
-                    if (results.rows.item(i).dias_vence == 1)
+                        '<div class="toggle-2">' +
+                            '<a href="#" class="deploy-toggle-2 toggle-2" style="font-weight: normal; font-size: 15px; color: black;">' +
+                                results.rows.item(i).titulo + '<label style="font-weight: bolder; font-size: 13px; color: black;">';
+                    if (results.rows.item(i).dias_vence == 0)
                         texto += 'Vence HOY</label>';
+                    else if (results.rows.item(i).dias_vence == 1)
+                        texto += 'Vence MAÑANA</label>';
                     else
                         texto += 'Vence en ' + results.rows.item(i).dias_vence + ' días</label>';
                     texto += '</a>' +
                             '<div class="toggle-content">' +
                                 '<p style="text-align:justify;">' +
-                                    results.rows.item(i).descripcion +
+                                    '<label style="padding-bottom:10px;">' +
+                                        results.rows.item(i).descripcion +
+                                    '</label>' +
                                     '<label>' +
                                         'Número de vacantes: <b>' + results.rows.item(i).vacantes + '</b></label>' +
                                     '<label>' +
@@ -138,7 +149,7 @@
                                         'Fecha Vencimiento: <b>' + results.rows.item(i).fecha_vencimiento.substring(0, n) + '</b></label>' +
                                 '</p>' +
                                 '<div class="toggle-content">' +
-                                    '<p><strong>Datos del Empleador:</strong></p>' +
+                                    '<p><strong style="font-size: medium;">DATOS DE CONTACTO DEL EMPLEADOR:</strong></p>' +
                                     '<div class="one-half-responsive ">' +
                                         '<div class="submenu-navigation">' +
                                             '<div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>' +
@@ -162,33 +173,43 @@
                                                     '<li class="right-list">E-mail: <b>' + results.rows.item(i).email + '</b></li>' +
                                                 '</ul>' +
                                             '</a>';
-                    if ($("#label-internet-connection").text() == "Online")
-                        texto += '<a name="#" style="text-align:center !important; border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
-                                         'Comparta esta oportunidad de trabajo' +
-                                             '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                 '<li style="padding-left:0px !important;">' +
-                                                     '<img src="images/misc/facebook.png" style="margin: 0px !important; padding-right: 3%;" class="star" onclick="abrirPaginaFacebook(\'' + results.rows.item(i).titulo + '\', ' + results.rows.item(i).id + ')"/>' +
-                                                     '<img src="images/misc/twitter.png" class="star" style="padding-left: 3%" onclick="abrirPaginaTwitter(\'' + results.rows.item(i).titulo + '\', ' + results.rows.item(i).id + ')"/>' +
-                                                 '</li>' +
-                                             '</ul>' +
-                                         '</a>';
-                    texto += '</div>' +
-                            '</div>' +
-                            '<div class="one-half-responsive" style="text-align:center !important;">' +
-                                    '<div onclick=\"eliminarfavorita(' + results.rows.item(i).id + ');\" style="width: 50%; float: left;"><img id="estrella' + results.rows.item(i).id + '" class="star" style="margin: 0px !important; width:auto !important;" src="' + rutaEstrella + '" style="width: 20px;" /><label>' + textoFavorita + '</label></div>';
-                                        if ($("#label-internet-connection").text() == "Online")
-                                            texto += '<div id="btnDen' + results.rows.item(i).id + '" style="padding-left: 20px; width: 50%; float: left;margin-top: 5px; display:block;"><a name="#" onclick="Denunciar(' + results.rows.item(i).id + ')" class="button-icon icon-setting button-red">Denunciar</a></div>' +
-                                            '<div id="comboDen' + results.rows.item(i).id + '" style="padding-left: 20px; width: 50%; float: left;margin-top: 5px; display:none;">Motivo de la denuncia: <br />' +
-                                            '<select class="styled-select" name="selectMotivoDenuncia' + results.rows.item(i).id + '" id="selectMotivoDenuncia' + results.rows.item(i).id + '">' +
-                                            '<option value="1">Vacante sospechosa / engañosa</option>' +
-                                            '<option value="2">Lenguaje no adecuado</option>' +
-                                            '<option value="3">Información de contacto errónea </option>' +
-                                            '<option value="4">Sospecha de Trata de personas</option>' +
-                                        '</select>' +
-                                        '<br /> <a name="#" onclick="GuardarDenuncia(' + results.rows.item(i).id + ')" class="button-icon icon-setting button-red">Confirmar denuncia</a>&nbsp;<a name="#" onclick="CancelarDenuncia(' + results.rows.item(i).id + ')" class="button-icon icon-setting button-red">Cancelar</a>' +
-                                        '</div>';
-                                   texto += '</div>' +
-                            '</div>' +
+                                if ($("#label-internet-connection").text() == "Online")
+                                    texto += '<a name="#" style="width:60%; float:left; padding-top: 10px !important; padding-bottom: 10px !important;">' +
+                                                '<label style="padding-left: 10px;">Comparta esta oportunidad de trabajo<label>' +
+                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                    '<li style="padding-left: 0px;">' +
+                                                        '<div style="width:50%; float:left;"><img src="images/misc/facebook.png" style="margin: 0 auto; width: 30px;" onclick="abrirPaginaFacebook(\'' + results.rows.item(i).titulo + '\', ' + results.rows.item(i).id + ')"/></div>' +
+                                                        '<div style="width:50%; float:left;"><img src="images/misc/twitter.png" style="margin: 0 auto; width: 30px;" onclick="abrirPaginaTwitter(\'' + results.rows.item(i).titulo + '\', ' + results.rows.item(i).id + ')"/></div>' +
+                                                    '</li>' +
+                                                '</ul>' +
+                                            '</a>';
+
+
+                                    texto += '<a name="#" style="width:40%; float:left; padding-top: 10px !important; padding-bottom: 10px !important; text-align: center;">' +
+                                                '<label style="padding-left: 10px;">Quitar de favoritos</label>' +
+                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                                    '<li style="padding-left: 0px;">' +
+                                                        '<img id="estrella' + results.rows.item(i).id + '" src="' + rutaEstrella + '" onclick=\"eliminarfavorita(' + results.rows.item(i).id + ');\" style="margin: 0 auto;" />' +
+                                                    '</li>' +
+                                                '</ul>' +
+                                            '</a>' +
+                                                        '</div>' +
+                                                    '</div>';
+
+                                            if ($("#label-internet-connection").text() == "Online")
+                                                texto += '<div class="one-half-responsive" style="text-align:center !important;">' +
+                                                 '<div id="btnDen' + results.rows.item(i).id + '" style="width: 100%; float: left; padding-top: 5px; padding-bottom: 5px; display:block; border-top: solid 1px rgba(0,0,0,0.1); border-bottom: solid 1px rgba(0,0,0,0.1);"><a name="#" onclick="Denunciar(' + results.rows.item(i).id + ')" class="button-icon icon-setting button-red">Denunciar</a></div>' +
+                                                 '<div id="comboDen' + results.rows.item(i).id + '" style="width: 96%; float: left;margin-left: 2%; display:none; border-top: solid 1px rgba(0,0,0,0.1); border-bottom: solid 1px rgba(0,0,0,0.1); padding-top: 5px; padding-bottom: 5px;">Motivo de la denuncia: <br />' +
+                                                 '<select class="styled-select" style="width:100% !important;" name="selectMotivoDenuncia' + results.rows.item(i).id + '" id="selectMotivoDenuncia' + results.rows.item(i).id + '">' +
+                                                    '<option value="1">Vacante sospechosa / engañosa</option>' +
+                                                    '<option value="2">Lenguaje no adecuado</option>' +
+                                                    '<option value="3">Información de contacto errónea </option>' +
+                                                    '<option value="4">Sospecha de Trata de personas</option>' +
+                                                '</select>' +
+                                                '<br /> <a name="#" onclick="GuardarDenuncia(' + results.rows.item(i).id + ')" class="button-icon icon-setting button-red">Confirmar denuncia</a>&nbsp;<a name="#" onclick="CancelarDenuncia(' + results.rows.item(i).id + ')" class="button-icon icon-setting button-red">Cancelar</a>' +
+                                                '</div>' +
+                                            '</div>';
+                                texto += '</div>' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
@@ -252,7 +273,7 @@
                 data: JSON.stringify(denuncia),
                 success: function (data, textStatus, xhr) {
                     alert(data);
-                    if (data == "Denuncia creada correctamente") {
+                    if (data == "Denuncia guardada correctamente") {
                         $("#btnDen" + id).show();
                         $("#comboDen" + id).hide();
                     }
@@ -261,7 +282,6 @@
                     alert(errorThrown);
                 }
             });
-
         }
 
         function CancelarDenuncia(id) {
@@ -269,81 +289,121 @@
             $("#comboDen" + id).hide();
         }
 
-        function abrirPaginaFacebook(nombre, id) {
-            window.open("https://www.facebook.com/share.php?u=http://empleomovil.apphb.com/Vacantes/Details/" + id, "_blank", "closebuttoncaption=Regresar");
-        }
-
-        function abrirPaginaTwitter(nombre, id) {
-            window.open("https://twitter.com/home?status=Oportunidad de trabajo: " + nombre + " https://www.mintransporte.gov.co/noticias.php/", "_blank", "closebuttoncaption=Regresar");
-        }
-
         function errorConsultarVacantes(err) {
             console.log(err);
             alert("Error consultando listado de vacantes" + err);
         }
 
-        function cargarOfertas(palabra) {
-            $("#map_canvas").hide();
-
+        function ActualizarFavoritas() {
             MostrarDivCargando();
-            var vectorConectores = ["a", "ante", "bajo", "con", "contra", "de", "desde", "en", "entre", "hacia", "hasta", "para", "por", "según", "segun", "sin", "sobre", "tras", " ", "  ", "   ", ""];
-
-            if (palabra != "") {
-                palabra = palabra.trim();
-                var palabrasSeparadas = palabra.split(" ");
-                var fraseDefinitiva = "";
-                var palabraAuxiliar = "";
-
-                for (x = 0; x < palabrasSeparadas.length; x++) {
-                    palabraAuxiliar = palabrasSeparadas[x];
-                    palabrasSeparadas[x] = palabraAuxiliar.trim().toLowerCase();
-                }
-
-                fraseDefinitiva += palabrasSeparadas[0];
-
-                for (x = 1; x < palabrasSeparadas.length; x++) {
-                    if ($.inArray(palabrasSeparadas[x], vectorConectores) == -1) {
-                        fraseDefinitiva += " AND ";
-                        fraseDefinitiva += palabrasSeparadas[x];
+            eliminarTodasfavoritas();
+            if (localStorage.getItem('vacantesGuardadas') != null) {
+                $.ajax({
+                    url: 'http://apiempleo.apphb.com/api/Vacante/actualizarVacantesFavoritas?listaFavoritas=' + localStorage.getItem('vacantesGuardadas').replace(/id/g, '') + '',
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (data, textStatus, xhr) {
+                        localStorage.setItem("vacantesGuardadas", "");
+                        $.each(data, function (i, val) {
+                            var vacanteFavorita = new Object();
+                            vacanteFavorita.ID = val['ID'];
+                            vacanteFavorita.Titulo = val['Titulo'];
+                            vacanteFavorita.Tipo = val['Tipo'];
+                            vacanteFavorita.Descripcion = val['Descripcion'];
+                            vacanteFavorita.Num_vacantes = val['Num_vacantes'];
+                            vacanteFavorita.Cargo = val['Cargo'];
+                            vacanteFavorita.Salario = val['Salario'];
+                            vacanteFavorita.Sector = val['Sector'];
+                            vacanteFavorita.Experiencia = val['Experiencia'];
+                            vacanteFavorita.Nivel_estudios = val['Nivel_estudios'];
+                            vacanteFavorita.Profesion = val['Profesion'];
+                            vacanteFavorita.DepartamentoNombre = val['DepartamentoNombre'];
+                            vacanteFavorita.MunicipioNombre = val['MunicipioNombre'];
+                            vacanteFavorita.Fecha_publicacion = val['Fecha_publicacion'];
+                            vacanteFavorita.Fecha_vencimiento = val['Fecha_vencimiento'];
+                            vacanteFavorita.DiasVence = val['DiasVence'];
+                            vacanteFavorita.Empleador = val['Empleador'];
+                            vacanteFavorita.Telefono = val['Telefono'];
+                            vacanteFavorita.Indicativo = val['Indicativo'];
+                            vacanteFavorita.Celular = val['Celular'];
+                            vacanteFavorita.Direccion = val['Direccion'];
+                            vacanteFavorita.Email = val['Email'];
+                            vacanteFavorita.Ultima_Actualizacion = val['Ultima_Actualizacion'];
+                            actualizarVacanteFavorita(vacanteFavorita);
+                        });
+                        OcultarDivCargando();
+//                        abrirAlert("La vacantes favoritas han sido actualizadas correctamente.");
+                        $("#div_actualizar_favoritas").hide();
+                        consultarVacante();
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert(errorThrown);
+                        OcultarDivCargando();
                     }
-                }
+                });
+            }
+        }
 
-                palabra = fraseDefinitiva;
+        function actualizarVacanteFavorita(vacanteFavorita) {
+            var db = window.openDatabase("bd_vacantes", "1.0", "Vacantes", 200000);
+            db.transaction(execute, error, exito);
+                      
+            function execute(tx) {
+                tx.executeSql('INSERT INTO vacantes (id, titulo, nombre_tipo, descripcion, vacantes, cargo, nombre_salario, sector, nombre_experiencia, nombre_nivel, profesion, nombre_departamento, nombre_municipio, fecha_publicacion, fecha_vencimiento, dias_vence, empleador, telefono, indicativo, celular, direccion, email, fecha_actualizacion) ' +
+                'VALUES ("' + vacanteFavorita.ID + '", "' + vacanteFavorita.Titulo + '" , "' + vacanteFavorita.Tipo + '", "' + vacanteFavorita.Descripcion + '", "' + vacanteFavorita.Num_vacantes + '", "' + vacanteFavorita.Cargo + '", "' + vacanteFavorita.Salario + '", "' + vacanteFavorita.Sector + '", "' + vacanteFavorita.Experiencia + '", "' + vacanteFavorita.Nivel_estudios + '", "' + vacanteFavorita.Profesion + '", "' + vacanteFavorita.DepartamentoNombre + '", "' + vacanteFavorita.MunicipioNombre + '", "' + vacanteFavorita.Fecha_publicacion + '", "' + vacanteFavorita.Fecha_vencimiento + '", "' + vacanteFavorita.DiasVence + '", "' + vacanteFavorita.Empleador + '", "' + vacanteFavorita.Telefono + '", "' + vacanteFavorita.Indicativo + '", "' + vacanteFavorita.Celular + '", "' + vacanteFavorita.Direccion + '", "' + vacanteFavorita.Email + '", "' + vacanteFavorita.Ultima_Actualizacion + '")');
             }
 
-            var texto = "";
-            var ofertas = $("#ofertas");
-            ofertas.empty();
+            // Transaction error callback
+            function error(err) {
+                console.log(err);
+                alert("Error de operación: " + err);
+            }
 
-            var nom_mun = localStorage.getItem('NombreMunicipio');
-            var nom_sal = localStorage.getItem('NombreSalario');
-            var nom_exp = localStorage.getItem('NombreExperiencia');
-            var nom_niv = localStorage.getItem('NombreNivel');
-            var municipio = localStorage.getItem('Municipio');
-            var tipo = localStorage.getItem('Oportunidad');
-            var salario = localStorage.getItem('Salario');
-            var experiencia = localStorage.getItem('Experiencia');
-            var nivel = localStorage.getItem('Nivel');
-            var vacantesGuardadas = localStorage.getItem("vacantesGuardadas");
-            $.ajax({
-                url: 'http://apiempleo.apphb.com/api/Vacante/obtenerVacantes?palabra=' + palabra + '&tipo=' + tipo + '&salario=' + salario + '&experiencia=' + experiencia + '&nivel=' + nivel + '&municipio=' + municipio,
-                type: 'POST',
-                dataType: 'json',
-                success: function (data, textStatus, xhr) {
-                    
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    //alert(errorThrown);
-                    OcultarDivCargando();
-                    alert("Ha ocurrido un problema, inténtelo nuevamente.");
-                }
-            });
+            function exito() {
+                if (localStorage.getItem('vacantesGuardadas'))
+                    localStorage.setItem("vacantesGuardadas", localStorage.getItem("vacantesGuardadas") + "id" + vacanteFavorita.ID + ",");
+                else
+                    localStorage.setItem("vacantesGuardadas", "id" + vacanteFavorita.ID + ",");
+                console.log("Operación Exitosa!");
+            }
+        }
+
+        function eliminarTodasfavoritas() {
+            function execute(tx) {
+                tx.executeSql('DELETE FROM vacantes');
+            }
+
+            function error(error) {
+                console.log("Error al configurar base de datos", error)
+            }
+
+            function exito() {
+                $("#ofertas").empty();
+                console.log("Eliminación exitosa.")
+            }
+
+            var db = window.openDatabase("bd_vacantes", "1.0", "Vacantes", 200000);
+            db.transaction(execute, error, exito);
+
+        }
+
+        function abrirPaginaFacebook(nombre, id) {
+            var url = 'http://empleomovil.apphb.com/Vacantes/Details/' + id;
+            var title = 'Comparta esta vacante';
+            var descr = 'Descripción de la vacante de prueba';
+            var image = 'http://goo.gl/B8AWrE';
+            window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=auto,left=auto,toolbar=0,status=0,width=auto,height=auto');
+        }
+
+        function abrirPaginaTwitter(nombre, id) {
+            var url = 'http://empleomovil.apphb.com/Vacantes/Details/' + id;
+            window.open("https://twitter.com/intent/tweet?url=" + url + "&text=Oportunidad de empleo: " + nombre, "_blank", "closebuttoncaption=Regresar");
         }
 
     </script>
 </head>
 <body>
-    <div id="div-confirm" style="display:none">
+    <div id="div-confirm" style="display:none" >
         <div id="content-alert">
         </div>
     </div>
@@ -445,8 +505,22 @@
                 <div class="container no-bottom">
                     <div class="big-notification blue-notification">
                         <h4>
-                            En esta sección encontrará la lista de vacantes pre-seleccionadas por usted y que todavía se encuentran vigentes</h4>
+                            En esta sección encontrará la lista de vacantes pre-seleccionadas por usted.</h4>
                         <a href="#" class="close-big-notification">X</a>
+                    </div>
+                </div>
+                <div id="div_actualizar_favoritas">
+                    <div class="decoration">
+                    </div>
+                    <div class="container no-bottom">
+                        <div class="big-notification blue-notification">
+                            <h4>
+                                Tenga en cuenta que esta sección funciona sin necesidad de Internet y las vacantes pueden estar desactualizadas.
+                            </h4>
+                            <h4 style="text-align: center;">
+                                <a name="#" onclick="ActualizarFavoritas()" class="button-icon icon-setting button-red">Actualizar</a>
+                            </h4>
+                        </div>
                     </div>
                 </div>
                 <div class="decoration">
@@ -460,6 +534,9 @@
                     </div>
                 </div>
                 <div id="ofertas">
+                </div>
+                <div id="loading" class="CargandoModalBackground" style="padding-top: 150px;">
+                    <img src="images/bx_loader.gif" alt="loding" />
                 </div>
                 <div class="decoration">
                 </div>

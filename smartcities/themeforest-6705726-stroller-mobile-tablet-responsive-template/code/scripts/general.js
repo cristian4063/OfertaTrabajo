@@ -136,7 +136,7 @@ function GuardarDenuncia(id, titulo, tipo, descripcion, vacantes, cargo, salario
         data: JSON.stringify(denuncia),
         success: function (data, textStatus, xhr) {
             alert(data);
-            if(data=="Denuncia creada correctamente"){
+            if(data=="Denuncia guardada correctamente"){
                 $("#btnDen"+id).show();
                 $("#comboDen"+id).hide();
             }
@@ -172,21 +172,15 @@ function abrirPaginaTwitter(nombre, id) {
 function cargarDeptos() {
     MostrarDivCargando();
     $('#selectDepartamentos').empty();
-    var texto = "";
-    var url = "http://www.dane.gov.co/Divipola/ControladorDivipola?tipoConsulta=depa";
-    $.ajax({
-        url: url,
-        type: 'GET',
-        dataType: 'xml',
-        crossDomain: true,
-        contentType: "application/xml; charset=utf-8",
-        success: function (data) {
-            $(data).find('DEPARTAMENTO').each(function () {
-                var CODIGO_DEPARTAMENTO = $(this).find('CODIGO_DEPARTAMENTO').text();
-                var NOMBRE_DEPARTAMENTO = $(this).find('NOMBRE_DEPARTAMENTO').text();
-                $('#selectDepartamentos').append('<option value=' + CODIGO_DEPARTAMENTO + '>' + NOMBRE_DEPARTAMENTO + '</option>');
-            });
 
+    $.ajax({
+        url: 'http://apiempleo.apphb.com/api/Vacante/obtenerDepartamentos',
+        type: 'POST',
+        dataType: 'json',
+        success: function (data, textStatus, xhr) {
+            $.each(data, function (i, val) {
+                $('#selectDepartamentos').append('<option value="' + val['ID'] + '">' + val['Nombre'] + '</option>');
+            });
             if (localStorage.getItem('Departamento')) {
                 $("#selectDepartamentos").val(localStorage.getItem('Departamento'));
             }
@@ -197,30 +191,22 @@ function cargarDeptos() {
             cargarMunicipios();
             OcultarDivCargando();
         },
-        error: function (x, y, z) {
-            OcultarDivCargando();
-            abrirAlert("Ha ocurrido un problema, inténtelo nuevamente.");
-        },
-        timeout: 60000
+        error: function (xhr, textStatus, errorThrown) {
+            abrirAlert("Ha ocurrido un problema, inténtelo nuevamente.")
+        }
     });
 }
 
 function cargarMunicipios() {
     MostrarDivCargando();
     $('#selectMunicipios').empty();
-    var texto = "";
-    var url = "http://www.dane.gov.co/Divipola/ControladorDivipola?tipoConsulta=municpio&idDepa=" + $("#selectDepartamentos").val();
     $.ajax({
-        url: url,
-        type: 'GET',
-        dataType: 'xml',
-        crossDomain: true,
-        contentType: "application/xml; charset=utf-8",
-        success: function (data) {
-            $(data).find('MUNICIPIO').each(function () {
-                var CODIGO_DPTO_MPIO = $(this).find('CODIGO_DPTO_MPIO').text();
-                var NOMBRE_MUNICIPIO = $(this).find('NOMBRE_MUNICIPIO').text();
-                $('#selectMunicipios').append('<option value=' + CODIGO_DPTO_MPIO + '>' + NOMBRE_MUNICIPIO + '</option>');
+        url: 'http://apiempleo.apphb.com/api/Vacante/obtenerMunicipios?departamento=' + $("#selectDepartamentos").val(),
+        type: 'POST',
+        dataType: 'json',
+        success: function (data, textStatus, xhr) {
+            $.each(data, function (i, val) {
+                $('#selectMunicipios').append('<option value="' + val['ID'] + '">' + val['Nombre'] + '</option>');
             });
             if (localStorage.getItem('Municipio')) {
                 $("#selectMunicipios").val(localStorage.getItem('Municipio'));
@@ -231,11 +217,9 @@ function cargarMunicipios() {
             $('input.ui-autocomplete-input:eq(1)').val($('#selectMunicipios option:selected').text());
             OcultarDivCargando();
         },
-        error: function (x, y, z) {
-            OcultarDivCargando();
+        error: function (xhr, textStatus, errorThrown) {
             abrirAlert("Ha ocurrido un problema, inténtelo nuevamente.")
-        },
-        timeout: 60000
+        }
     });
 }
 
