@@ -59,16 +59,15 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+            $("#div_sin_favoritas").hide();
             if (doesConnectionExist()) {
                 $("#label-internet-connection").text("Online");
                 $("#div-internet-connection").css("background-color", "#80d580");
-                $("#div_actualizar_favoritas").show();
             } else {
                 $("#label-internet-connection").text("Offline");
                 $("#div-internet-connection").css("background-color", "#ec8787");
-                $("#div_actualizar_favoritas").hide();
             }
-            consultarVacante();
+            ActualizarFavoritas();
         });
 
         function consultarVacante() {
@@ -232,7 +231,6 @@
 
             var db = window.openDatabase("bd_vacantes", "1.0", "Vacantes", 200000);
             db.transaction(execute, error, exito);
-
         }
 
         function Denunciar(id) {
@@ -315,8 +313,6 @@
                             actualizarVacanteFavorita(vacanteFavorita);
                         });
                         OcultarDivCargando();
-                        abrirAlert("La vacantes favoritas han sido actualizadas correctamente.");
-                        $("#div_actualizar_favoritas").hide();
                         consultarVacante();
                     },
                     error: function (xhr, textStatus, errorThrown) {
@@ -488,22 +484,8 @@
                 <div class="container no-bottom">
                     <div class="big-notification blue-notification">
                         <h4>
-                            En esta sección encontrará la lista de vacantes pre-seleccionadas por usted.</h4>
+                            En esta sección encontrará la lista de vacantes pre-seleccionadas por usted y que todavía se encuentran vigentes.</h4>
                         <a href="#" class="close-big-notification">X</a>
-                    </div>
-                </div>
-                <div id="div_actualizar_favoritas">
-                    <div class="decoration">
-                    </div>
-                    <div class="container no-bottom">
-                        <div class="big-notification blue-notification">
-                            <h4>
-                                Tenga en cuenta que esta sección funciona sin necesidad de Internet y las vacantes pueden estar desactualizadas.
-                            </h4>
-                            <h4 style="text-align: center;">
-                                <a name="#" onclick="ActualizarFavoritas()" class="button-icon icon-setting button-red">Actualizar</a>
-                            </h4>
-                        </div>
                     </div>
                 </div>
                 <div class="decoration">
