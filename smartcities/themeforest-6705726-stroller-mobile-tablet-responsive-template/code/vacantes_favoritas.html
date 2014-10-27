@@ -12,6 +12,7 @@
     <link href="styles/swipebox.css" rel="stylesheet" type="text/css">
     <link href="styles/colorbox.css" rel="stylesheet" type="text/css">
     <link href="styles/general.css" rel="stylesheet" type="text/css">
+    <link href="styles/jquery-ui.css" rel="stylesheet" type="text/css">
     <style>
         .star
         {
@@ -54,6 +55,7 @@
     <script type="text/javascript" src="scripts/framework.js"></script>
     <script type="text/javascript" src="scripts/framework.launcher.js"></script>
     <script type="text/javascript" src="scripts/bd.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -88,25 +90,6 @@
             var n = 0;
             if (len > 0) {
                 for (var i = 0; i < len; i++) {
-                    //Consultamos la vacante para actualizarla si tiene conexión a Internet
-                    //var id_vacante = results.rows.item(i).id;
-                    //var fecha_actualizacion = results.rows.item(i).fecha_actualizacion;
-                    //if ($("#label-internet-connection").text() == "Online") {
-                    //    $.ajax({
-                    //        url: 'http://apiempleo.apphb.com/api/Vacante/obtenerVacante/' + id_vacante,
-                    //        type: 'POST',
-                    //        dataType: 'json',
-                    //        success: function (data, textStatus, xhr) {
-                    //            if (fecha_actualizacion == data['Ultima_Actualizacion'])
-                    //                alert(data['Titulo']);
-                    //        },
-                    //        error: function (xhr, textStatus, errorThrown) {
-                    //            alert(errorThrown);
-                    //        }
-                    //    });
-                    //}
-
-                    //alert(results.rows.item(i).titulo);
                     var rutaEstrella = "images/estrella_llena.png";
                     var textoFavorita ="Quitar de favoritas";
                     n = results.rows.item(i).fecha_vencimiento.indexOf('T');
@@ -332,12 +315,12 @@
                             actualizarVacanteFavorita(vacanteFavorita);
                         });
                         OcultarDivCargando();
-//                        abrirAlert("La vacantes favoritas han sido actualizadas correctamente.");
+                        abrirAlert("La vacantes favoritas han sido actualizadas correctamente.");
                         $("#div_actualizar_favoritas").hide();
                         consultarVacante();
                     },
                     error: function (xhr, textStatus, errorThrown) {
-                        alert(errorThrown);
+                        abrirAlert(errorThrown);
                         OcultarDivCargando();
                     }
                 });
@@ -423,7 +406,7 @@
                 <div class="sidebar-search">
                     <div class="search-box">
                         <input type="text" class="search-field" name="search" onfocus="if(this.value == 'Looking for something?') { this.value = ''; }"
-                               value="Looking for something?">
+                               value="Looking for something?" />
                         <a href="#" class="search-close"></a>
                     </div>
                 </div>
