@@ -36,7 +36,7 @@ function validarSesion(){
         var diffMs = (today - after); // milliseconds between now & Christmas
         var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
 
-        if(diffMins >= 3) { //Tiempo de inactividad 15 minutos
+        if(diffMins >= 15) { //Tiempo de inactividad 15 minutos
             abrirAlertSesion("Su sesión se cerrará por inactividad");
             //alert("Su sesión se cerrará por inactividad");
             //cerrar();
