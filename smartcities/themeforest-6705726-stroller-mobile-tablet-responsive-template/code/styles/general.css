@@ -153,5 +153,6 @@ li
 }
 
 .ui-icon-closethick {
-    background-image: none !important;
+    background-image: url('../images/ui/close.png') !important;
+    background-position: 25% 20%;;
 }
