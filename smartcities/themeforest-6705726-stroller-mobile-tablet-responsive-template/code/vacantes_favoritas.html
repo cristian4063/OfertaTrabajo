@@ -183,7 +183,7 @@
                                                 texto += '<div class="one-half-responsive" style="text-align:center !important;">' +
                                                  '<div id="btnDen' + results.rows.item(i).id + '" style="width: 100%; float: left; padding-top: 5px; padding-bottom: 5px; display:block; border-top: solid 1px rgba(0,0,0,0.1); border-bottom: solid 1px rgba(0,0,0,0.1);"><a name="#" onclick="Denunciar(' + results.rows.item(i).id + ')" class="button-icon icon-setting button-red">Denunciar</a></div>' +
                                                  '<div id="comboDen' + results.rows.item(i).id + '" style="width: 96%; float: left;margin-left: 2%; display:none; border-top: solid 1px rgba(0,0,0,0.1); border-bottom: solid 1px rgba(0,0,0,0.1); padding-top: 5px; padding-bottom: 5px;">Motivo de la denuncia: <br />' +
-                                                 '<select class="styled-select" style="width:100% !important;" name="selectMotivoDenuncia' + results.rows.item(i).id + '" id="selectMotivoDenuncia' + results.rows.item(i).id + '">' +
+                                                 '<select class="styled-select" style="width:100% !important; margin-bottom: 5px;" name="selectMotivoDenuncia' + results.rows.item(i).id + '" id="selectMotivoDenuncia' + results.rows.item(i).id + '">' +
                                                     '<option value="1">Vacante sospechosa / engañosa</option>' +
                                                     '<option value="2">Lenguaje no adecuado</option>' +
                                                     '<option value="3">Información de contacto errónea </option>' +
@@ -277,6 +277,7 @@
         }
 
         function ActualizarFavoritas() {
+            $("#div_sin_favoritas").hide();
             MostrarDivCargando();
             eliminarTodasfavoritas();
             if (localStorage.getItem('vacantesGuardadas') != null) {
@@ -321,6 +322,10 @@
                         OcultarDivCargando();
                     }
                 });
+            }
+            else {
+                OcultarDivCargando();
+                $("#div_sin_favoritas").fadeIn();
             }
         }
 

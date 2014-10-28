@@ -267,7 +267,7 @@ function cargarOfertas(palabra)
                                             '</ul>' +
                                         '</a>' +
                                         '<a name="#" style="width:40%; float:left; padding-top: 10px !important; padding-bottom: 10px !important; text-align: center;">' +
-                                            '<label style="padding-left: 10px;">Agregar a favoritos</label>' +
+                                            '<label style="padding-left: 10px;">' + textoFavorita + '</label>' +
                                             '<ul style="margin-bottom:0px;" class="icon-list">' +
                                                 '<li style="padding-left: 0px;">' +
                                                     '<img id="estrella' + val['ID'] + '" src="' + rutaEstrella + '" onclick=\"' + metodoFavorito + '\" style="margin: 0 auto;" />' +
@@ -281,7 +281,7 @@ function cargarOfertas(palabra)
                                      //'<div onclick=\"'+metodoFavorito+'\" style="width: 50%; float: left;"><img id="estrella'+val['ID']+'" class="star" style="margin: 0px !important; width:auto !important;" src="'+rutaEstrella+'" style="width: 20px;" /><label>'+textoFavorita+'</label></div>' +
                                      '<div id="btnDen' + val['ID'] + '" style="width: 100%; float: left; padding-top: 5px; padding-bottom: 5px; display:block; border-top: solid 1px rgba(0,0,0,0.1); border-bottom: solid 1px rgba(0,0,0,0.1);"><a name="#" onclick="Denunciar(' + val['ID'] + ')" class="button-icon icon-setting button-red">Denunciar</a></div>' +
                                      '<div id="comboDen' + val['ID'] + '" style="width: 96%; float: left;margin-left: 2%; display:none; border-top: solid 1px rgba(0,0,0,0.1); border-bottom: solid 1px rgba(0,0,0,0.1); padding-top: 5px; padding-bottom: 5px;">Motivo de la denuncia: <br />' +
-                                     '<select class="styled-select" style="width:100% !important;" name="selectMotivoDenuncia'+val['ID']+'" id="selectMotivoDenuncia'+val['ID']+'">'+
+                                     '<select class="styled-select" style="width:100% !important; margin-bottom: 5px;" name="selectMotivoDenuncia' + val['ID'] + '" id="selectMotivoDenuncia' + val['ID'] + '">' +
                                         '<option value="1">Vacante sospechosa / engañosa</option>'+
                                         '<option value="2">Lenguaje no adecuado</option>'+
                                         '<option value="3">Información de contacto errónea </option>'+
@@ -540,10 +540,12 @@ function cargarVacante(vacanteID) {
                     '<div class="toggle-2">' +
                         '<a href="#" class="deploy-toggle-2 toggle-2-active" style="font-weight: normal; font-size: 15px; color: black;">' +
                             data['Titulo'] + '<label style="font-weight: bolder; font-size: 13px; color: black;">';
-            if (data['DiasVence'] == 1)
+            if (data['DiasVence'] == 0)
                 texto += 'Vence HOY</label>';
+            else if (data['DiasVence'] == 1)
+                texto += 'Vence MAÑANA</label>';
             else
-                texto += 'Vence en '+data['DiasVence']+' días</label>';
+                texto += 'Vence en ' + data['DiasVence'] + ' días</label>';
             texto +=    '</a>' +
                     '<div class="toggle-content" style="overflow: hidden; display: block;">' +
                         '<p style="text-align:justify;">' +
@@ -596,27 +598,34 @@ function cargarVacante(vacanteID) {
                                             '<li class="right-list">E-mail: <b>' + data['Email'] + '</b></li>' +
                                         '</ul>' +
                                     '</a>' +
-                                    '<a name="#" style="text-align:center !important; border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
-                                    'Comparta esta oportunidad de trabajo'+
+                                    '<a name="#" style="width:60%; float:left; padding-top: 10px !important; padding-bottom: 10px !important;">' +
+                                        '<label style="padding-left: 10px;">Comparta esta oportunidad de trabajo<label>' +
                                         '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                            '<li style="padding-left:0px !important;">' +
-                                                '<img src="images/misc/facebook.png" style="margin: 0px !important; padding-right: 3%;" class="star" onclick="abrirPaginaFacebook(\''+data['Titulo']+'\', '+data['ID']+')"/>' +
-                                                '<img src="images/misc/twitter.png" class="star" style="padding-left: 3%" onclick="abrirPaginaTwitter(\'' + data['Titulo'] + '\', ' + data['ID'] + ')"/>' +
+                                            '<li style="padding-left: 0px;">' +
+                                                '<div style="width:50%; float:left;"><img src="images/misc/facebook.png" style="margin: 0 auto; width: 30px;" onclick="abrirPaginaFacebook(\'' + data['Titulo'] + '\', ' + data['ID'] + ')"/></div>' +
+                                                '<div style="width:50%; float:left;"><img src="images/misc/twitter.png" style="margin: 0 auto; width: 30px;" onclick="abrirPaginaTwitter(\'' + data['Titulo'] + '\', ' + data['ID'] + ')"/></div>' +
+                                            '</li>' +
+                                        '</ul>' +
+                                    '</a>' +
+                                    '<a name="#" style="width:40%; float:left; padding-top: 10px !important; padding-bottom: 10px !important; text-align: center;">' +
+                                        '<label style="padding-left: 10px;">' + textoFavorita + '</label>' +
+                                        '<ul style="margin-bottom:0px;" class="icon-list">' +
+                                            '<li style="padding-left: 0px;">' +
+                                                '<img id="estrella' + data['ID'] + '" src="' + rutaEstrella + '" onclick=\"' + metodoFavorito + '\" style="margin: 0 auto;" />' +
                                             '</li>' +
                                         '</ul>' +
                                     '</a>' +
                                 '</div>' +
                             '</div>' +
                             '<div class="one-half-responsive" style="text-align:center !important;">' +
-                                 '<div onclick=\"'+metodoFavorito+'\" style="width: 50%; float: left;"><img id="estrella'+data['ID']+'" class="star" style="margin: 0px !important; width:auto !important;" src="'+rutaEstrella+'" style="width: 20px;" /><label>'+textoFavorita+'</label></div>' +
-                                 '<div id="btnDen'+data['ID']+'" style="padding-left: 20px; width: 50%; float: left;margin-top: 5px; display:block;"><a name="#" onclick="Denunciar('+data['ID']+')" class="button-icon icon-setting button-red">Denunciar</a></div>' +
-                                 '<div id="comboDen'+data['ID']+'" style="padding-left: 20px; width: 50%; float: left;margin-top: 5px; display:none;">Motivo de la denuncia: <br />'+ 
-                                 '<select class="styled-select" name="selectMotivoDenuncia'+data['ID']+'" id="selectMotivoDenuncia'+data['ID']+'">'+
-                                    '<option value="1">Vacante sospechosa / engañosa</option>'+
-                                    '<option value="2">Lenguaje no adecuado</option>'+
-                                    '<option value="3">Información de contacto errónea </option>'+
-                                    '<option value="4">Sospecha de Trata de personas</option>'+
-                                '</select>'+
+                                    '<div id="btnDen' + data['ID'] + '" style="width: 100%; float: left; padding-top: 5px; padding-bottom: 5px; display:block; border-top: solid 1px rgba(0,0,0,0.1); border-bottom: solid 1px rgba(0,0,0,0.1);"><a name="#" onclick="Denunciar(' + data['ID'] + ')" class="button-icon icon-setting button-red">Denunciar</a></div>' +
+                                    '<div id="comboDen' + data['ID'] + '" style="width: 96%; float: left;margin-left: 2%; display:none; border-top: solid 1px rgba(0,0,0,0.1); border-bottom: solid 1px rgba(0,0,0,0.1); padding-top: 5px; padding-bottom: 5px;">Motivo de la denuncia: <br />' +
+                                    '<select class="styled-select" style="width:100% !important; margin-bottom: 5px;" name="selectMotivoDenuncia' + data['ID'] + '" id="selectMotivoDenuncia' + data['ID'] + '">' +
+                                    '<option value="1">Vacante sospechosa / engañosa</option>' +
+                                    '<option value="2">Lenguaje no adecuado</option>' +
+                                    '<option value="3">Información de contacto errónea </option>' +
+                                    '<option value="4">Sospecha de Trata de personas</option>' +
+                                '</select>' +
                                 '<br /> <a name="#" onclick=\"' + metodoDenuncia + '\" class="button-icon icon-setting button-red">Confirmar denuncia</a>&nbsp;<a name="#" onclick="CancelarDenuncia(' + data['ID'] + ')" class="button-icon icon-setting button-red">Cancelar</a>' +
                                 '</div>' +
                             '</div>' +
@@ -678,74 +687,76 @@ function cargarVacantesEmpleador() {
                     textoEstado = "Activar";
                 }
 
+                n = val['Fecha_vencimiento'].indexOf('T');
                 texto += '<div class="container">' +
                         '<div class="toggle-2">' +
-                            '<a href="#" class="deploy-toggle-2 toggle-2">' +
-                                val['Titulo'] + '<label style="font-weight: bolder; font-size: 15px; color: black;">Vence en '+val['DiasVence']+' días</label>' +
-                                '</a>' +
+                            '<a href="#" class="deploy-toggle-2 toggle-2-active" style="font-weight: normal; font-size: 15px; color: black;">' +
+                            val['Titulo'] + '<label style="font-weight: bolder; font-size: 13px; color: black;">';
+                        if (val['DiasVence'] == 0)
+                                texto += 'Vence HOY</label>';
+                        else if (val['DiasVence'] == 1)
+                                texto += 'Vence MAÑANA</label>';
+                            else
+                                texto += 'Vence en ' + val['DiasVence'] + ' días</label>';
+                            texto += '</a>' +
                             '<div class="toggle-content">' +
                                 '<p style="text-align:justify;">' +
-                                    '<label>' +
-                                        'Fecha Publicación: '+val['Fecha_publicacion']+'</label>' +
-                                        'Fecha Vencimiento: '+val['Fecha_vencimiento']+'</label><br /><br />' +
+                                    '<label style="padding-bottom:10px;">' +
                                         val['Descripcion'] +
+                                    '</label>' +
+                                    '<label>' +
+                                        'Número de vacantes: <b>' + val['Num_vacantes'] + '</b></label>' +
+                                    '<label>' +
+                                        'Cargo: <b>' + val['Cargo'] + '</b></label>' +
+                                    '<label>' +
+                                        'Salario: <b>' + val['Salario'] + '</b></label>' +
+                                    '<label>' +
+                                        'Sector: <b>' + val['Sector'] + '</b></label>' +
+                                    '<label>' +
+                                        'Experiencia: <b>' + val['Experiencia'] + '</b></label>' +
+                                    '<label>' +
+                                        'Nivel de Estudios: <b>' + val['Nivel_estudios'] + '</b></label>' +
+                                    '<label>' +
+                                        'Profesión: <b>' + val['Profesion'] + '</b></label>' +
+                                    '<label>' +
+                                        'Departamento: <b>' + val['Departamento'] + '</b></label>' +
+                                    '<label>' +
+                                        'Municipio: <b>' + val['Municipio'] + '</b></label>' +
+                                    '<label>' +
+                                        'Fecha Vencimiento: <b>' + val['Fecha_vencimiento'].substring(0, n) + '</b></label>' +
+
                                 '</p>' +
-                                '<div class="toggle-content">' +
+                                '<div class="toggle-content" style="padding-bottom: 5px;">' +
                                     '<p><strong>Datos del Empleador:</strong></p>' +
                                     '<div class="one-half-responsive ">' +
                                         '<div class="submenu-navigation">' +
                                             '<div class="submenu-nav-items" style="overflow: hidden; display: block;"></div>' +
-                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<a name="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
                                                 '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                    '<li class="right-list">Empleador: '+val['Empleador']+' </li>' +
+                                                    '<li class="right-list">Teléfono (Indicativo): <b>' + val['Telefono'] + ' (' + val['Indicativo'] + ')</b></li>' +
                                                 '</ul>' +
                                             '</a>' +
-                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<a name="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
                                                 '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                    '<li class="right-list">Ciudad: '+val['Municipio']+' </li>' +
+                                                    '<li class="right-list">Celular: <b>' + val['Celular'] + '</b></li>' +
                                                 '</ul>' +
                                             '</a>' +
-                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<a name="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
                                                 '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                    '<li class="right-list">Número de vacantes: '+val['Num_vacantes']+' </li>' +
+                                                    '<li class="right-list">Dirección: <b>' + val['Direccion'] + '</b></li>' +
                                                 '</ul>' +
                                             '</a>' +
-                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<a name="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
                                                 '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                    '<li class="right-list">Cargo: '+val['Cargo']+' </li>' +
+                                                    '<li class="right-list">E-mail: <b>' + val['Email'] + '</b></li>' +
                                                 '</ul>' +
                                             '</a>' +
-                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
+                                            '<a name="#" style="width:100%; float:left; padding-top: 10px !important; padding-bottom: 10px !important;">' +
+                                                '<label style="padding-left: 10px;">Comparta esta oportunidad de trabajo<label>' +
                                                 '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                    '<li class="right-list">Sector: '+val['Sector']+' </li>' +
-                                                '</ul>' +
-                                            '</a>' +
-                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
-                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                    '<li class="right-list">Profesión: '+val['Profesion']+' </li>' +
-                                                '</ul>' +
-                                            '</a>' +
-                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
-                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                    '<li class="right-list">Salario: '+val['SalarioID']+' </li>' +
-                                                '</ul>' +
-                                            '</a>' +
-                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
-                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                    '<li class="right-list">Experiencia: '+val['ExperienciaID']+' </li>' +
-                                                '</ul>' +
-                                            '</a>' +
-                                            '<a href="#" style="border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
-                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                    '<li class="right-list">Nivel: '+val['Nivel_estudiosID']+' </li>' +
-                                                '</ul>' +
-                                            '</a>' +
-                                            '<a href="#" style="text-align:center !important; border-top: solid 1px rgba(0,0,0,0.1); padding-left: 20px !important; padding-top: 10px !important; padding-bottom: 10px !important; border-bottom: solid 1px rgba(0,0,0,0.1) !important;">' +
-                                            'Comparta esta oportunidad de trabajo'+
-                                                '<ul style="margin-bottom:0px;" class="icon-list">' +
-                                                    '<li style="padding-left:0px !important;">' +
-                                                        '<img src="images/misc/facebook.png" style="margin: 0px !important;" class="star" onclick="abrirPaginaFacebook(\''+val['Titulo']+'\', '+val['ID']+')">' +
-                                                        '<img src="images/misc/twitter.png" class="star" style="margin-left: 5px;" onclick="abrirPaginaTwitter(\''+val['Titulo']+'\', '+val['ID']+')">' + 
+                                                    '<li style="padding-left: 0px;">' +
+                                                        '<div style="width:50%; float:left;"><img src="images/misc/facebook.png" style="margin: 0 auto; width: 30px;" onclick="abrirPaginaFacebook(\'' + val['Titulo'] + '\', ' + val['ID'] + ')"/></div>' +
+                                                        '<div style="width:50%; float:left;"><img src="images/misc/twitter.png" style="margin: 0 auto; width: 30px;" onclick="abrirPaginaTwitter(\'' + val['Titulo'] + '\', ' + val['ID'] + ')"/></div>' +
                                                     '</li>' +
                                                 '</ul>' +
                                             '</a>' +
