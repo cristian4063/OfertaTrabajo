@@ -37,8 +37,9 @@ function validarSesion(){
         var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
 
         if(diffMins >= 3) { //Tiempo de inactividad 15 minutos
-            alert("Su sesión se cerrará por inactividad");
-            cerrar();
+            abrirAlertSesion("Su sesión se cerrará por inactividad");
+            //alert("Su sesión se cerrará por inactividad");
+            //cerrar();
         }
         else {
             localStorage.setItem("tiempo", today);
