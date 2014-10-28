@@ -156,3 +156,11 @@ li
     background-image: url('../images/ui/close.png') !important;
     background-position: 25% 20%;;
 }
+
+.ui-icon-circle-triangle-e {
+    background-image: url('../images/ui/next-arrow.png') !important;
+}
+
+.ui-icon-circle-triangle-w {
+    background-image: url('../images/ui/previous-arrow.png') !important;
+}
