@@ -86,8 +86,7 @@
                             localStorage.setItem("tiempo", today);
                             localStorage.setItem("nombreUsuario", usuario);
                             OcultarDivCargando();
-                            abrirAlert("Ingreso exitoso!");
-                            document.location.href = "lista_ofertas_empleador.html";
+                            abrirConfirmSesion("Ingreso exitoso!");
                         }
                         else {
                             $('#contactForm').show();

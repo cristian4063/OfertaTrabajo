@@ -406,7 +406,7 @@ function Initialize(data) {
  
     // Using the JQuery "each" selector to iterate through the JSON list and drop marker pins
     $.each(data, function (i, item) {
-        marker = new google.maps.Marker({
+        var marker = new google.maps.Marker({
             'position': new google.maps.LatLng(item.GeoLat, item.GeoLong),
             'map': map,
             'title': item.PlaceName
@@ -1126,6 +1126,34 @@ function abrirConfirm(contenido){
         buttons: {
             "Aceptar": function() {
                 $(this).dialog("close");
+                document.location.href="lista_ofertas_empleador.html";
+            }
+        }
+    });
+
+}
+
+function abrirConfirmSesion(contenido){
+    var windowWidth = $(window).width();
+    var windowHeight = $(window).height();
+    var ancho=windowWidth-(windowWidth/10);
+    $('#content-alert').html('<p>'+contenido+'</p>');
+    $("#div-confirm").dialog({
+        modal: true,
+        draggable: false,
+        resizable: false,
+        title: 'Advertencia',
+        minWidth:ancho,
+        my: "center",
+        at: "center",
+        of: window,
+        show: 'blind',
+        hide: 'blind',
+        dialogClass: 'prueba',
+        buttons: {
+            "Aceptar": function() {
+                $(this).dialog("close");
+                //OcultarDivCargando();
                 document.location.href="lista_ofertas_empleador.html";
             }
         }
